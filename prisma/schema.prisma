@@ -167,6 +167,12 @@ model Table {
   orders      Order[]
 }
 
+model User {
+  id         Int      @id @default(autoincrement())
+  email String
+  name String?
+}
+
 enum ORDERSTATUS {
   ORDERED
   OUTFORDELIVERY
