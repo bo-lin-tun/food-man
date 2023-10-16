@@ -1,9 +1,11 @@
 import NewMenuCategory from "@/components/NewMenuCategory";
-import { Box, Button } from "@mui/material";
+import { useAppSelector } from "@/store/hooks";
+import { Box, Button, Typography } from "@mui/material";
 import { useState } from "react";
 
 const MenuCategoriesPage = () => {
   const [open, setOpen] = useState(false);
+  const menuCategories = useAppSelector((state) => state.menuCategory.items);
   return (
     <Box>
       <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
@@ -11,7 +13,11 @@ const MenuCategoriesPage = () => {
           New menu category
         </Button>
       </Box>
-      <h1>Other stuffs here..</h1>
+      <Box>
+        {menuCategories.map((item) => (
+          <Typography key={item.id}>{item.name}</Typography>
+        ))}
+      </Box>
       <NewMenuCategory open={open} setOpen={setOpen} />
     </Box>
   );

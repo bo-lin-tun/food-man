@@ -16,6 +16,7 @@ model Company {
   address        String?
   menuCategories MenuCategory[]
   locations      Location[]
+  users User[]
   isArchived     Boolean        @default(false)
   createdAt      DateTime       @default(now())
   updatedAt      DateTime       @updatedAt
@@ -169,8 +170,10 @@ model Table {
 
 model User {
   id         Int      @id @default(autoincrement())
-  email String
+  email String @unique
   name String?
+  company Company @relation(fields: [companyId], references: [id])
+  companyId Int
 }
 
 enum ORDERSTATUS {
