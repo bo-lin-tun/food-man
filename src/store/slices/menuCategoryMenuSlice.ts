@@ -11,14 +11,14 @@ const menuCategoryMenuSlice = createSlice({
   name: "menuCategoryMenuSlice",
   initialState,
   reducers: {
-    setMenuCategoryMenu: (state, action) => {
+    setMenuCategoryMenus: (state, action) => {
       state.items = action.payload;
     },
     addMenuCategoryMenu: (state, action) => {
-      state.items = [...state.items, action.payload];
+      state.items = [...state.items, ...action.payload];
     },
     replaceMenuCategoryMenu: (state, action) => {
-      const menuId = action.payload[0].menuId;
+      const menuId = action.payload[0].menuId; // 5
       const otherMenuCategoryMenu = state.items.filter(
         (item) => item.menuId !== menuId
       );
@@ -28,7 +28,7 @@ const menuCategoryMenuSlice = createSlice({
 });
 
 export const {
-  setMenuCategoryMenu,
+  setMenuCategoryMenus,
   addMenuCategoryMenu,
   replaceMenuCategoryMenu,
 } = menuCategoryMenuSlice.actions;

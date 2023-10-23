@@ -1,4 +1,5 @@
-import { useAppSelector } from "@/store/hooks";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { createMenu } from "@/store/slices/menuSlice";
 import { CreateMenuOptions } from "@/types/menu";
 import {
   Box,
@@ -32,6 +33,7 @@ const defaultNewMenu = {
 const NewMenu = ({ open, setOpen }: Props) => {
   const [newMenu, setNewMenu] = useState<CreateMenuOptions>(defaultNewMenu);
   const menuCategories = useAppSelector((state) => state.menuCategory.items);
+  const dispatch = useAppDispatch();
 
   const handleOnChange = (evt: SelectChangeEvent<number[]>) => {
     const selectedIds = evt.target.value as number[];
@@ -39,7 +41,7 @@ const NewMenu = ({ open, setOpen }: Props) => {
   };
 
   const handleCreateMenu = () => {
-    console.log(newMenu);
+    dispatch(createMenu({ ...newMenu, onSuccess: () => setOpen(false) }));
   };
 
   return (
@@ -51,7 +53,9 @@ const NewMenu = ({ open, setOpen }: Props) => {
       }}
     >
       <DialogTitle>Create new menu</DialogTitle>
-      <DialogContent sx={{ display: "flex", flexDirection: "column" }}>
+      <DialogContent
+        sx={{ display: "flex", flexDirection: "column", width: 400 }}
+      >
         <TextField
           placeholder="Name"
           sx={{ mb: 2 }}
@@ -71,14 +75,12 @@ const NewMenu = ({ open, setOpen }: Props) => {
             value={newMenu.menuCategoryIds}
             label="Menu Category"
             onChange={handleOnChange}
-            sx={{ width: 400 }}
             renderValue={(selectedMenuCategoryIds) => {
               return selectedMenuCategoryIds
                 .map((selectedMenuCategoryId) => {
-                  const menuCategory = menuCategories.find(
+                  return menuCategories.find(
                     (item) => item.id === selectedMenuCategoryId
                   ) as MenuCategory;
-                  return menuCategory;
                 })
                 .map((item) => item.name)
                 .join(", ");
@@ -101,7 +103,11 @@ const NewMenu = ({ open, setOpen }: Props) => {
           </Select>
         </FormControl>
         <Box sx={{ mt: 3, display: "flex", justifyContent: "flex-end" }}>
-          <Button variant="contained" sx={{ mr: 2 }}>
+          <Button
+            variant="contained"
+            sx={{ mr: 2 }}
+            onClick={() => setOpen(false)}
+          >
             Cancel
           </Button>
           <Button
