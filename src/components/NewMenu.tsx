@@ -5,6 +5,7 @@ import {
   Box,
   Button,
   Checkbox,
+  Chip,
   Dialog,
   DialogContent,
   DialogTitle,
@@ -82,8 +83,7 @@ const NewMenu = ({ open, setOpen }: Props) => {
                     (item) => item.id === selectedMenuCategoryId
                   ) as MenuCategory;
                 })
-                .map((item) => item.name)
-                .join(", ");
+                .map((item) => <Chip label={item.name} sx={{ mr: 1 }} />);
             }}
             MenuProps={{
               PaperProps: {
