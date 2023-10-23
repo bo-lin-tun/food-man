@@ -14,3 +14,9 @@ export interface BaseOptions {
 export interface GetMenusOptions extends BaseOptions {
   locationId: string;
 }
+
+export interface CreateMenuOptions extends BaseOptions {
+  name: string;
+  price: number;
+  menuCategoryIds: number[];
+}
