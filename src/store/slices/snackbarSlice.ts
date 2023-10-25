@@ -2,9 +2,9 @@ import { SnackbarSlice } from "@/types/snackbar";
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState: SnackbarSlice = {
+  open: false,
   message: null,
   autoHideDuration: 5000,
-  open: false,
   severity: "success",
 };
 

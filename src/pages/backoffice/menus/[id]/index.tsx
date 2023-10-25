@@ -20,7 +20,7 @@ import {
 } from "@mui/material";
 import { MenuCategory } from "@prisma/client";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const MenuDetail = () => {
   const router = useRouter();
@@ -31,13 +31,21 @@ const MenuDetail = () => {
     (state) => state.menuCategoryMenu.items
   );
   const menu = menus.find((item) => item.id === menuId);
-  const menuCategoryMenu = menuCategoryMenus.filter(
+  const currentMenuCategoryMenu = menuCategoryMenus.filter(
     (item) => item.menuId === menuId
   );
-  const menuCategoryIds = menuCategoryMenu.map((item) => item.menuCategoryId);
+  const menuCategoryIds = currentMenuCategoryMenu.map(
+    (item) => item.menuCategoryId
+  );
   const [data, setData] = useState<UpdateMenuOptions>();
   const dispatch = useAppDispatch();
   const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    if (menu) {
+      setData({ ...menu, menuCategoryIds });
+    }
+  }, [menu]);
 
   if (!menu || !data) return null;
 

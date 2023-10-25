@@ -1,6 +1,8 @@
+import ItemCard from "@/components/ItemCard";
 import NewAddonCategory from "@/components/NewAddonCategory";
 import { useAppSelector } from "@/store/hooks";
-import { Box, Button, Typography } from "@mui/material";
+import ClassIcon from "@mui/icons-material/Class";
+import { Box, Button } from "@mui/material";
 import { useState } from "react";
 
 const AddonCategoriesPage = () => {
@@ -9,17 +11,20 @@ const AddonCategoriesPage = () => {
   return (
     <Box>
       <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
-        <Button
-          variant="contained"
-          onClick={() => setOpen(true)}
-          sx={{ width: 400 }}
-        >
+        <Button variant="contained" onClick={() => setOpen(true)}>
           New addon category
         </Button>
       </Box>
-      {addonCategories.map((item) => (
-        <Typography key={item.id}>{item.name}</Typography>
-      ))}
+      <Box sx={{ display: "flex", flexWrap: "wrap" }}>
+        {addonCategories.map((item) => (
+          <ItemCard
+            icon={<ClassIcon />}
+            key={item.id}
+            title={item.name}
+            href={`/backoffice/addon-categories/${item.id}`}
+          />
+        ))}
+      </Box>
       <NewAddonCategory open={open} setOpen={setOpen} />
     </Box>
   );
