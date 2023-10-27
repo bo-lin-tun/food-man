@@ -1,6 +1,8 @@
+import ItemCard from "@/components/ItemCard";
 import NewTable from "@/components/NewTable";
 import { useAppSelector } from "@/store/hooks";
-import { Box, Button, Typography } from "@mui/material";
+import TableBarIcon from "@mui/icons-material/TableBar";
+import { Box, Button } from "@mui/material";
 import { useState } from "react";
 
 const TablesPage = () => {
@@ -13,9 +15,16 @@ const TablesPage = () => {
           New table
         </Button>
       </Box>
-      {tables.map((item) => (
-        <Typography key={item.id}>{item.name}</Typography>
-      ))}
+      <Box sx={{ display: "flex", flexWrap: "wrap" }}>
+        {tables.map((item) => (
+          <ItemCard
+            href={`/backoffice/tables/${item.id}`}
+            icon={<TableBarIcon />}
+            key={item.id}
+            title={item.name}
+          />
+        ))}
+      </Box>
       <NewTable open={open} setOpen={setOpen} />
     </Box>
   );

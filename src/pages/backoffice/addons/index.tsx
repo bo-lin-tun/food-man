@@ -1,6 +1,8 @@
+import ItemCard from "@/components/ItemCard";
 import NewAddon from "@/components/NewAddon";
 import { useAppSelector } from "@/store/hooks";
-import { Box, Button, Typography } from "@mui/material";
+import EggIcon from "@mui/icons-material/Egg";
+import { Box, Button } from "@mui/material";
 import { useState } from "react";
 
 const AddonsPage = () => {
@@ -13,9 +15,16 @@ const AddonsPage = () => {
           New addon
         </Button>
       </Box>
-      {addons.map((item) => (
-        <Typography key={item.id}>{item.name}</Typography>
-      ))}
+      <Box sx={{ display: "flex", flexWrap: "wrap" }}>
+        {addons.map((item) => (
+          <ItemCard
+            icon={<EggIcon />}
+            href={`/backoffice/addons/${item.id}`}
+            key={item.id}
+            title={item.name}
+          />
+        ))}
+      </Box>
       <NewAddon open={open} setOpen={setOpen} />
     </Box>
   );
