@@ -7,6 +7,7 @@ import {
 } from "@/types/menu";
 import { config } from "@/utils/config";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { removeMenuAddonCategoryByMenuId } from "./menuAddonCategorySlice";
 import {
   addMenuCategoryMenu,
   replaceMenuCategoryMenu,
@@ -84,6 +85,7 @@ export const deleteMenu = createAsyncThunk(
         method: "DELETE",
       });
       thunkApi.dispatch(removeMenu({ id }));
+      thunkApi.dispatch(removeMenuAddonCategoryByMenuId({ menuId: id }));
       onSuccess && onSuccess();
     } catch (err) {
       onError && onError();

@@ -42,6 +42,7 @@ const NewAddon = ({ open, setOpen }: Props) => {
   const handleCreateAddon = () => {
     dispatch(createAddon({ ...newAddon, onSuccess: () => setOpen(false) }));
   };
+
   return (
     <Dialog
       open={open}
