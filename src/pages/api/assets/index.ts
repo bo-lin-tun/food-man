@@ -1,6 +1,25 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import type { NextApiRequest, NextApiResponse } from "next";
+import { fileUpload } from "@/utils/fileUpload";
+import { Request, Response } from "express";
 
-export default function handler(req: NextApiRequest, res: NextApiResponse) {
-  res.status(200).json({ name: "John Doe" });
+export const config = {
+  api: {
+    bodyParser: false,
+  },
+};
+
+export default function handler(req: Request, res: Response) {
+  try {
+    fileUpload(req, res, (error) => {
+      if (error) {
+        return res.status(500).send("Internal Server Error");
+      }
+      const files = req.files as Express.MulterS3.File[];
+      const file = files[0];
+      const assetUrl = file.location;
+      res.status(200).json({ assetUrl });
+    });
+  } catch (err) {
+    res.status(500).send("Internal Server Error");
+  }
 }
