@@ -100,7 +100,6 @@ const menuSlice = createSlice({
   reducers: {
     setMenus: (state, action) => {
       state.items = action.payload;
-      console.log(state.items);
     },
     replaceMenu: (state, action) => {
       state.items = state.items.map((item) =>

@@ -15,6 +15,8 @@ export interface CreateMenuCategoryOptions extends BaseOptions {
 export interface UpdateMenuCategoryOptions extends BaseOptions {
   id: number;
   name: string;
+  locationId: number;
+  isAvaialble: boolean;
 }
 
 export interface DeleteMenuCategoryOptions extends BaseOptions {

@@ -11,6 +11,8 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
+  FormControlLabel,
+  Switch,
   TextField,
 } from "@mui/material";
 import { useRouter } from "next/router";
@@ -26,17 +28,34 @@ const MenuCategoryDetail = () => {
   const [data, setData] = useState<UpdateMenuCategoryOptions>();
   const dispatch = useAppDispatch();
   const [open, setOpen] = useState(false);
+  const disalbedLocationmenuCategories = useAppSelector(
+    (state) => state.disabledLocationMenuCategory.items
+  );
 
   useEffect(() => {
     if (menuCategory) {
-      setData({ ...menuCategory });
+      const disalbedLocationmenuCategory = disalbedLocationmenuCategories.find(
+        (item) =>
+          item.locationId === 1 && item.menuCategoryId === menuCategoryId
+      );
+      console.log(disalbedLocationmenuCategory);
+      setData({
+        ...menuCategory,
+        locationId: 1,
+        isAvaialble: disalbedLocationmenuCategory ? false : true,
+      });
     }
-  }, [menuCategory]);
+  }, [menuCategory, disalbedLocationmenuCategories]);
 
   if (!menuCategory || !data) return null;
 
   const handleUpdateMenuCategory = () => {
-    dispatch(updateMenuCategory(data));
+    dispatch(
+      updateMenuCategory({
+        ...data,
+        locationId: Number(localStorage.getItem("selectedLocationId")),
+      })
+    );
   };
 
   const handleDeleteMenuCategory = () => {
@@ -61,6 +80,15 @@ const MenuCategoryDetail = () => {
         onChange={(evt) =>
           setData({ ...data, id: menuCategoryId, name: evt.target.value })
         }
+      />
+      <FormControlLabel
+        control={
+          <Switch
+            defaultChecked={data.isAvaialble}
+            onChange={(evt, value) => setData({ ...data, isAvaialble: value })}
+          />
+        }
+        label="Available"
       />
       <Button
         variant="contained"

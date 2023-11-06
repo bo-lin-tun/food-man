@@ -5,11 +5,12 @@ import { ReactNode } from "react";
 interface Props {
   icon: ReactNode;
   title: string;
+  isAvailable?: boolean;
   href?: string;
   subtitle?: string;
 }
 
-const ItemCard = ({ icon, title, href, subtitle }: Props) => {
+const ItemCard = ({ icon, title, href, subtitle, isAvailable }: Props) => {
   if (href) {
     return (
       <Link href={href} style={{ textDecoration: "none", color: "#000000" }}>
@@ -24,6 +25,7 @@ const ItemCard = ({ icon, title, href, subtitle }: Props) => {
             justifyContent: "center",
             alignItems: "center",
             m: 2,
+            opacity: isAvailable === false ? 0.4 : 1,
           }}
         >
           {icon}

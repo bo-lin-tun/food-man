@@ -8,6 +8,10 @@ import { useState } from "react";
 const MenuCategoriesPage = () => {
   const [open, setOpen] = useState(false);
   const menuCategories = useAppSelector((state) => state.menuCategory.items);
+  const disabledLocationMenuCategories = useAppSelector(
+    (state) => state.disabledLocationMenuCategory.items
+  );
+
   return (
     <Box>
       <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
@@ -16,14 +20,24 @@ const MenuCategoriesPage = () => {
         </Button>
       </Box>
       <Box sx={{ display: "flex", flexWrap: "wrap" }}>
-        {menuCategories.map((item) => (
-          <ItemCard
-            icon={<CategoryIcon />}
-            href={`/backoffice/menu-categories/${item.id}`}
-            key={item.id}
-            title={item.name}
-          />
-        ))}
+        {menuCategories.map((item) => {
+          const exist = disabledLocationMenuCategories.find(
+            (disabledLocationMenuCategory) =>
+              disabledLocationMenuCategory.locationId ===
+                Number(localStorage.getItem("selectedLocationId")) &&
+              disabledLocationMenuCategory.menuCategoryId === item.id
+          );
+          const isAvailable = exist ? false : true;
+          return (
+            <ItemCard
+              icon={<CategoryIcon />}
+              href={`/backoffice/menu-categories/${item.id}`}
+              key={item.id}
+              title={item.name}
+              isAvailable={isAvailable}
+            />
+          );
+        })}
       </Box>
       <NewMenuCategory open={open} setOpen={setOpen} />
     </Box>
