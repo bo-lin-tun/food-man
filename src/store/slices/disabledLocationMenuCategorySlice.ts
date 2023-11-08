@@ -14,10 +14,10 @@ const disabledLocationMenuCategorySlice = createSlice({
     setDisabledLocationMenuCategories: (state, action) => {
       state.items = action.payload;
     },
-    addDisalbedLocationmenuCategory: (state, action) => {
+    addDisabledLocationmenuCategory: (state, action) => {
       state.items = [...state.items, action.payload];
     },
-    removeDisalbedLocationmenuCategory: (
+    removeDisabledLocationmenuCategory: (
       state,
       action: PayloadAction<{ locationId: number; menuCategoryId: number }>
     ) => {
@@ -35,7 +35,7 @@ const disabledLocationMenuCategorySlice = createSlice({
 
 export const {
   setDisabledLocationMenuCategories,
-  addDisalbedLocationmenuCategory,
-  removeDisalbedLocationmenuCategory,
+  addDisabledLocationmenuCategory,
+  removeDisabledLocationmenuCategory,
 } = disabledLocationMenuCategorySlice.actions;
 export default disabledLocationMenuCategorySlice.reducer;

@@ -13,11 +13,13 @@ import {
   DialogContent,
   DialogTitle,
   FormControl,
+  FormControlLabel,
   InputLabel,
   ListItemText,
   MenuItem,
   Select,
   SelectChangeEvent,
+  Switch,
   TextField,
 } from "@mui/material";
 import { MenuCategory } from "@prisma/client";
@@ -45,10 +47,25 @@ const MenuDetail = () => {
   const [data, setData] = useState<UpdateMenuOptions>();
   const dispatch = useAppDispatch();
   const [open, setOpen] = useState(false);
+  const disabledLocationMenus = useAppSelector(
+    (state) => state.disabledLocationMenu.items
+  );
 
   useEffect(() => {
     if (menu) {
-      setData({ ...menu, menuCategoryIds });
+      const selectedLocationId = Number(
+        localStorage.getItem("selectedLocationId")
+      );
+      const disabledLocationMenu = disabledLocationMenus.find(
+        (item) =>
+          item.locationId === selectedLocationId && item.menuId === menuId
+      );
+      setData({
+        ...menu,
+        menuCategoryIds,
+        locationId: selectedLocationId,
+        isAvailable: disabledLocationMenu ? false : true,
+      });
     }
   }, [menu]);
 
@@ -142,6 +159,15 @@ const MenuDetail = () => {
           ))}
         </Select>
       </FormControl>
+      <FormControlLabel
+        control={
+          <Switch
+            defaultChecked={data.isAvailable}
+            onChange={(evt, value) => setData({ ...data, isAvailable: value })}
+          />
+        }
+        label="Available"
+      />
       <Button
         variant="contained"
         sx={{ mt: 2, width: "fit-content" }}

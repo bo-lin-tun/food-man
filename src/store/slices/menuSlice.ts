@@ -7,6 +7,10 @@ import {
 } from "@/types/menu";
 import { config } from "@/utils/config";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import {
+  addDisabledLocationMenu,
+  removeDisabledLocationMenu,
+} from "./disabledLocationMenuSlice";
 import { removeMenuAddonCategoryByMenuId } from "./menuAddonCategorySlice";
 import {
   addMenuCategoryMenu,
@@ -60,16 +64,41 @@ export const createMenu = createAsyncThunk(
 export const updateMenu = createAsyncThunk(
   "menu/updateMenu",
   async (options: UpdateMenuOptions, thunkApi) => {
-    const { id, name, price, menuCategoryIds, onSuccess, onError } = options;
+    console.log(options);
+    const {
+      id,
+      name,
+      price,
+      menuCategoryIds,
+      locationId,
+      isAvailable,
+      onSuccess,
+      onError,
+    } = options;
     try {
       const response = await fetch(`${config.apiBaseUrl}/menus`, {
         method: "PUT",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ id, name, price, menuCategoryIds }),
+        body: JSON.stringify({
+          id,
+          name,
+          price,
+          menuCategoryIds,
+          locationId,
+          isAvailable,
+        }),
       });
-      const { menu, menuCategoryMenus } = await response.json();
+      const { menu, menuCategoryMenus, disabledLocationMenus } =
+        await response.json();
       thunkApi.dispatch(replaceMenu(menu));
       thunkApi.dispatch(replaceMenuCategoryMenu(menuCategoryMenus));
+      if (isAvailable === false) {
+        thunkApi.dispatch(addDisabledLocationMenu(disabledLocationMenus));
+      } else {
+        thunkApi.dispatch(
+          removeDisabledLocationMenu({ locationId, menuId: id })
+        );
+      }
       onSuccess && onSuccess();
     } catch (err) {
       onError && onError();

@@ -30,7 +30,8 @@ export default async function handler(
     );
     return res.status(200).json({ menu, menuCategoryMenus });
   } else if (method === "PUT") {
-    const { id, name, price, menuCategoryIds } = req.body;
+    const { id, name, price, menuCategoryIds, locationId, isAvailable } =
+      req.body;
     const isValid =
       id && name && price !== undefined && menuCategoryIds.length > 0;
     if (!isValid) return res.status(400).send("Bad request.");
@@ -52,7 +53,28 @@ export default async function handler(
         })
       )
     );
-    return res.status(200).json({ menu, menuCategoryMenus });
+    if (locationId) {
+      if (isAvailable === false) {
+        const exist = await prisma.disabledLocationMenu.findFirst({
+          where: { menuId: id },
+        });
+        if (!exist) {
+          await prisma.disabledLocationMenu.create({
+            data: { locationId, menuId: id },
+          });
+        }
+      } else {
+        await prisma.disabledLocationMenu.deleteMany({
+          where: { locationId, menuId: id },
+        });
+      }
+    }
+    const disabledLocationMenus = await prisma.disabledLocationMenu.findMany({
+      where: { menuId: id },
+    });
+    return res
+      .status(200)
+      .json({ menu, menuCategoryMenus, disabledLocationMenus });
   } else if (method === "DELETE") {
     const menuId = Number(req.query.id);
     const menu = await prisma.menu.findFirst({ where: { id: menuId } });

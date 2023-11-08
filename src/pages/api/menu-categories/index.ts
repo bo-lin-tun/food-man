@@ -25,7 +25,7 @@ export default async function handler(
     });
     return res.status(200).json(menuCategory);
   } else if (method === "PUT") {
-    const { id, name, locationId, isAvaialble } = req.body;
+    const { id, name, locationId, isAvailable } = req.body;
     const isValid = id && name;
     if (!isValid) return res.status(400).send("Bad request.");
     const exist = await prisma.menuCategory.findFirst({
@@ -36,7 +36,7 @@ export default async function handler(
       data: { name },
       where: { id },
     });
-    if (locationId && isAvaialble === false) {
+    if (locationId && isAvailable === false) {
       const exist = await prisma.disabledLocationMenuCategory.findFirst({
         where: { menuCategoryId: id, locationId },
       });
@@ -52,7 +52,7 @@ export default async function handler(
       return res
         .status(200)
         .json({ menuCategory, disabledLocationMenuCategory });
-    } else if (locationId && isAvaialble === true) {
+    } else if (locationId && isAvailable === true) {
       const exist = await prisma.disabledLocationMenuCategory.findFirst({
         where: { menuCategoryId: id, locationId },
       });

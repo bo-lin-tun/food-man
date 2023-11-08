@@ -28,24 +28,27 @@ const MenuCategoryDetail = () => {
   const [data, setData] = useState<UpdateMenuCategoryOptions>();
   const dispatch = useAppDispatch();
   const [open, setOpen] = useState(false);
-  const disalbedLocationmenuCategories = useAppSelector(
+  const disabledLocationmenuCategories = useAppSelector(
     (state) => state.disabledLocationMenuCategory.items
   );
 
   useEffect(() => {
     if (menuCategory) {
-      const disalbedLocationmenuCategory = disalbedLocationmenuCategories.find(
-        (item) =>
-          item.locationId === 1 && item.menuCategoryId === menuCategoryId
+      const selectedLocationId = Number(
+        localStorage.getItem("selectedLocationId")
       );
-      console.log(disalbedLocationmenuCategory);
+      const disalbedLocationmenuCategory = disabledLocationmenuCategories.find(
+        (item) =>
+          item.locationId === selectedLocationId &&
+          item.menuCategoryId === menuCategoryId
+      );
       setData({
         ...menuCategory,
-        locationId: 1,
-        isAvaialble: disalbedLocationmenuCategory ? false : true,
+        locationId: selectedLocationId,
+        isAvailable: disalbedLocationmenuCategory ? false : true,
       });
     }
-  }, [menuCategory, disalbedLocationmenuCategories]);
+  }, [menuCategory, disabledLocationmenuCategories]);
 
   if (!menuCategory || !data) return null;
 
@@ -84,8 +87,8 @@ const MenuCategoryDetail = () => {
       <FormControlLabel
         control={
           <Switch
-            defaultChecked={data.isAvaialble}
-            onChange={(evt, value) => setData({ ...data, isAvaialble: value })}
+            defaultChecked={data.isAvailable}
+            onChange={(evt, value) => setData({ ...data, isAvailable: value })}
           />
         }
         label="Available"
