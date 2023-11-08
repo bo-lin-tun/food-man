@@ -6,7 +6,7 @@ import Link from "next/link";
 interface Props {
   menu: Menu;
   href: string | object;
-  isAvailable: boolean;
+  isAvailable?: boolean;
 }
 
 const MenuCard = ({ menu, href, isAvailable }: Props) => {
@@ -31,7 +31,7 @@ const MenuCard = ({ menu, href, isAvailable }: Props) => {
       >
         <CardMedia
           sx={{ height: 140, objectFit: "contain" }}
-          image={menu.assetUrl || ""}
+          image={menu.assetUrl || "/default-menu.png"}
           component={"div"}
         />
         <CardContent>

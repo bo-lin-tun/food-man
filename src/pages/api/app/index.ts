@@ -14,28 +14,34 @@ export default async function handler(
   const isOrderAppRequest = companyId && tableId;
   if (method === "GET") {
     if (isOrderAppRequest) {
-      const locations = await prisma.location.findMany({
-        where: { companyId: Number(companyId), isArchived: false },
-      });
-      const locationIds = locations.map((item) => item.id);
-      const menuCategories = await prisma.menuCategory.findMany({
+      let menuCategories = await prisma.menuCategory.findMany({
         where: { companyId: Number(companyId), isArchived: false },
       });
       const menuCategoryIds = menuCategories.map((item) => item.id);
-      const disabledLocationMenuCategories =
+      const disabledMenuCategoryIds = (
         await prisma.disabledLocationMenuCategory.findMany({
           where: { menuCategoryId: { in: menuCategoryIds } },
-        });
+        })
+      ).map((item) => item.menuCategoryId);
+
+      menuCategories = menuCategories.filter(
+        (item) => !disabledMenuCategoryIds.includes(item.id)
+      );
+
       const menuCategoryMenus = await prisma.menuCategoryMenu.findMany({
         where: { menuCategoryId: { in: menuCategoryIds }, isArchived: false },
       });
       const menuIds = menuCategoryMenus.map((item) => item.menuId);
-      const menus = await prisma.menu.findMany({
-        where: { id: { in: menuIds }, isArchived: false },
-      });
-      const disabledLocationMenus = await prisma.disabledLocationMenu.findMany({
-        where: { menuId: { in: menuIds } },
-      });
+      const disabledMenuIds = (
+        await prisma.disabledLocationMenu.findMany({
+          where: { menuId: { in: menuIds } },
+        })
+      ).map((item) => item.menuId);
+      const menus = (
+        await prisma.menu.findMany({
+          where: { id: { in: menuIds }, isArchived: false },
+        })
+      ).filter((item) => !disabledMenuIds.includes(item.id));
       const menuAddonCategories = await prisma.menuAddonCategory.findMany({
         where: { menuId: { in: menuIds }, isArchived: false },
       });
@@ -51,20 +57,17 @@ export default async function handler(
           isArchived: false,
         },
       });
-      const tables = await prisma.table.findMany({
-        where: { locationId: { in: locationIds }, isArchived: false },
-      });
       return res.status(200).json({
-        locations,
+        locations: [],
         menuCategories,
         menus,
         menuCategoryMenus,
         menuAddonCategories,
         addonCategories,
         addons,
-        tables,
-        disabledLocationMenuCategories,
-        disabledLocationMenus,
+        tables: [],
+        disabledLocationMenuCategories: [],
+        disabledLocationMenus: [],
       });
     } else {
       const session = await getServerSession(req, res, authOptions);
@@ -141,14 +144,16 @@ export default async function handler(
         });
 
         return res.status(200).json({
-          menuCategory,
-          menu,
-          menuCategoryMenu,
-          addonCategory,
-          menuAddonCategory,
+          menuCategories: [menuCategory],
+          menus: [menu],
+          menuCategoryMenus: [menuCategoryMenu],
+          addonCategories: [addonCategory],
+          menuAddonCategories: [menuAddonCategory],
           addons,
-          location,
-          table,
+          locations: [location],
+          tables: [table],
+          disabledLocationMenuCategories: [],
+          disabledLocationMenus: [],
         });
       } else {
         const companyId = dbUser.companyId;

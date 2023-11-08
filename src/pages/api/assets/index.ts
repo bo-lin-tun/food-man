@@ -10,15 +10,19 @@ export const config = {
 
 export default function handler(req: Request, res: Response) {
   try {
-    fileUpload(req, res, (error) => {
-      if (error) {
-        return res.status(500).send("Internal Server Error");
-      }
-      const files = req.files as Express.MulterS3.File[];
-      const file = files[0];
-      const assetUrl = file.location;
-      res.status(200).json({ assetUrl });
-    });
+    if (req.method === "POST") {
+      fileUpload(req, res, (error) => {
+        if (error) {
+          return res.status(500).send("Internal Server Error");
+        }
+        const files = req.files as Express.MulterS3.File[];
+        const file = files[0];
+        const assetUrl = file.location;
+        res.status(200).json({ assetUrl });
+      });
+    } else if (req.method === "DELETE") {
+      //
+    }
   } catch (err) {
     res.status(500).send("Internal Server Error");
   }
