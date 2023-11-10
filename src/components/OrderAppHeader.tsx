@@ -3,7 +3,6 @@ import { Box, Typography } from "@mui/material";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import React from "react";
-import OrderAppHeaderImg from "../assets/order-app-header.svg";
 
 interface Props {
   cartItemCount: number;
@@ -11,7 +10,7 @@ interface Props {
 
 const OrderAppHeader = ({ cartItemCount }: Props) => {
   const router = useRouter();
-  const isHome = router.pathname === "/order?dkd";
+  const isHome = router.pathname === "/order";
   const isCart = router.pathname === "/order/cart";
   const isActiveOrder = router.pathname.includes("/order/activeOrder");
   const showCartIcon = !isCart && !isActiveOrder;
@@ -25,6 +24,7 @@ const OrderAppHeader = ({ cartItemCount }: Props) => {
         alignItems: "center",
         position: "fixed",
         zIndex: 5,
+        top: 0,
       }}
     >
       {showCartIcon && (
@@ -63,13 +63,11 @@ const OrderAppHeader = ({ cartItemCount }: Props) => {
       )}
 
       <Image
-        src={OrderAppHeaderImg}
-        style={{
-          width: "100%",
-          padding: 0,
-          margin: 0,
-          objectFit: "cover",
-        }}
+        src="/order-app-header.svg"
+        width={0}
+        height={0}
+        sizes="100vw"
+        style={{ width: "100%", height: "auto" }}
         alt="header-image"
       />
       {isHome && (
