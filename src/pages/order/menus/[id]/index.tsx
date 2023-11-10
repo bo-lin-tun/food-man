@@ -4,7 +4,7 @@ import { useAppSelector } from "@/store/hooks";
 import { Box } from "@mui/material";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 const MenuDetail = () => {
   const { query, isReady } = useRouter();
@@ -13,10 +13,6 @@ const MenuDetail = () => {
   const menu = menus.find((item) => item.id === menuId);
   const [quantity, setQuantity] = useState(1);
   const [selectedAddonIds, setSelectedAddonIds] = useState<number[]>([]);
-
-  useEffect(() => {
-    console.log(selectedAddonIds);
-  }, [selectedAddonIds]);
 
   const handleQuantityDecrease = () => {
     const newValue = quantity - 1 === 0 ? 1 : quantity - 1;

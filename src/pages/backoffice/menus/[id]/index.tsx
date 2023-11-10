@@ -67,7 +67,7 @@ const MenuDetail = () => {
         isAvailable: disabledLocationMenu ? false : true,
       });
     }
-  }, [menu]);
+  }, [menu, disabledLocationMenus]);
 
   if (!menu || !data) return null;
 
@@ -115,9 +115,10 @@ const MenuDetail = () => {
       <TextField
         defaultValue={menu.name}
         sx={{ mb: 2 }}
-        onChange={(evt) =>
-          setData({ ...data, id: menuId, name: evt.target.value })
-        }
+        onChange={(evt) => {
+          console.log("inside text change. ", data);
+          setData({ ...data, id: menuId, name: evt.target.value });
+        }}
       />
       <TextField
         defaultValue={menu.price}

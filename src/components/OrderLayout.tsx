@@ -15,6 +15,7 @@ const OrderLayout = (props: Props) => {
   const dispatch = useAppDispatch();
   const cartItems = useAppSelector((state) => state.cart.items);
   const isHome = router.pathname === "/order";
+  console.log();
 
   useEffect(() => {
     if (companyId && tableId) {
