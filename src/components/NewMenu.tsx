@@ -1,7 +1,10 @@
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { createMenu } from "@/store/slices/menuSlice";
+import { createMenu, setLoadingMenu } from "@/store/slices/menuSlice";
+import { setOpenSnackbar } from "@/store/slices/snackbarSlice";
 import { CreateMenuOptions } from "@/types/menu";
 import { config } from "@/utils/config";
+import SaveIcon from "@mui/icons-material/Save";
+import LoadingButton from "@mui/lab/LoadingButton";
 import {
   Box,
   Button,
@@ -35,6 +38,7 @@ const defaultNewMenu = {
 
 const NewMenu = ({ open, setOpen }: Props) => {
   const [newMenu, setNewMenu] = useState<CreateMenuOptions>(defaultNewMenu);
+  const { isLoading } = useAppSelector((state) => state.menu);
   const menuCategories = useAppSelector((state) => state.menuCategory.items);
   const dispatch = useAppDispatch();
   const [menuImage, setMenuImage] = useState<File>();
@@ -45,6 +49,7 @@ const NewMenu = ({ open, setOpen }: Props) => {
   };
 
   const handleCreateMenu = async () => {
+    dispatch(setLoadingMenu(true));
     const newMenuPayload = { ...newMenu };
     if (menuImage) {
       const formData = new FormData();
@@ -57,7 +62,23 @@ const NewMenu = ({ open, setOpen }: Props) => {
       newMenuPayload.assetUrl = assetUrl;
     }
     dispatch(
-      createMenu({ ...newMenuPayload, onSuccess: () => setOpen(false) })
+      createMenu({
+        ...newMenuPayload,
+        onSuccess: () => {
+          setOpen(false);
+          dispatch(setLoadingMenu(false));
+        },
+        onError: () => {
+          dispatch(
+            setOpenSnackbar({
+              message: "Error occurred when creating menu.",
+              autoHideDuration: 2000,
+              severity: "error",
+            })
+          );
+          dispatch(setLoadingMenu(false));
+        },
+      })
     );
   };
 
@@ -142,13 +163,16 @@ const NewMenu = ({ open, setOpen }: Props) => {
           >
             Cancel
           </Button>
-          <Button
+          <LoadingButton
+            loading={isLoading}
+            loadingPosition="start"
+            startIcon={<SaveIcon />}
             variant="contained"
             disabled={!newMenu.name || !newMenu.menuCategoryIds.length}
             onClick={handleCreateMenu}
           >
             Confirm
-          </Button>
+          </LoadingButton>
         </Box>
       </DialogContent>
     </Dialog>

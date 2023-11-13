@@ -1,4 +1,4 @@
-type SnackbarSeverity = "success" | "error";
+export type SnackbarSeverity = "success" | "error";
 
 export interface SnackbarSlice {
   message: string | null;

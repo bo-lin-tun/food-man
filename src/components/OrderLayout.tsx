@@ -11,24 +11,22 @@ interface Props {
 
 const OrderLayout = (props: Props) => {
   const router = useRouter();
-  const { companyId, tableId } = router.query;
+  const { tableId } = router.query;
   const dispatch = useAppDispatch();
   const cartItems = useAppSelector((state) => state.cart.items);
   const isHome = router.pathname === "/order";
   console.log();
 
   useEffect(() => {
-    if (companyId && tableId) {
-      dispatch(
-        fetchAppData({ companyId: Number(companyId), tableId: Number(tableId) })
-      );
+    if (tableId) {
+      dispatch(fetchAppData({ tableId: Number(tableId) }));
     }
-  }, [companyId]);
+  }, [tableId]);
 
   return (
     <Box>
       <OrderAppHeader cartItemCount={cartItems.length} />
-      <Box sx={{ position: "relative", zIndex: 5, top: isHome ? 240 : 0 }}>
+      <Box sx={{ position: "relative", top: isHome ? 240 : 0 }}>
         <Box sx={{ width: { xs: "100%", md: "80%", lg: "55%" }, m: "0 auto" }}>
           {props.children}
         </Box>
