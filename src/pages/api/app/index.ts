@@ -144,12 +144,12 @@ export default async function handler(
         });
         // 9. create new table
         const newTableName = "Default table";
-        const table = await prisma.table.create({
+        let table = await prisma.table.create({
           data: { name: newTableName, locationId: location.id, assetUrl: "" },
         });
         await qrCodeImageUpload(table.id);
         const assetUrl = getQrCodeUrl(table.id);
-        await prisma.table.update({
+        table = await prisma.table.update({
           data: { assetUrl },
           where: { id: table.id },
         });

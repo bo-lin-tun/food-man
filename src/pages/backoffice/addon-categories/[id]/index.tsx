@@ -109,7 +109,9 @@ const AddonCategoryDetail = () => {
               .map((selectedMenuId) => {
                 return menus.find((item) => item.id === selectedMenuId) as Menu;
               })
-              .map((item) => <Chip label={item.name} sx={{ mr: 1 }} />);
+              .map((item) => (
+                <Chip key={item.id} label={item.name} sx={{ mr: 1 }} />
+              ));
           }}
           MenuProps={{
             PaperProps: {

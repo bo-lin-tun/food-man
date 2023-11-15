@@ -20,8 +20,6 @@ export default function handler(req: Request, res: Response) {
         const assetUrl = file.location;
         res.status(200).json({ assetUrl });
       });
-    } else if (req.method === "DELETE") {
-      //
     }
   } catch (err) {
     res.status(500).send("Internal Server Error");

@@ -71,11 +71,10 @@ export const updateMenu = createAsyncThunk(
       menuCategoryIds,
       locationId,
       isAvailable,
+      assetUrl,
       onSuccess,
       onError,
     } = options;
-    console.log("Options: ", options);
-    console.log("isAvailable: ", isAvailable);
     try {
       const response = await fetch(`${config.apiBaseUrl}/menus`, {
         method: "PUT",
@@ -87,11 +86,11 @@ export const updateMenu = createAsyncThunk(
           menuCategoryIds,
           locationId,
           isAvailable,
+          assetUrl,
         }),
       });
       const { menu, menuCategoryMenus, disabledLocationMenus } =
         await response.json();
-      console.log(menuCategoryMenus);
       thunkApi.dispatch(replaceMenu(menu));
       thunkApi.dispatch(replaceMenuCategoryMenu(menuCategoryMenus));
       if (isAvailable === false) {
