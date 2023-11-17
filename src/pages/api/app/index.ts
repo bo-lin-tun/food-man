@@ -24,7 +24,7 @@ export default async function handler(
       let menuCategories = await prisma.menuCategory.findMany({
         where: { companyId: Number(companyId), isArchived: false },
       });
-      console.log(menuCategories);
+
       const menuCategoryIds = menuCategories.map((item) => item.id);
       const disabledMenuCategoryIds = (
         await prisma.disabledLocationMenuCategory.findMany({
@@ -68,6 +68,12 @@ export default async function handler(
           isArchived: false,
         },
       });
+      const tableIds = (
+        await prisma.table.findMany({ where: { locationId: location?.id } })
+      ).map((item) => item.id);
+      const orders = await prisma.order.findMany({
+        where: { tableId: { in: tableIds } },
+      });
       return res.status(200).json({
         locations: [],
         menuCategories,
@@ -79,6 +85,7 @@ export default async function handler(
         tables: [],
         disabledLocationMenuCategories: [],
         disabledLocationMenus: [],
+        orders,
       });
     } else {
       const session = await getServerSession(req, res, authOptions);
@@ -165,6 +172,7 @@ export default async function handler(
           tables: [table],
           disabledLocationMenuCategories: [],
           disabledLocationMenus: [],
+          orders: [],
         });
       } else {
         const companyId = dbUser.companyId;
@@ -209,6 +217,12 @@ export default async function handler(
         const tables = await prisma.table.findMany({
           where: { locationId: { in: locationIds }, isArchived: false },
         });
+        const orders = await prisma.order.findMany({
+          where: {
+            tableId: { in: tables.map((item) => item.id) },
+            isArchived: false,
+          },
+        });
         return res.status(200).json({
           locations,
           menuCategories,
@@ -220,6 +234,7 @@ export default async function handler(
           tables,
           disabledLocationMenuCategories,
           disabledLocationMenus,
+          orders,
         });
       }
     }

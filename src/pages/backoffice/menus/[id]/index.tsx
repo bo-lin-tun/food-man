@@ -157,7 +157,6 @@ const MenuDetail = () => {
         defaultValue={menu.name}
         sx={{ mb: 2 }}
         onChange={(evt) => {
-          console.log("inside text change. ", data);
           setData({ ...data, id: menuId, name: evt.target.value });
         }}
       />
