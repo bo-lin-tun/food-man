@@ -35,7 +35,13 @@ const OrderLayout = (props: Props) => {
   return (
     <Box>
       <OrderAppHeader cartItemCount={cartItems.length} />
-      <Box sx={{ position: "relative", top: isHome ? 240 : 0 }}>
+      <Box
+        sx={{
+          position: "relative",
+          top: isHome ? { sm: 240 } : 0,
+          mb: 10,
+        }}
+      >
         <Box sx={{ width: { xs: "100%", md: "80%", lg: "55%" }, m: "0 auto" }}>
           {props.children}
         </Box>
@@ -52,6 +58,7 @@ const OrderLayout = (props: Props) => {
             alignItems: "center",
             display: "flex",
             cursor: "pointer",
+            zIndex: 5,
           }}
           onClick={() =>
             router.push({
@@ -60,10 +67,7 @@ const OrderLayout = (props: Props) => {
             })
           }
         >
-          <Typography
-            variant="h6"
-            sx={{ color: "secondary.main", userSelect: "none" }}
-          >
+          <Typography sx={{ color: "secondary.main", userSelect: "none" }}>
             You have active order. Click here to view.
           </Typography>
         </Box>

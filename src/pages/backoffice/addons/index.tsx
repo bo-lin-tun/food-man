@@ -15,7 +15,13 @@ const AddonsPage = () => {
           New addon
         </Button>
       </Box>
-      <Box sx={{ display: "flex", flexWrap: "wrap" }}>
+      <Box
+        sx={{
+          display: "flex",
+          flexWrap: "wrap",
+          justifyContent: { xs: "center", sm: "flex-start" },
+        }}
+      >
         {addons.map((item) => (
           <ItemCard
             icon={<EggIcon />}

@@ -33,42 +33,45 @@ export const formatOrders = (
     );
     const addonIds = currentOrders.map((item) => item.addonId);
     let orderAddons: OrderAddon[] = [];
-    addonIds.forEach((addonId) => {
-      const addon = addons.find((item) => item.id === addonId) as Addon;
-      const exist = orderAddons.find(
-        (item) => item.addonCategoryId === addon.addonCategoryId
-      );
-      if (exist) {
-        orderAddons = orderAddons.map((item) => {
-          const isSameParent = item.addonCategoryId === addon.addonCategoryId;
-          if (isSameParent) {
-            return {
+    if (addonIds.length) {
+      addonIds.forEach((addonId) => {
+        const addon = addons.find((item) => item.id === addonId) as Addon;
+        if (!addon) return;
+        const exist = orderAddons.find(
+          (item) => item.addonCategoryId === addon.addonCategoryId
+        );
+        if (exist) {
+          orderAddons = orderAddons.map((item) => {
+            const isSameParent = item.addonCategoryId === addon.addonCategoryId;
+            if (isSameParent) {
+              return {
+                addonCategoryId: addon.addonCategoryId,
+                addons: [...item.addons, addon].sort((a, b) =>
+                  a.name.localeCompare(b.name)
+                ),
+              };
+            } else {
+              return item;
+            }
+          });
+        } else {
+          orderAddons = [
+            ...orderAddons,
+            {
               addonCategoryId: addon.addonCategoryId,
-              addons: [...item.addons, addon].sort((a, b) =>
-                a.name.localeCompare(b.name)
-              ),
-            };
-          } else {
-            return item;
-          }
-        });
-      } else {
-        orderAddons = [
-          ...orderAddons,
-          {
-            addonCategoryId: addon.addonCategoryId,
-            addons: [addon].sort((a, b) => a.name.localeCompare(b.name)),
-          },
-        ];
-      }
-    });
+              addons: [addon].sort((a, b) => a.name.localeCompare(b.name)),
+            },
+          ];
+        }
+      });
+    }
 
     return {
       itemId: orderItemId,
       status: currentOrders[0].status,
-      orderAddons: orderAddons.sort(
-        (a, b) => a.addonCategoryId - b.addonCategoryId
-      ),
+      orderAddons: addonIds.length
+        ? orderAddons.sort((a, b) => a.addonCategoryId - b.addonCategoryId)
+        : [],
       menu: menus.find((item) => item.id === currentOrders[0].menuId) as Menu,
       table: tables.find(
         (item) => item.id === currentOrders[0].tableId

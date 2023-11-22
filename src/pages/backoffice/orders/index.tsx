@@ -50,7 +50,13 @@ const OrdersPage = () => {
           </ToggleButton>
         </ToggleButtonGroup>
       </Box>
-      <Box sx={{ display: "flex", flexWrap: "wrap" }}>
+      <Box
+        sx={{
+          display: "flex",
+          flexWrap: "wrap",
+          justifyContent: { xs: "center", sm: "flex-start" },
+        }}
+      >
         {filteredOrders.map((orderItem) => {
           return (
             <OrderCard
