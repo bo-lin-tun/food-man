@@ -18,23 +18,17 @@ const OrdersPage = () => {
   const [filteredOrders, setFilteredOrders] = useState<OrderItem[]>([]);
 
   useEffect(() => {
-    if (value) {
+    if (orders.length) {
       const filteredOrder = formatOrders(orders, addons, menus, tables).filter(
         (orderItem) => orderItem.status === value
       );
       setFilteredOrders(filteredOrder);
     }
-  }, [value]);
+  }, [orders, value]);
 
   const handleOrderStatuUpdate = (itemId: string, status: ORDERSTATUS) => {
     dispatch(updateOrder({ itemId, status }));
   };
-
-  useEffect(() => {
-    if (orders.length) {
-      setOrderItems(formatOrders(orders, addons, menus, tables));
-    }
-  }, [orders]);
 
   return (
     <Box>

@@ -1,6 +1,7 @@
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { fetchAppData } from "@/store/slices/appSlice";
 import { Box, Typography } from "@mui/material";
+import { ORDERSTATUS } from "@prisma/client";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import OrderAppHeader from "./OrderAppHeader";
@@ -17,6 +18,13 @@ const OrderLayout = (props: Props) => {
   const isHome = router.pathname === "/order";
   const isActiveOrderPage = router.pathname.includes("active-order");
   const orders = useAppSelector((state) => state.order.items);
+  const showActiveOrderFooterBar =
+    !isActiveOrderPage &&
+    orders.some(
+      (item) =>
+        item.status === ORDERSTATUS.COOKING ||
+        item.status === ORDERSTATUS.PENDING
+    );
 
   useEffect(() => {
     if (tableId) {
@@ -32,7 +40,7 @@ const OrderLayout = (props: Props) => {
           {props.children}
         </Box>
       </Box>
-      {orders.length && !isActiveOrderPage && (
+      {showActiveOrderFooterBar && (
         <Box
           sx={{
             height: 50,
