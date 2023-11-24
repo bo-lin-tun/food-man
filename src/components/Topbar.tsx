@@ -10,6 +10,7 @@ const Topbar = () => {
   const { data } = useSession();
   const { selectedLocation } = useAppSelector((state) => state.location);
   const [openDrawer, setOpenDrawer] = useState(false);
+  const showLocation = data && selectedLocation;
 
   return (
     <Box
@@ -30,9 +31,11 @@ const Topbar = () => {
         <Typography variant="h5" color={"secondary"}>
           Foodie POS
         </Typography>
-        <Typography color={"secondary"} sx={{ fontSize: 12 }}>
-          ({selectedLocation?.name})
-        </Typography>
+        {showLocation && (
+          <Typography color={"secondary"} sx={{ fontSize: 12 }}>
+            {selectedLocation?.name}
+          </Typography>
+        )}
       </Box>
       {data ? (
         <Box>

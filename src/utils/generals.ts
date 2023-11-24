@@ -21,7 +21,6 @@ export const formatOrders = (
   menus: Menu[],
   tables: Table[]
 ): OrderItem[] => {
-  console.log("orders: ", orders);
   const orderItemIds: string[] = [];
   orders.forEach((order) => {
     const itemId = order.itemId;
