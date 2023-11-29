@@ -1,6 +1,6 @@
-import { AppSlice, GetAppDataOptions } from "@/types/app";
+import { AppSlice, GetAppDataOptions, Theme } from "@/types/app";
 import { config } from "@/utils/config";
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { setAddonCategories } from "./addonCategorySlice";
 import { setAddons } from "./addonSlice";
 import { setCompany } from "./companySlice";
@@ -16,6 +16,7 @@ import { setTables } from "./tableSlice";
 
 const initialState: AppSlice = {
   init: false,
+  theme: "light",
   isLoading: false,
   error: null,
 };
@@ -26,8 +27,8 @@ export const fetchAppData = createAsyncThunk(
     const { tableId, onSuccess, onError } = options;
     try {
       const appDataUrl = tableId
-        ? `${config.apiBaseUrl}/app?tableId=${tableId}`
-        : `${config.apiBaseUrl}/app`;
+        ? `${config.orderApiUrl}/app?tableId=${tableId}`
+        : `${config.backofficeApiUrl}/app`;
       const response = await fetch(appDataUrl);
       const appData = await response.json();
       const {
@@ -59,6 +60,9 @@ export const fetchAppData = createAsyncThunk(
       thunkApi.dispatch(setDisabledLocationMenus(disabledLocationMenus));
       thunkApi.dispatch(setOrders(orders));
       thunkApi.dispatch(setCompany(company));
+      thunkApi.dispatch(
+        setTheme((localStorage.getItem("theme") as Theme) ?? "light")
+      );
       onSuccess && onSuccess();
     } catch (err) {
       onError && onError();
@@ -73,8 +77,11 @@ const appSlice = createSlice({
     setInit: (state, action) => {
       state.init = action.payload;
     },
+    setTheme: (state, action: PayloadAction<Theme>) => {
+      state.theme = action.payload;
+    },
   },
 });
 
-export const { setInit } = appSlice.actions;
+export const { setInit, setTheme } = appSlice.actions;
 export default appSlice.reducer;

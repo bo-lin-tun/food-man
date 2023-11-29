@@ -36,7 +36,7 @@ const MenuCategoriesPage = () => {
           const isAvailable = exist ? false : true;
           return (
             <ItemCard
-              icon={<CategoryIcon />}
+              icon={<CategoryIcon fontSize="large" />}
               href={`/backoffice/menu-categories/${item.id}`}
               key={item.id}
               title={item.name}

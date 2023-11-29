@@ -8,6 +8,7 @@ import SideBar from "./Sidebar";
 
 const Topbar = () => {
   const { data } = useSession();
+  const { theme } = useAppSelector((state) => state.app);
   const { selectedLocation } = useAppSelector((state) => state.location);
   const [openDrawer, setOpenDrawer] = useState(false);
   const showLocation = data && selectedLocation;
@@ -15,7 +16,7 @@ const Topbar = () => {
   return (
     <Box
       sx={{
-        bgcolor: "success.main",
+        bgcolor: theme === "light" ? "success.dark" : "primary.dark",
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between",

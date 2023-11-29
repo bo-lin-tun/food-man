@@ -24,7 +24,7 @@ const AddonsPage = () => {
       >
         {addons.map((item) => (
           <ItemCard
-            icon={<EggIcon />}
+            icon={<EggIcon fontSize="large" />}
             href={`/backoffice/addons/${item.id}`}
             key={item.id}
             title={item.name}

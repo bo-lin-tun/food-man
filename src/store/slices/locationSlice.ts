@@ -13,12 +13,13 @@ const initialState: LocationSlice = {
 export const createNewLocation = createAsyncThunk(
   "location/createNewLocation",
   async (options: CreateNewLocationOptions, thunkApi) => {
-    const { name, street, township, city, onSuccess, onError } = options;
+    const { name, street, township, city, companyId, onSuccess, onError } =
+      options;
     try {
-      const response = await fetch(`${config.apiBaseUrl}/locations`, {
+      const response = await fetch(`${config.backofficeApiUrl}/locations`, {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ name, street, township, city }),
+        body: JSON.stringify({ name, street, township, city, companyId }),
       });
       const createdLocation = await response.json();
       thunkApi.dispatch(addLocation(createdLocation));

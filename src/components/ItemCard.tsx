@@ -1,3 +1,4 @@
+import { useAppSelector } from "@/store/hooks";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import { Paper, Typography } from "@mui/material";
 import Link from "next/link";
@@ -22,6 +23,7 @@ const ItemCard = ({
   selected,
   onClick,
 }: Props) => {
+  const theme = useAppSelector((state) => state.app.theme);
   if (href) {
     return (
       <Link href={href} style={{ textDecoration: "none", color: "#000000" }}>
@@ -37,16 +39,13 @@ const ItemCard = ({
             alignItems: "center",
             m: 2,
             opacity: isAvailable === false ? 0.4 : 1,
+            backgroundColor: theme === "dark" ? "info.main" : "info.main",
           }}
         >
           {icon}
-          <Typography sx={{ color: "#4C4C6D", fontWeight: "700" }}>
-            {title}
-          </Typography>
+          <Typography sx={{ fontWeight: "700" }}>{title}</Typography>
           {subtitle && (
-            <Typography sx={{ color: "#4C4C6D", fontSize: 14 }}>
-              {subtitle}
-            </Typography>
+            <Typography sx={{ fontSize: 14 }}>{subtitle}</Typography>
           )}
         </Paper>
       </Link>
@@ -67,6 +66,7 @@ const ItemCard = ({
         m: 2,
         position: "relative",
         cursor: "pointer",
+        backgroundColor: theme === "dark" ? "info.main" : "inherit",
       }}
       onClick={() => onClick && onClick()}
     >
@@ -82,14 +82,8 @@ const ItemCard = ({
         />
       )}
       {icon}
-      <Typography sx={{ color: "#4C4C6D", fontWeight: "700" }}>
-        {title}
-      </Typography>
-      {subtitle && (
-        <Typography sx={{ color: "#4C4C6D", fontSize: 14 }}>
-          {subtitle}
-        </Typography>
-      )}
+      <Typography sx={{ fontWeight: "700" }}>{title}</Typography>
+      {subtitle && <Typography sx={{ fontSize: 14 }}>{subtitle}</Typography>}
     </Paper>
   );
 };

@@ -13,4 +13,5 @@ export interface CreateNewLocationOptions extends BaseOptions {
   street: string;
   township: string;
   city: string;
+  companyId: number;
 }

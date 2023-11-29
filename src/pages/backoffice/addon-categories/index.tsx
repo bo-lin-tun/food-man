@@ -24,7 +24,7 @@ const AddonCategoriesPage = () => {
       >
         {addonCategories.map((item) => (
           <ItemCard
-            icon={<ClassIcon />}
+            icon={<ClassIcon fontSize="large" />}
             key={item.id}
             title={item.name}
             href={`/backoffice/addon-categories/${item.id}`}

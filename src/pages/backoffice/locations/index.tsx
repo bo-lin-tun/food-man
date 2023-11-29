@@ -29,7 +29,7 @@ const LocationsPage = () => {
         {locations.map((item) => (
           <ItemCard
             key={item.id}
-            icon={<LocationOnIcon />}
+            icon={<LocationOnIcon fontSize="large" />}
             title={item.name}
             selected={item.id === selectedLocation?.id}
             onClick={() => {

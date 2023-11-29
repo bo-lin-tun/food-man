@@ -24,11 +24,14 @@ export const createMenuCategory = createAsyncThunk(
   async (options: CreateMenuCategoryOptions, thunkApi) => {
     const { name, locationId, onSuccess, onError } = options;
     try {
-      const response = await fetch(`${config.apiBaseUrl}/menu-categories`, {
-        method: "POST",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify({ name, locationId }),
-      });
+      const response = await fetch(
+        `${config.backofficeApiUrl}/menu-categories`,
+        {
+          method: "POST",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify({ name, locationId }),
+        }
+      );
       const menuCategory = await response.json();
       thunkApi.dispatch(addMenuCategory(menuCategory));
       onSuccess && onSuccess();
@@ -43,11 +46,14 @@ export const updateMenuCategory = createAsyncThunk(
   async (options: UpdateMenuCategoryOptions, thunkApi) => {
     const { id, name, locationId, isAvailable, onSuccess, onError } = options;
     try {
-      const response = await fetch(`${config.apiBaseUrl}/menu-categories`, {
-        method: "PUT",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify({ id, name, locationId, isAvailable }),
-      });
+      const response = await fetch(
+        `${config.backofficeApiUrl}/menu-categories`,
+        {
+          method: "PUT",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify({ id, name, locationId, isAvailable }),
+        }
+      );
       const { menuCategory, disabledLocationMenuCategory } =
         await response.json();
       thunkApi.dispatch(replaceMenuCategory(menuCategory));
@@ -73,7 +79,7 @@ export const deleteMenuCategory = createAsyncThunk(
   async (options: DeleteMenuCategoryOptions, thunkApi) => {
     const { id, onSuccess, onError } = options;
     try {
-      await fetch(`${config.apiBaseUrl}/menu-categories?id=${id}`, {
+      await fetch(`${config.backofficeApiUrl}/menu-categories?id=${id}`, {
         method: "DELETE",
       });
       thunkApi.dispatch(removeMenuCategory({ id }));

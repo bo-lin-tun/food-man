@@ -1,15 +1,11 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import { prisma } from "@/utils/db";
 import type { NextApiRequest, NextApiResponse } from "next";
-import { getServerSession } from "next-auth";
-import { authOptions } from "../auth/[...nextauth]";
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const session = await getServerSession(req, res, authOptions);
-  if (!session) return res.status(401).send("Unauthorized");
   const method = req.method;
   if (method === "POST") {
     // Data validation
@@ -32,6 +28,9 @@ export default async function handler(
       where: { id },
     });
     if (!exist) return res.status(400).send("Bad request.");
+    const location = await prisma.location.findFirst({
+      where: { id: locationId },
+    });
     const menuCategory = await prisma.menuCategory.update({
       data: { name },
       where: { id },
@@ -55,12 +54,9 @@ export default async function handler(
         });
       }
     }
-    const dbUser = await prisma.user.findUnique({
-      where: { email: session.user?.email as string },
-    });
     const menuCategoryIds = (
       await prisma.menuCategory.findMany({
-        where: { companyId: dbUser?.companyId },
+        where: { companyId: location?.companyId },
       })
     ).map((item) => item.id);
     const disabledLocationMenuCategory =
