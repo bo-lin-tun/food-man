@@ -14,7 +14,7 @@ interface Props {
 const BackofficeLayout = ({ children }: Props) => {
   const { data: session } = useSession();
   const dispatch = useAppDispatch();
-  const router = useRouter();
+  const { isReady, ...router } = useRouter();
   const { theme } = useAppSelector((state) => state.app);
   const { init } = useAppSelector((state) => state.app);
 
@@ -22,10 +22,10 @@ const BackofficeLayout = ({ children }: Props) => {
     if (session && !init) {
       dispatch(fetchAppData({}));
     }
-    if (!session) {
+    if (isReady && !session) {
       router.push("/backoffice");
     }
-  }, [session]);
+  }, [session, isReady]);
 
   return (
     <Box sx={{ minHeight: "100vh" }}>

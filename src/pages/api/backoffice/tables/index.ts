@@ -8,7 +8,6 @@ export default async function handler(
   res: NextApiResponse
 ) {
   const method = req.method;
-  return res.status(200).send("Ok");
   if (method === "POST") {
     const { name, locationId } = req.body;
     const isValid = name && locationId;
