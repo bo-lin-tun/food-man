@@ -16,7 +16,7 @@ const OrderAppHeader = () => {
   const cartItems = useAppSelector((state) => state.cart.items);
 
   return (
-    <Box>
+    <Box sx={{ position: "relative" }}>
       <Box
         sx={{
           bgcolor: "#1B9C85",
@@ -25,6 +25,10 @@ const OrderAppHeader = () => {
           display: { xs: "flex", sm: "none" },
           justifyContent: "space-between",
           alignItems: "center",
+          position: "fixed",
+          width: "100%",
+          boxSizing: "border-box",
+          zIndex: 9999999,
         }}
       >
         <Typography
@@ -85,6 +89,9 @@ const OrderAppHeader = () => {
           flexDirection: "column",
           alignItems: "center",
           position: "fixed",
+          zIndex: 99999,
+          bgcolor: "info.main",
+          maxHeight: { xs: 100, md: 150, lg: 200 },
         }}
       >
         <Box

@@ -81,13 +81,21 @@ const MenuDetail = () => {
   if (!isReady || !menu) return null;
 
   return (
-    <Box sx={{ position: "relative", zIndex: 5 }}>
+    <Box
+      sx={{
+        position: "absolute",
+        zIndex: 99999,
+        top: { md: -100, lg: -120 },
+        left: 0,
+        right: 0,
+        bgcolor: "transparent",
+      }}
+    >
       <Box
         sx={{
           display: "flex",
           justifyContent: "center",
           flexDirection: "column",
-          p: 4,
         }}
       >
         <Image
