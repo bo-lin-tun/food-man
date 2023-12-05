@@ -20,7 +20,7 @@ const OrderLayout = (props: Props) => {
   const orders = useAppSelector((state) => state.order.items);
   const showActiveOrderFooterBar =
     !isActiveOrderPage &&
-    orders.length &&
+    orders.length > 0 &&
     orders.some(
       (item) =>
         item.status === ORDERSTATUS.COOKING ||
