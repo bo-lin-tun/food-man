@@ -1,4 +1,4 @@
-import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { useAppDispatch } from "@/store/hooks";
 import { fetchAppData } from "@/store/slices/appSlice";
 import { Box } from "@mui/material";
 import { useRouter } from "next/router";
@@ -14,8 +14,6 @@ const OrderLayout = (props: Props) => {
   const router = useRouter();
   const { tableId } = router.query;
   const dispatch = useAppDispatch();
-  const cartItems = useAppSelector((state) => state.cart.items);
-  const isHome = router.pathname === "/order";
 
   useEffect(() => {
     if (tableId) {
@@ -24,9 +22,11 @@ const OrderLayout = (props: Props) => {
   }, [tableId]);
 
   return (
-    <Box sx={{ minHeight: "100vh", bgcolor: "lightblue" }}>
-      <OrderAppHeader cartItemCount={cartItems.length} />
-      <Box>{props.children}</Box>
+    <Box sx={{ minHeight: "100vh", bgcolor: "info.main" }}>
+      <OrderAppHeader />
+      <Box sx={{ position: "relative", top: { sm: 100, md: 200 } }}>
+        {props.children}
+      </Box>
       <OrderAppFooter />
     </Box>
   );
