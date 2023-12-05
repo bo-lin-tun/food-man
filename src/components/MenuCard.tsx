@@ -23,19 +23,29 @@ const MenuCard = ({ menu, href, isAvailable }: Props) => {
       <Card
         title={isAvailable === false ? "Unavailable" : ""}
         sx={{
-          width: 200,
-          height: 220,
-          pb: 2,
+          width: { xs: 150, sm: 200 },
+          height: { xs: 150, sm: 220 },
+          pb: { xs: 2, sm: 2 },
           opacity: isAvailable === false ? 0.4 : 1,
         }}
       >
         <CardMedia
-          sx={{ height: 140, objectFit: "contain" }}
+          sx={{ height: { xs: 100, sm: 140 }, objectFit: "contain" }}
           image={menu.assetUrl || "/default-menu.png"}
           component={"div"}
         />
-        <CardContent>
-          <Typography gutterBottom variant="h6" sx={{ mb: 0 }}>
+        <CardContent
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            p: { xs: 1, sm: 2 },
+          }}
+        >
+          <Typography
+            gutterBottom
+            sx={{ mb: { xs: 0.2, sm: 1 }, fontSize: { xs: 16, sm: 18 } }}
+          >
             {menu.name}
           </Typography>
           <Box
@@ -48,8 +58,7 @@ const MenuCard = ({ menu, href, isAvailable }: Props) => {
             <PaidIcon color="success" />
             <Typography
               gutterBottom
-              variant="subtitle1"
-              sx={{ mt: 0.8, ml: 0.4, fontWeight: "bold", fontStyle: "italic" }}
+              sx={{ m: 0, fontWeight: "bold", fontStyle: "italic" }}
             >
               {menu.price}
             </Typography>

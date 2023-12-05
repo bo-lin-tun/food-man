@@ -19,7 +19,7 @@ const OrderAppHeader = ({ cartItemCount }: Props) => {
   const company = useAppSelector((state) => state.company.item);
 
   return (
-    <Box>
+    <Box sx={{ position: "relative", zIndex: 999 }}>
       <Box
         sx={{
           bgcolor: "#1B9C85",
@@ -90,6 +90,7 @@ const OrderAppHeader = ({ cartItemCount }: Props) => {
           position: "fixed",
           zIndex: 5,
           top: 0,
+          bgcolor: "lightblue",
         }}
       >
         <Box
