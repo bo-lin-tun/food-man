@@ -56,7 +56,7 @@ const OrderApp = () => {
           bgcolor: "info.main",
           position: "sticky",
           top: { xs: 60, sm: 100, md: 150, lg: 200 },
-          zIndex: 999999999,
+          zIndex: 1,
         }}
       >
         <Tabs

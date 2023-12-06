@@ -4,9 +4,9 @@ import ShoppingCartCheckoutIcon from "@mui/icons-material/ShoppingCartCheckout";
 import { Box, Typography } from "@mui/material";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import React from "react";
 
 const OrderAppHeader = () => {
+  const { isLoading } = useAppSelector((state) => state.app);
   const router = useRouter();
   const isHome = router.pathname === "/order";
   const isCart = router.pathname === "/order/cart";
@@ -14,6 +14,7 @@ const OrderAppHeader = () => {
   const isCartOrActiveOrderPage = isCart || isActiveOrder;
   const company = useAppSelector((state) => state.company.item);
   const cartItems = useAppSelector((state) => state.cart.items);
+  const showCompanyInfo = isHome && company;
 
   return (
     <Box sx={{ position: "relative" }}>
@@ -28,7 +29,7 @@ const OrderAppHeader = () => {
           position: "fixed",
           width: "100%",
           boxSizing: "border-box",
-          zIndex: 9999999,
+          zIndex: 1,
         }}
       >
         <Typography
@@ -89,7 +90,7 @@ const OrderAppHeader = () => {
           flexDirection: "column",
           alignItems: "center",
           position: "fixed",
-          zIndex: 99999,
+          zIndex: 1,
           bgcolor: "info.main",
           maxHeight: { xs: 100, md: 150, lg: 200 },
         }}
@@ -152,7 +153,7 @@ const OrderAppHeader = () => {
           style={{ width: "100%", height: "auto" }}
           alt="header-image"
         />
-        {isHome && (
+        {showCompanyInfo && (
           <Box sx={{ position: "absolute" }}>
             <Box sx={{ textAlign: "center" }}>
               <Typography
@@ -185,4 +186,4 @@ const OrderAppHeader = () => {
   );
 };
 
-export default React.memo(OrderAppHeader);
+export default OrderAppHeader;

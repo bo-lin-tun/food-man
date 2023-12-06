@@ -84,7 +84,7 @@ const MenuDetail = () => {
     <Box
       sx={{
         position: "absolute",
-        zIndex: 99999,
+        zIndex: 2,
         top: { md: -100, lg: -120 },
         left: 0,
         right: 0,

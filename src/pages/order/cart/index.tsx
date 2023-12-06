@@ -71,7 +71,6 @@ const Cart = () => {
         mx: 3,
         position: "relative",
         top: { xs: 30, sm: 150 },
-        zIndex: 5,
       }}
     >
       {!cartItems.length ? (

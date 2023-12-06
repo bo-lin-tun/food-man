@@ -6,6 +6,10 @@ const nextConfig = {
         protocol: "https",
         hostname: "msquarefdc.sgp1.digitaloceanspaces.com",
       },
+      {
+        protocol: "https",
+        hostname: "raw.githubusercontent.com",
+      },
     ],
   },
 };

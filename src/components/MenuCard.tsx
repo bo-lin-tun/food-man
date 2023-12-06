@@ -24,7 +24,7 @@ const MenuCard = ({ menu, href, isAvailable }: Props) => {
         title={isAvailable === false ? "Unavailable" : ""}
         sx={{
           width: { xs: 150, sm: 200 },
-          height: { xs: 150, sm: 220 },
+          height: { xs: 150, sm: 200 },
           pb: { xs: 2, sm: 2 },
           opacity: isAvailable === false ? 0.4 : 1,
         }}
@@ -42,10 +42,7 @@ const MenuCard = ({ menu, href, isAvailable }: Props) => {
             p: { xs: 1, sm: 2 },
           }}
         >
-          <Typography
-            gutterBottom
-            sx={{ mb: { xs: 0.2, sm: 1 }, fontSize: { xs: 16, sm: 18 } }}
-          >
+          <Typography noWrap sx={{ fontSize: { xs: 16, sm: 18 } }}>
             {menu.name}
           </Typography>
           <Box
@@ -56,10 +53,7 @@ const MenuCard = ({ menu, href, isAvailable }: Props) => {
             }}
           >
             <PaidIcon color="success" />
-            <Typography
-              gutterBottom
-              sx={{ m: 0, fontWeight: "bold", fontStyle: "italic" }}
-            >
+            <Typography sx={{ m: 0, fontWeight: "bold", fontStyle: "italic" }}>
               {menu.price}
             </Typography>
           </Box>

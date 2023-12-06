@@ -1,6 +1,6 @@
-import { useAppDispatch } from "@/store/hooks";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { fetchAppData } from "@/store/slices/appSlice";
-import { Box } from "@mui/material";
+import { Box, CircularProgress } from "@mui/material";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import OrderAppFooter from "./OrderAppFooter";
@@ -11,6 +11,7 @@ interface Props {
 }
 
 const OrderLayout = (props: Props) => {
+  const { isLoading } = useAppSelector((state) => state.app);
   const router = useRouter();
   const { tableId } = router.query;
   const dispatch = useAppDispatch();
@@ -34,7 +35,20 @@ const OrderLayout = (props: Props) => {
           bgcolor: "info.main",
         }}
       >
-        {props.children}
+        {isLoading ? (
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              position: "relative",
+              top: 200,
+            }}
+          >
+            <CircularProgress size={80} />
+          </Box>
+        ) : (
+          props.children
+        )}
       </Box>
       <OrderAppFooter />
     </Box>
