@@ -39,17 +39,39 @@ const ActiveOrder = () => {
           display: "flex",
           justifyContent: "center",
           p: 3,
-          bgcolor: "#E8F6EF",
           borderRadius: 15,
-          mx: 3,
           flexDirection: "column",
           alignItems: "center",
+          position: "relative",
+          top: { xs: 0, md: -220, lg: -280 },
         }}
       >
-        <Typography>OrderSeq: {orderSeq}</Typography>
-        <Typography>Total price: {orders[0].totalPrice}</Typography>
+        <Typography
+          sx={{
+            color: { xs: "success.main", md: "info.main" },
+            fontSize: { xs: 20, md: 25 },
+          }}
+        >
+          Table: 01
+        </Typography>
+        <Typography
+          sx={{
+            color: { xs: "success.main", md: "info.main" },
+            fontSize: { xs: 20, md: 25 },
+          }}
+        >
+          Total price: {orders[0].totalPrice}
+        </Typography>
       </Box>
-      <Box sx={{ display: "flex", flexWrap: "wrap", justifyContent: "center" }}>
+      <Box
+        sx={{
+          display: "flex",
+          flexWrap: "wrap",
+          justifyContent: "center",
+          position: "relative",
+          top: { md: -200 },
+        }}
+      >
         {orderItems.map((orderItem) => {
           return (
             <OrderCard

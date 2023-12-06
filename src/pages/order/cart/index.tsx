@@ -61,97 +61,104 @@ const Cart = () => {
   };
 
   return (
-    <Box
-      sx={{
-        display: "flex",
-        justifyContent: "center",
-        p: 3,
-        bgcolor: "#E8F6EF",
-        borderRadius: 15,
-        mx: 3,
-        position: "relative",
-        top: { xs: 30, sm: 150 },
-      }}
-    >
-      {!cartItems.length ? (
-        <Typography>Your cart is empty.</Typography>
-      ) : (
-        <Box
-          sx={{
-            width: { xs: "100%", md: "500px" },
-          }}
-        >
-          <Typography
-            color={"primary"}
-            sx={{ textAlign: "center", mb: 3, fontSize: { xs: 18, sm: 22 } }}
+    <Box>
+      <Typography
+        color={"info.main"}
+        variant="h4"
+        sx={{
+          position: "relative",
+          top: { md: -180, lg: -240 },
+          textAlign: "center",
+          fontSize: { md: 30, lg: 40 },
+        }}
+      >
+        Review your order
+      </Typography>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          p: 3,
+          bgcolor: "#E8F6EF",
+          borderRadius: 15,
+          position: "relative",
+          top: { md: -100 },
+        }}
+      >
+        {!cartItems.length ? (
+          <Typography>Your cart is empty.</Typography>
+        ) : (
+          <Box
+            sx={{
+              width: { xs: "100%", md: "500px" },
+            }}
           >
-            Review your order
-          </Typography>
-          {cartItems.map((cartItem) => {
-            const { menu, addons, quantity } = cartItem;
-            return (
-              <Box key={cartItem.id}>
-                <Box sx={{ display: "flex", alignItems: "center" }}>
-                  <Avatar
-                    sx={{
-                      width: 25,
-                      height: 25,
-                      mr: 1,
-                      backgroundColor: "#1B9C85",
-                    }}
-                  >
-                    {quantity}
-                  </Avatar>
+            {cartItems.map((cartItem) => {
+              const { menu, addons, quantity } = cartItem;
+              return (
+                <Box key={cartItem.id}>
+                  <Box sx={{ display: "flex", alignItems: "center" }}>
+                    <Avatar
+                      sx={{
+                        width: 25,
+                        height: 25,
+                        mr: 1,
+                        backgroundColor: "#1B9C85",
+                      }}
+                    >
+                      {quantity}
+                    </Avatar>
+                    <Box
+                      sx={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        width: "100%",
+                      }}
+                    >
+                      <Typography color={"primary"}>{menu.name}</Typography>
+                      <Typography color={"primary"}>{menu.price}</Typography>
+                    </Box>
+                  </Box>
+                  <Box sx={{ pl: 6 }}>{renderAddons(addons)}</Box>
                   <Box
                     sx={{
                       display: "flex",
-                      justifyContent: "space-between",
-                      width: "100%",
+                      justifyContent: "flex-end",
+                      mb: 3,
+                      mt: 1,
                     }}
                   >
-                    <Typography color={"primary"}>{menu.name}</Typography>
-                    <Typography color={"primary"}>{menu.price}</Typography>
+                    <DeleteIcon
+                      color="primary"
+                      sx={{ mr: 2, cursor: "pointer" }}
+                      onClick={() => handleRemoveFromCart(cartItem)}
+                    />
+                    <EditIcon
+                      color="primary"
+                      sx={{ cursor: "pointer" }}
+                      onClick={() =>
+                        router.push({
+                          pathname: `menus/${menu.id}`,
+                          query: { ...router.query, cartItemId: cartItem.id },
+                        })
+                      }
+                    />
                   </Box>
                 </Box>
-                <Box sx={{ pl: 6 }}>{renderAddons(addons)}</Box>
-                <Box
-                  sx={{
-                    display: "flex",
-                    justifyContent: "flex-end",
-                    mb: 3,
-                    mt: 1,
-                  }}
-                >
-                  <DeleteIcon
-                    color="primary"
-                    sx={{ mr: 2, cursor: "pointer" }}
-                    onClick={() => handleRemoveFromCart(cartItem)}
-                  />
-                  <EditIcon
-                    color="primary"
-                    sx={{ cursor: "pointer" }}
-                    onClick={() =>
-                      router.push({
-                        pathname: `menus/${menu.id}`,
-                        query: { ...router.query, cartItemId: cartItem.id },
-                      })
-                    }
-                  />
-                </Box>
-              </Box>
-            );
-          })}
-          <Divider />
-          <Box sx={{ display: "flex", justifyContent: "flex-end", mt: 2 }}>
-            <Typography color="primary" sx={{ fontSize: { sm: 22 } }}>
-              Total: {getCartTotalPrice(cartItems)}
-            </Typography>
+              );
+            })}
+            <Divider />
+            <Box sx={{ display: "flex", justifyContent: "flex-end", mt: 2 }}>
+              <Typography color="primary" sx={{ fontSize: { sm: 22 } }}>
+                Total: {getCartTotalPrice(cartItems)}
+              </Typography>
+            </Box>
+            <Box sx={{ mt: 3, textAlign: "center" }} onClick={confirmOrder}>
+              <Button variant="contained">Confirm order</Button>
+            </Box>
           </Box>
-          <Box sx={{ mt: 3, textAlign: "center" }} onClick={confirmOrder}>
-            <Button variant="contained">Confirm order</Button>
-          </Box>
-        </Box>
-      )}
+        )}
+      </Box>
     </Box>
   );
 };
