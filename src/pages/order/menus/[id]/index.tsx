@@ -81,7 +81,14 @@ const MenuDetail = () => {
   if (!isReady || !menu) return null;
 
   return (
-    <Box sx={{ position: "relative", px: 2, top: { xs: 10, md: -170 } }}>
+    <Box
+      sx={{
+        position: "relative",
+        px: 2,
+        top: { xs: 10, md: -170, lg: -250, xl: -400 },
+        pb: { xs: 10, md: 0 },
+      }}
+    >
       <Box
         sx={{
           display: "flex",
@@ -126,7 +133,7 @@ const MenuDetail = () => {
             onClick={handleAddToCart}
             sx={{
               width: "fit-content",
-              mt: 3,
+              mt: 2,
             }}
           >
             {cartItem ? "Update cart" : "Add to cart"}
