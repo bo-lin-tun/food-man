@@ -33,9 +33,7 @@ const ActiveOrder = () => {
   if (!orders.length) return null;
 
   return (
-    <Box
-      sx={{ position: "relative", top: { xs: 30, sm: 150 }, zIndex: 5, px: 2 }}
-    >
+    <Box>
       <Box
         sx={{
           display: "flex",

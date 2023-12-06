@@ -81,21 +81,13 @@ const MenuDetail = () => {
   if (!isReady || !menu) return null;
 
   return (
-    <Box
-      sx={{
-        position: "absolute",
-        zIndex: 2,
-        top: { md: -100, lg: -120 },
-        left: 0,
-        right: 0,
-        bgcolor: "transparent",
-      }}
-    >
+    <Box sx={{ position: "relative", px: 2, top: { xs: 10, md: -170 } }}>
       <Box
         sx={{
           display: "flex",
           justifyContent: "center",
           flexDirection: "column",
+          alignItems: "center",
         }}
       >
         <Image
@@ -110,10 +102,12 @@ const MenuDetail = () => {
         />
         <Box
           sx={{
-            mt: 5,
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
+            width: { xs: "100%", sm: 350 },
+            mt: 5,
+            boxSizing: "border-box",
           }}
         >
           <AddonCategories

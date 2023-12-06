@@ -23,13 +23,10 @@ const OrderAppHeader = () => {
           bgcolor: "#1B9C85",
           height: 60,
           px: 2,
-          display: { xs: "flex", sm: "none" },
+          display: { xs: "flex", md: "none" },
           justifyContent: "space-between",
           alignItems: "center",
-          position: "fixed",
-          width: "100%",
           boxSizing: "border-box",
-          zIndex: 1,
         }}
       >
         <Typography
@@ -86,18 +83,14 @@ const OrderAppHeader = () => {
       <Box
         sx={{
           width: "100vw",
-          display: { xs: "none", sm: "flex" },
+          display: { xs: "none", md: "flex" },
           flexDirection: "column",
           alignItems: "center",
-          position: "fixed",
-          zIndex: 1,
-          bgcolor: "info.main",
-          maxHeight: { xs: 100, md: 150, lg: 200 },
         }}
       >
         <Box
           sx={{
-            position: "absolute",
+            position: "fixed",
             top: 15,
             right: { xs: 40, md: 80, lg: 200 },
             cursor: "pointer",
@@ -160,7 +153,7 @@ const OrderAppHeader = () => {
                 sx={{
                   fontWeight: "bold",
                   color: "info.main",
-                  mt: { xs: 1, md: 5 },
+                  mt: { xs: 1, md: 2, lg: 4, xl: 10 },
                   fontSize: { sm: 25, md: 30, lg: 40 },
                 }}
               >

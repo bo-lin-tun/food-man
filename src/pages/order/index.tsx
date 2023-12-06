@@ -49,14 +49,14 @@ const OrderApp = () => {
         position: "relative",
         maxWidth: 900,
         m: "0 auto",
+        top: { md: -50, lg: -70, xl: -130 },
       }}
     >
       <Box
         sx={{
-          bgcolor: "info.main",
           position: "sticky",
-          top: { xs: 60, sm: 100, md: 150, lg: 200 },
-          zIndex: 1,
+          top: 0,
+          bgcolor: "info.main",
         }}
       >
         <Tabs
@@ -66,7 +66,9 @@ const OrderApp = () => {
           value={value}
           onChange={(evt, value) => setValue(value)}
           variant="scrollable"
+          scrollButtons={false}
           sx={{
+            pb: 1,
             ".Mui-selected": {
               color: "#1B9C85",
               fontWeight: "bold",
@@ -87,10 +89,9 @@ const OrderApp = () => {
       </Box>
       <Box
         sx={{
-          mt: { xs: 2, sm: 4, md: 6, lg: 9 },
           display: "flex",
           flexWrap: "wrap",
-          px: { xs: 2, md: 0 },
+          px: 2,
         }}
       >
         {renderMenus()}
