@@ -86,7 +86,6 @@ const MenuDetail = () => {
         position: "relative",
         px: 2,
         top: { xs: 10, md: -170, lg: -250, xl: -400 },
-        pb: { xs: 10, md: 0 },
       }}
     >
       <Box

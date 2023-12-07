@@ -23,7 +23,14 @@ const OrderLayout = (props: Props) => {
   }, [tableId]);
 
   return (
-    <Box sx={{ minHeight: "100vh", height: "auto", bgcolor: "info.main" }}>
+    <Box
+      sx={{
+        minHeight: "100vh",
+        height: "auto",
+        bgcolor: "info.main",
+        pb: { xs: 10, md: 0 },
+      }}
+    >
       <OrderAppHeader />
       <Box>
         {isLoading ? (
