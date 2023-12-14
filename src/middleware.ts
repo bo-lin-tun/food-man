@@ -11,7 +11,7 @@ export function middleware() {
   res.headers.append("Access-Control-Allow-Origin", "*");
   res.headers.append(
     "Access-Control-Allow-Methods",
-    "GET,DELETE,PATCH,POST,PUT"
+    "GET,DELETE,PATCH,POST,PUT,OPTIONS"
   );
   res.headers.append(
     "Access-Control-Allow-Headers",
