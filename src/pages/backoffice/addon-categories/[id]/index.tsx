@@ -61,7 +61,9 @@ const AddonCategoryDetail = () => {
       updateAddonCategory({
         ...data,
         onSuccess: () =>
-          dispatch(setOpenSnackbar({ message: "Updated menu successfully." })),
+          dispatch(
+            setOpenSnackbar({ message: "Updated addon category successfully." })
+          ),
       })
     );
   };

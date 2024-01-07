@@ -3,6 +3,7 @@ import {
   deleteMenuCategory,
   updateMenuCategory,
 } from "@/store/slices/menuCategorySlice";
+import { setOpenSnackbar } from "@/store/slices/snackbarSlice";
 import { UpdateMenuCategoryOptions } from "@/types/menuCategory";
 import {
   Box,
@@ -57,6 +58,10 @@ const MenuCategoryDetail = () => {
       updateMenuCategory({
         ...data,
         locationId: Number(localStorage.getItem("selectedLocationId")),
+        onSuccess: () =>
+          dispatch(
+            setOpenSnackbar({ message: "Updated menu category successfully." })
+          ),
       })
     );
   };
@@ -65,7 +70,10 @@ const MenuCategoryDetail = () => {
     dispatch(
       deleteMenuCategory({
         id: menuCategoryId,
-        onSuccess: () => router.push("/backoffice/menu-categories"),
+        onSuccess: () => {
+          router.push("/backoffice/menu-categories");
+          setOpenSnackbar({ message: "Deleted menu category successfully." });
+        },
       })
     );
   };

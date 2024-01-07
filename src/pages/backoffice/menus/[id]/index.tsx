@@ -2,6 +2,7 @@ import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { removeAddonCategory } from "@/store/slices/addonCategorySlice";
 import { removeMenuAddonCategoryById } from "@/store/slices/menuAddonCategorySlice";
 import { deleteMenu, updateMenu } from "@/store/slices/menuSlice";
+import { setOpenSnackbar } from "@/store/slices/snackbarSlice";
 import { UpdateMenuOptions } from "@/types/menu";
 import { config } from "@/utils/config";
 import {
@@ -79,7 +80,13 @@ const MenuDetail = () => {
   };
 
   const handleUpdateMenu = () => {
-    dispatch(updateMenu(data));
+    dispatch(
+      updateMenu({
+        ...data,
+        onSuccess: () =>
+          dispatch(setOpenSnackbar({ message: "Updated menu  successfully." })),
+      })
+    );
   };
 
   const handleDeleteMenu = () => {
@@ -102,6 +109,7 @@ const MenuDetail = () => {
                 );
               }
             });
+          setOpenSnackbar({ message: "Deleted menu  successfully." });
         },
       })
     );

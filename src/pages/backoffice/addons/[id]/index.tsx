@@ -1,5 +1,6 @@
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { deleteAddon, updateAddon } from "@/store/slices/addonSlice";
+import { setOpenSnackbar } from "@/store/slices/snackbarSlice";
 import { UpdateAddonOptions } from "@/types/addon";
 import {
   Box,
@@ -49,14 +50,23 @@ const AddonDetail = () => {
   };
 
   const handleUpdateAddon = () => {
-    dispatch(updateAddon(data));
+    dispatch(
+      updateAddon({
+        ...data,
+        onSuccess: () =>
+          dispatch(setOpenSnackbar({ message: "Updated addon successfully." })),
+      })
+    );
   };
 
   const handleDeleteAddon = () => {
     dispatch(
       deleteAddon({
         id: addon.id,
-        onSuccess: () => router.push("/backoffice/addons"),
+        onSuccess: () => {
+          dispatch(setOpenSnackbar({ message: "Deleted addon successfully." }));
+          router.push("/backoffice/addons");
+        },
       })
     );
   };
