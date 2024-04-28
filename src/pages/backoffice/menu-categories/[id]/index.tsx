@@ -58,10 +58,12 @@ const MenuCategoryDetail = () => {
       updateMenuCategory({
         ...data,
         locationId: Number(localStorage.getItem("selectedLocationId")),
-        onSuccess: () =>
+        onSuccess: () => {
+          router.push("/backoffice/menu-categories");
           dispatch(
             setOpenSnackbar({ message: "Updated menu category successfully." })
-          ),
+          );
+        },
       })
     );
   };

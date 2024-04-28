@@ -35,10 +35,16 @@ const Footer = () => {
               Sanchaung, Yangon <br />
               contact@foodiepos.com
               <br />
-              +95 123 456 79
+              09791563867
             </Typography>
           </Box>
-          <Image alt="logo" src={"/logo.png"} width={150} height={80} />
+          <Image
+            alt="logo"
+            src={"/foodilogo.png"}
+            width={150}
+            height={80}
+            style={{ borderRadius: 10 }}
+          />
           <Box>
             <Link href={"/order?tableId=1"} style={{ textDecoration: "none" }}>
               <Typography sx={{ color: "#E8F6EF", fontStyle: "italic" }}>

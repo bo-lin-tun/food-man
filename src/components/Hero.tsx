@@ -7,7 +7,7 @@ const Hero = () => {
   return (
     <Box
       sx={{
-        mt: "250px",
+        mt: "px",
         textAlign: "center",
         display: "flex",
         flexDirection: "column",
@@ -46,7 +46,7 @@ const Hero = () => {
                   fontSize: { xs: "16px", md: "20px" },
                   mr: 2,
                   width: "fit-content",
-                  backgroundColor: "#4C4C6D",
+                  backgroundColor: "#41B06E",
                 }}
               >
                 Order App

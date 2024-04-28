@@ -135,7 +135,7 @@ const MenuDetail = () => {
               mt: 2,
             }}
           >
-            {cartItem ? "Update cart" : "Add to cart"}
+            {cartItem ? "Update cart" : "မှာယူရန်"}
           </Button>
         </Box>
       </Box>

@@ -83,8 +83,10 @@ const MenuDetail = () => {
     dispatch(
       updateMenu({
         ...data,
-        onSuccess: () =>
-          dispatch(setOpenSnackbar({ message: "Updated menu  successfully." })),
+        onSuccess: () => {
+          router.push("/backoffice/menus");
+          dispatch(setOpenSnackbar({ message: "Updated menu  successfully." }));
+        },
       })
     );
   };
@@ -109,6 +111,7 @@ const MenuDetail = () => {
                 );
               }
             });
+          router.push("/backoffice/menus");
           setOpenSnackbar({ message: "Deleted menu  successfully." });
         },
       })

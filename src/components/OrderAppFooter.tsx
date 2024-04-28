@@ -38,7 +38,7 @@ const OrderAppFooter = () => {
       }
     >
       <Typography sx={{ color: "secondary.main", userSelect: "none" }}>
-        You have active order. Click here to view.
+       မှာယူထားသည်များကို ကြည့်ရန်နှိပ်ပါ
       </Typography>
     </Box>
   );

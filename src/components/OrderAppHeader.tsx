@@ -17,7 +17,7 @@ const OrderAppHeader = () => {
   const showCompanyInfo = isHome && company;
 
   return (
-    <Box sx={{ position: "relative" }}>
+    <Box sx={{ position: "sticky", top: 0, zIndex: 5 }}>
       <Box
         sx={{
           bgcolor: "#1B9C85",

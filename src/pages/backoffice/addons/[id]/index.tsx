@@ -53,8 +53,10 @@ const AddonDetail = () => {
     dispatch(
       updateAddon({
         ...data,
-        onSuccess: () =>
-          dispatch(setOpenSnackbar({ message: "Updated addon successfully." })),
+        onSuccess: () => {
+          router.push("/backoffice/addons");
+          dispatch(setOpenSnackbar({ message: "Updated addon successfully." }));
+        },
       })
     );
   };

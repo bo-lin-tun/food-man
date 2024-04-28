@@ -60,10 +60,12 @@ const AddonCategoryDetail = () => {
     dispatch(
       updateAddonCategory({
         ...data,
-        onSuccess: () =>
+        onSuccess: () => {
+          router.push("/backoffice/addon-categories");
           dispatch(
             setOpenSnackbar({ message: "Updated addon category successfully." })
-          ),
+          );
+        },
       })
     );
   };
@@ -139,7 +141,7 @@ const AddonCategoryDetail = () => {
             onChange={(evt, value) => setData({ ...data, isRequired: value })}
           />
         }
-        label="Required"
+        label="Required‌"
         sx={{ mb: 4 }}
       />
       <Button

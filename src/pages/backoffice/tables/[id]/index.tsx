@@ -1,4 +1,5 @@
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { setOpenSnackbar } from "@/store/slices/snackbarSlice";
 import { deleteTable, updateTable } from "@/store/slices/tableSlice";
 import { UpdateTableOptions } from "@/types/table";
 import {
@@ -36,6 +37,17 @@ const TableDetail = () => {
 
   const handleUpdateTable = () => {
     dispatch(updateTable(data));
+
+    dispatch(
+      updateTable({
+        ...data,
+        onSuccess: () => {
+          router.push("/backoffice/tables");
+
+          dispatch(setOpenSnackbar({ message: "Updated table                                                                                                                                                                                    successfully." }));
+        },
+      })
+    );
   };
 
   const handleDeleteTable = () => {
