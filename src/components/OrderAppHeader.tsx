@@ -54,7 +54,7 @@ const OrderAppHeader = () => {
             />
           ) : (
             <>
-              <ShoppingCartCheckoutIcon
+              {/* <ShoppingCartCheckoutIcon
                 onClick={() =>
                   router.push({ pathname: "/order/cart", query: router.query })
                 }
@@ -62,15 +62,32 @@ const OrderAppHeader = () => {
                   fontSize: "40px",
                   color: "#FFE194",
                 }}
+              /> */}
+
+              <Image
+                src="/notiIcon.png"
+                width={50}
+                height={50}
+                alt="Picture of the author"
+                onClick={() =>
+                  router.push({ pathname: "/order/cart", query: router.query })
+                }
               />
+
               {cartItems.length > 0 && (
                 <Typography
                   sx={{
-                    textAlign: "right",
                     color: "#E8F6EF",
                     position: "absolute",
-                    top: -10,
+                    top: -5,
                     right: -10,
+                    bgcolor: "#FC4100",
+                    borderRadius: "50%",
+                    padding: 1,
+
+                    with: 15,
+                    height: 15,
+                    textAlign: "center",
                   }}
                 >
                   {cartItems.length}
@@ -111,7 +128,7 @@ const OrderAppHeader = () => {
             />
           ) : (
             <>
-              <ShoppingCartCheckoutIcon
+              {/* <ShoppingCartCheckoutIcon
                 onClick={() =>
                   router.push({ pathname: "/order/cart", query: router.query })
                 }
@@ -119,16 +136,32 @@ const OrderAppHeader = () => {
                   fontSize: "40px",
                   color: "#FFE194",
                 }}
+              /> */}
+
+              <Image
+                src="/notiIcon.png"
+                width={40}
+                height={40}
+                alt="Picture of the author"
+                onClick={() =>
+                  router.push({ pathname: "/order/cart", query: router.query })
+                }
               />
+
               {cartItems.length > 0 && (
                 <Typography
-                  variant="h5"
                   sx={{
-                    textAlign: "right",
                     color: "#E8F6EF",
                     position: "absolute",
                     top: -10,
-                    right: -10,
+                    right: -18,
+                    bgcolor: "#FC4100",
+                    borderRadius: "50%",
+                    padding: 1,
+
+                    with: 10,
+                    height: 10,
+                    textAlign: "center",
                   }}
                 >
                   {cartItems.length}
