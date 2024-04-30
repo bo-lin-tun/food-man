@@ -1,24 +1,42 @@
-export { default } from "next-auth/middleware";
+import { getToken } from "next-auth/jwt";
+import { NextRequest, NextResponse } from "next/server";
 
-import { NextResponse } from "next/server";
+export default async function middleware(req: NextRequest) {
+  const apiAuthPrefix = "/api/auth";
+  const publicRoutes = ["/"];
+  const authRoutes = ["/auth/signin", "/auth/signup"];
+  const backOfficeRoutePrefix = "/backoffice";
 
-export function middleware() {
-  // retrieve the current response
-  const res = NextResponse.next();
+  const session = await getToken({
+    req: req,
+  });
 
-  // add the CORS headers to the response
-  res.headers.append("Access-Control-Allow-Credentials", "true");
-  res.headers.append("Access-Control-Allow-Origin", "*");
-  res.headers.append(
-    "Access-Control-Allow-Methods",
-    "GET,DELETE,PATCH,POST,PUT,OPTIONS"
-  );
-  res.headers.append(
-    "Access-Control-Allow-Headers",
-    "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version"
-  );
+  const isApiAuthRoute = req.nextUrl.pathname.startsWith(apiAuthPrefix);
+  const isPublicRoute = publicRoutes.includes(req.nextUrl.pathname);
+  const isAuthRoute = authRoutes.includes(req.nextUrl.pathname);
+  // const isBackOfficeRoute = req.nextUrl.pathname.startsWith(
+  //   backOfficeRoutePrefix
+  // );
 
-  return res;
+  if (isApiAuthRoute) {
+    return NextResponse.next();
+  }
+
+  if (isAuthRoute) {
+    return NextResponse.next();
+  }
+
+  if (!session && !isPublicRoute) {
+    return NextResponse.redirect(new URL("/auth/signin", req.nextUrl));
+    // if (!session) {
+    //   return NextResponse.redirect(new URL("/auth/signin", req.nextUrl));
+    // }
+    // return NextResponse.next();
+  }
+
+  return NextResponse.next();
 }
 
-export const config = { matcher: ["/api/backoffice/:path*"] };
+export const config = {
+  matcher: ["/((?!.+\\.[\\w]+$|_next).*)", "/", "/(api|trpc)(.*)"],
+};
