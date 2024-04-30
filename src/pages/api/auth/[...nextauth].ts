@@ -1,14 +1,75 @@
-import { config } from "@/utils/config";
-import NextAuth from "next-auth";
-import GoogleProvider from "next-auth/providers/google";
+import NextAuth, { NextAuthOptions } from "next-auth";
+import CredentialProvider from "next-auth/providers/credentials";
+import { prisma } from "@/utils/db";
+import bcrypt from "bcrypt";
+import { signinSchema } from "@/schemas/auth";
 
-export const authOptions = {
+export const authOptions: NextAuthOptions = {
   providers: [
-    GoogleProvider({
-      clientId: config.googleClientId,
-      clientSecret: config.googleClientSecret,
+    CredentialProvider({
+      name: "Credentials",
+      type: "credentials",
+      credentials: {
+        email: {
+          label: "email:",
+          type: "email",
+          placeholder: "your email",
+        },
+        password: {
+          label: "password",
+          type: "password",
+          placeholder: "your password",
+        },
+      },
+      async authorize(credentials) {
+        const validatedFields = signinSchema.safeParse(credentials);
+        if (!validatedFields.success) return null;
+        const { email, password } = validatedFields.data;
+
+        const existingUser = await prisma.user.findFirst({
+          where: {
+            email: email,
+          },
+        });
+
+        if (
+          !existingUser ||
+          !existingUser.password ||
+          !existingUser.emailVerified
+        )
+          return null;
+
+        const isPassMatch = await bcrypt.compare(
+          password,
+          existingUser.password
+        );
+
+        if (!isPassMatch) return null;
+        const user = {
+          id: existingUser.id.toLocaleString(),
+          name: existingUser.name,
+          email: existingUser.email,
+          role: existingUser.role,
+          emailVerified: existingUser.emailVerified,
+          companyId: existingUser.companyId.toLocaleString(),
+        };
+        return user;
+      },
     }),
   ],
+  pages: {
+    signIn: "/auth/signin",
+    error: "/",
+  },
+  callbacks: {
+    async jwt({ token, user }) {
+      return { ...token, ...user };
+    },
+    async session({ token, session }) {
+      session.user = token;
+      return session;
+    },
+  },
 };
 
 export default NextAuth(authOptions);
