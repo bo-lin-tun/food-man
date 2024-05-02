@@ -1,5 +1,5 @@
 import * as z from "zod";
-import React, { useTransition } from "react";
+import React, { useState } from "react";
 import AuthInput from "@/components/auth/auth-input";
 import AuthWrapper from "@/components/auth/auth-wrapper";
 import { Box, Button, Stack, Typography } from "@mui/material";
@@ -10,8 +10,10 @@ import ErrorMessage from "@/components/auth/error-message";
 import { toast } from "react-toastify";
 
 const Signup = () => {
-  const [isPending, startTransition] = useTransition();
-  const { control, handleSubmit } = useForm<z.infer<typeof signupSchema>>({
+  const [isPending, setIsPending] = useState(false);
+  const { control, handleSubmit, reset } = useForm<
+    z.infer<typeof signupSchema>
+  >({
     resolver: zodResolver(signupSchema),
     defaultValues: {
       name: "",
@@ -20,18 +22,22 @@ const Signup = () => {
     },
   });
 
-  const handleRegister = (data: z.infer<typeof signupSchema>) => {
-    startTransition(async () => {
-      const response = await fetch("http://localhost:3000/api/auth/signup", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
-      const resData = await response.json();
-      toast.success(resData.message);
+  const handleRegister = async (data: z.infer<typeof signupSchema>) => {
+    setIsPending(true);
+    const response = await fetch("http://localhost:3000/api/auth/signup", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
     });
+    const resData = await response.json();
+    setIsPending(false);
+    if (!response.ok) {
+      return toast.error(resData.message);
+    }
+    toast.success(resData.message);
+    reset();
   };
 
   return (
