@@ -26,13 +26,13 @@ export default async function middleware(req: NextRequest) {
     return NextResponse.next();
   }
 
-  if (!session && !isPublicRoute) {
-    return NextResponse.redirect(new URL("/auth/signin", req.nextUrl));
-    // if (!session) {
-    //   return NextResponse.redirect(new URL("/auth/signin", req.nextUrl));
-    // }
-    // return NextResponse.next();
-  }
+  // if (!session && !isPublicRoute) {
+  //   return NextResponse.redirect(new URL("/auth/signin", req.nextUrl));
+  //   // if (!session) {
+  //   //   return NextResponse.redirect(new URL("/auth/signin", req.nextUrl));
+  //   // }
+  //   // return NextResponse.next();
+  // }
 
   return NextResponse.next();
 }
