@@ -43,7 +43,7 @@ export default async function handler(
         },
       });
       const USER_ROLE: UserRole =
-        email === "sanwanaungdev@gmail.com" ? "AMDIN" : "SUB_ADMIN";
+        email === "bolinnhtun6@gmail.com" ? "AMDIN" : "SUB_ADMIN";
       const user = await prisma.user.create({
         data: {
           name: name,

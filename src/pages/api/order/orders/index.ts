@@ -12,10 +12,26 @@ export default async function handler(
 ) {
   const method = req.method;
   if (method === "GET") {
+    const today = new Date();
+
+    const startOfDay = new Date(today);
+    startOfDay.setHours(0, 0, 0, 0);
+    const endOfDay = new Date(today);
+    endOfDay.setHours(23, 59, 59, 999);
     const isValid = req.query.orderSeq;
     if (!isValid) return res.status(400).send("Bad request");
     const orderSeq = String(req.query.orderSeq);
-    const exist = await prisma.order.findMany({ where: { orderSeq } });
+
+    const exist = await prisma.order.findMany({
+      where: {
+        orderSeq,
+        createdAt: {
+          gte: startOfDay,
+          lte: endOfDay,
+        },
+      },
+    });
+
     if (!exist) return res.status(400).send("Bad request");
     return res.status(200).json({ orders: exist });
   } else if (method === "POST") {

@@ -27,6 +27,7 @@ const OrderAppHeader = () => {
           justifyContent: "space-between",
           alignItems: "center",
           boxSizing: "border-box",
+
         }}
       >
         <Typography
@@ -38,7 +39,7 @@ const OrderAppHeader = () => {
         >
           {company?.name}
         </Typography>
-        <Box sx={{ position: "relative" }}>
+        <Box sx={{ position: "relative", }}>
           {isCartOrActiveOrderPage ? (
             <Home
               onClick={() =>

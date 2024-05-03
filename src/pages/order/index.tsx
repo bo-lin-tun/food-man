@@ -57,11 +57,12 @@ const OrderApp = () => {
           position: "sticky",
           top: 60,
           bgcolor: "info.main",
+
         }}
       >
         <Tabs
           TabIndicatorProps={{
-            style: { background: "#1B9C85" },
+            style: { background: "#1B9C85", },
           }}
           value={value}
           onChange={(evt, value) => setValue(value)}
@@ -93,6 +94,7 @@ const OrderApp = () => {
           flexWrap: "wrap",
           justifyContent: { xs: "center", sm: "center" },
           mt: 2,
+
         }}
       >
         {renderMenus()}

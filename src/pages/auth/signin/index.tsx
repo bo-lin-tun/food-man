@@ -23,7 +23,7 @@ const Signin = () => {
       email: data.email,
       password: data.password,
       redirect: true,
-      callbackUrl: "/auth/test",
+      callbackUrl: "/backoffice",
     });
   };
 
