@@ -18,13 +18,13 @@ export default async function middleware(req: NextRequest) {
   //   backOfficeRoutePrefix
   // );
 
-  if (isApiAuthRoute) {
-    return NextResponse.next();
-  }
+  // if (isApiAuthRoute) {
+  //   return NextResponse.next();
+  // }
 
-  if (isAuthRoute) {
-    return NextResponse.next();
-  }
+  // if (isAuthRoute) {
+  //   return NextResponse.next();
+  // }
 
   // if (!session && !isPublicRoute) {
   //   return NextResponse.redirect(new URL("/auth/signin", req.nextUrl));

@@ -12,7 +12,7 @@ import { useRouter } from "next/router";
 const Cart = () => {
   const cartItems = useAppSelector((state) => state.cart.items);
   const router = useRouter();
-  const tableId = Number(router.query.tableId);
+  const tableId = router.query.tableId as string;
   const dispatch = useAppDispatch();
 
   const renderAddons = (addons: Addon[]) => {
@@ -43,7 +43,7 @@ const Cart = () => {
   };
 
   const confirmOrder = async () => {
-    const isValid = tableId;
+    const isValid = tableId as string;
     if (!isValid) return alert("Table Id");
     dispatch(
       createOrder({
