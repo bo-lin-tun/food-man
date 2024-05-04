@@ -1,5 +1,5 @@
 import * as z from "zod";
-import React from "react";
+import React, { useState } from "react";
 import AuthInput from "@/components/auth/auth-input";
 import AuthWrapper from "@/components/auth/auth-wrapper";
 import { Box, Button, Stack, Typography } from "@mui/material";
@@ -8,9 +8,13 @@ import { signIn } from "next-auth/react";
 import { signinSchema } from "@/schemas/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
 import ErrorMessage from "@/components/auth/error-message";
+import { toast } from "react-toastify";
 
 const Signin = () => {
-  const { control, handleSubmit } = useForm<z.infer<typeof signinSchema>>({
+  const [isPending, setIsPending] = useState(false);
+  const { control, handleSubmit, reset } = useForm<
+    z.infer<typeof signinSchema>
+  >({
     resolver: zodResolver(signinSchema),
     defaultValues: {
       email: "",
@@ -76,7 +80,7 @@ const Signin = () => {
               </Stack>
             )}
           />
-          <Button type="submit" variant="contained">
+          <Button type="submit" variant="contained" disabled={isPending}>
             Sign In
           </Button>
         </form>
@@ -86,3 +90,6 @@ const Signin = () => {
 };
 
 export default Signin;
+
+// sanwanaung400042@gmail.com
+// San400042@

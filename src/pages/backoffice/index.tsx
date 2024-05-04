@@ -3,9 +3,9 @@ import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 
 export default function Home() {
-  const { data } = useSession();
+  const { data: session } = useSession();
   const router = useRouter();
-  if (!data) {
+  if (!session) {
     return (
       <Box
         sx={{
