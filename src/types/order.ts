@@ -9,7 +9,7 @@ export interface OrderSlice {
 }
 
 export interface CreateOrderOptions extends BaseOptions {
-  tableId:string ;
+  tableId: string;
   cartItems: CartItem[];
 }
 

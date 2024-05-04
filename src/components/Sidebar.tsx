@@ -86,6 +86,12 @@ export default SideBar;
 
 export const sidebarMenuItems = [
   {
+    id: 0,
+    label: "Dashboard",
+    icon: <LocalMallIcon />,
+    route: "/backoffice/dashboard",
+  },
+  {
     id: 1,
     label: "Orders",
     icon: <LocalMallIcon />,
