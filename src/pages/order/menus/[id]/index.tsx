@@ -4,7 +4,7 @@ import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { addToCart } from "@/store/slices/cartSlice";
 import { CartItem } from "@/types/cart";
 import { Box, Button } from "@mui/material";
-import { Addon } from "@prisma/client";
+import { Addon, Menu } from "@prisma/client";
 import { nanoid } from "nanoid";
 import Image from "next/image";
 import { useRouter } from "next/router";
@@ -12,12 +12,13 @@ import { useEffect, useState } from "react";
 
 const MenuDetail = () => {
   const { query, isReady, ...router } = useRouter();
+  const [currentMenu, setCurrentMenu] = useState<Menu[]>([]);
   const menus = useAppSelector((state) => state.menu.items);
   const cartItems = useAppSelector((state) => state.cart.items);
-  const menuId = Number(query.id);
+  const menuId = query.id as string;
   const cartItemId = query.cartItemId;
   const cartItem = cartItems.find((item) => item.id === cartItemId);
-  const menu = menus.find((item) => item.id === menuId);
+  const menu = currentMenu.find((item) => item.id === menuId);
   const [quantity, setQuantity] = useState(1);
   const [selectedAddons, setSelectedAddons] = useState<Addon[]>([]);
   const [isDisabled, setIsDisabled] = useState(true);
@@ -25,12 +26,18 @@ const MenuDetail = () => {
     (state) => state.menuAddonCategory.items
   );
   const addonCategoryIds = allMenuAddonCategories
-    .filter((item) => item.menuId === menuId)
+    .filter((item) => item.menuId === String(menuId))
     .map((item) => item.addonCategoryId);
   const addonCategories = useAppSelector(
     (state) => state.addonCategory.items
   ).filter((item) => addonCategoryIds.includes(item.id));
   const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (menus.length) {
+      setCurrentMenu(menus);
+    }
+  }, [menus]);
 
   useEffect(() => {
     const requiredAddonCategories = addonCategories.filter(
