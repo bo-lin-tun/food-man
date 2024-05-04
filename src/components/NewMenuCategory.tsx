@@ -29,7 +29,7 @@ const NewMenuCategory = ({ open, setOpen }: Props) => {
     dispatch(
       createMenuCategory({
         name,
-        locationId: Number(selectedLocationId),
+        locationId: selectedLocationId,
         onSuccess,
       })
     );

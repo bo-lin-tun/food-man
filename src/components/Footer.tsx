@@ -46,7 +46,7 @@ const Footer = () => {
             style={{ borderRadius: 10 }}
           />
           <Box>
-            <Link href={"/order?tableId=1"} style={{ textDecoration: "none" }}>
+            <Link href={"/order?tableId=a1a4dad2-5239-44ec-99d3-ed3200f32c53"} style={{ textDecoration: "none" }}>
               <Typography sx={{ color: "#E8F6EF", fontStyle: "italic" }}>
                 Order app
               </Typography>

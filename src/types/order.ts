@@ -9,7 +9,7 @@ export interface OrderSlice {
 }
 
 export interface CreateOrderOptions extends BaseOptions {
-  tableId: number;
+  tableId:string ;
   cartItems: CartItem[];
 }
 
@@ -23,7 +23,7 @@ export interface RefreshOrderOptions extends BaseOptions {
 }
 
 export interface OrderAddon {
-  addonCategoryId: number;
+  addonCategoryId: string;
   addons: Addon[];
 }
 

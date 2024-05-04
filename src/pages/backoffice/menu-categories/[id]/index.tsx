@@ -21,7 +21,7 @@ import { useEffect, useState } from "react";
 
 const MenuCategoryDetail = () => {
   const router = useRouter();
-  const menuCategoryId = Number(router.query.id);
+  const menuCategoryId = (router.query.id);
   const menuCategories = useAppSelector((state) => state.menuCategory.items);
   const menuCategory = menuCategories.find(
     (item) => item.id === menuCategoryId
@@ -35,7 +35,7 @@ const MenuCategoryDetail = () => {
 
   useEffect(() => {
     if (menuCategory) {
-      const selectedLocationId = Number(
+      const selectedLocationId = (
         localStorage.getItem("selectedLocationId")
       );
       const disalbedLocationmenuCategory = disabledLocationmenuCategories.find(
@@ -57,7 +57,7 @@ const MenuCategoryDetail = () => {
     dispatch(
       updateMenuCategory({
         ...data,
-        locationId: Number(localStorage.getItem("selectedLocationId")),
+        locationId: (localStorage.getItem("selectedLocationId")),
         onSuccess: () => {
           router.push("/backoffice/menu-categories");
           dispatch(

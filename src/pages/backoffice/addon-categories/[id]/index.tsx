@@ -29,7 +29,7 @@ import { useEffect, useState } from "react";
 
 const AddonCategoryDetail = () => {
   const router = useRouter();
-  const addonCategoryId = Number(router.query.id);
+  const addonCategoryId = (router.query.id);
   const addonCategories = useAppSelector((state) => state.addonCategory.items);
   const menuAddonCategories = useAppSelector(
     (state) => state.menuAddonCategory.items

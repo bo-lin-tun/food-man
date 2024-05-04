@@ -14,7 +14,7 @@ const MenuDetail = () => {
   const { query, isReady, ...router } = useRouter();
   const menus = useAppSelector((state) => state.menu.items);
   const cartItems = useAppSelector((state) => state.cart.items);
-  const menuId = Number(query.id);
+  const menuId = (query.id);
   const cartItemId = query.cartItemId;
   const cartItem = cartItems.find((item) => item.id === cartItemId);
   const menu = menus.find((item) => item.id === menuId);

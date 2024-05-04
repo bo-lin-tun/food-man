@@ -12,7 +12,7 @@ import { useRouter } from "next/router";
 const Cart = () => {
   const cartItems = useAppSelector((state) => state.cart.items);
   const router = useRouter();
-  const tableId = Number(router.query.tableId);
+  const tableId = (router.query.tableId);
   const dispatch = useAppDispatch();
 
   const renderAddons = (addons: Addon[]) => {

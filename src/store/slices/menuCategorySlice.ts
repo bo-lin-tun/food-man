@@ -106,7 +106,7 @@ const menuCategorySlice = createSlice({
         item.id === action.payload.id ? action.payload : item
       );
     },
-    removeMenuCategory: (state, action: PayloadAction<{ id: number }>) => {
+    removeMenuCategory: (state, action: PayloadAction<{ id: string }>) => {
       state.items = state.items.filter((item) => item.id !== action.payload.id);
     },
   },

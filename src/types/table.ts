@@ -10,7 +10,7 @@ export interface TableSlice {
 export interface UpdateTableOptions extends BaseOptions {
   id: number;
   name: string;
-  locationId: number;
+  locationId:string;
 }
 
 export interface DeleteTableOptions extends BaseOptions {
@@ -19,5 +19,5 @@ export interface DeleteTableOptions extends BaseOptions {
 
 export interface CreateTableOptions extends BaseOptions {
   name: string;
-  locationId?: number;
+  locationId?:string | null;
 }

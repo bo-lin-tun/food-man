@@ -19,15 +19,15 @@ export interface CreateMenuOptions extends BaseOptions {
 }
 
 export interface UpdateMenuOptions extends BaseOptions {
-  id: number;
+  id: string;
   name: string;
   price: number;
-  menuCategoryIds: number[];
-  locationId: number;
+  menuCategoryIds: string[];
+  locationId: string;
   isAvailable: boolean;
   assetUrl: string | null;
 }
 
 export interface DeleteMenuOptions extends BaseOptions {
-  id: number;
+  id: string;
 }

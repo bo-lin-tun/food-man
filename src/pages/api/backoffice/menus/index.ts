@@ -101,7 +101,7 @@ export default async function handler(
       .status(200)
       .json({ menu, menuCategoryMenus, disabledLocationMenus });
   } else if (method === "DELETE") {
-    const menuId = Number(req.query.id);
+    const menuId = (req.query.id);
     const menu = await prisma.menu.findFirst({ where: { id: menuId } });
     if (!menu) return res.status(400).send("Bad request.");
     await prisma.menuAddonCategory.updateMany({

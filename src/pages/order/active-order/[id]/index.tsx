@@ -14,7 +14,7 @@ const ActiveOrder = () => {
   const menus = useAppSelector((state) => state.menu.items);
   const tables = useAppSelector((state) => state.table.items);
   const orderItems = formatOrders(orders, addons, menus, tables);
-  const tableId = Number(router.query.tableId);
+  const tableId = (router.query.tableId);
   const table = tables.find((table) => table.id === tableId);
   const dispatch = useAppDispatch();
   let intervalId: number;

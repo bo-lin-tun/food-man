@@ -31,7 +31,7 @@ import { ChangeEvent, useEffect, useState } from "react";
 
 const MenuDetail = () => {
   const router = useRouter();
-  const menuId = Number(router.query.id);
+  const menuId = (router.query.id);
   const menus = useAppSelector((state) => state.menu.items);
   const menuCategories = useAppSelector((state) => state.menuCategory.items);
   const menuAddonCategories = useAppSelector(
@@ -56,7 +56,7 @@ const MenuDetail = () => {
 
   useEffect(() => {
     if (menu) {
-      const selectedLocationId = Number(
+      const selectedLocationId = (
         localStorage.getItem("selectedLocationId")
       );
       const disabledLocationMenu = disabledLocationMenus.find(

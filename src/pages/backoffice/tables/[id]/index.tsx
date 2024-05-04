@@ -16,7 +16,7 @@ import { useEffect, useState } from "react";
 
 const TableDetail = () => {
   const router = useRouter();
-  const tableId = Number(router.query.id);
+  const tableId = (router.query.id);
   const tables = useAppSelector((state) => state.table.items);
   const table = tables.find((item) => item.id === tableId);
   const [data, setData] = useState<UpdateTableOptions>();

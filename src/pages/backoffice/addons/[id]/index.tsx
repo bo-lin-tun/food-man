@@ -23,7 +23,7 @@ import { useEffect, useState } from "react";
 
 const AddonDetail = () => {
   const router = useRouter();
-  const addonId = Number(router.query.id);
+  const addonId = (router.query.id);
   const addons = useAppSelector((state) => state.addon.items);
   const addonCategories = useAppSelector((state) => state.addonCategory.items);
   const addon = addons.find((item) => item.id === addonId);

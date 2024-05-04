@@ -12,7 +12,7 @@ export default async function handler(
   if (!isValid) return res.status(400).send("Bad Request");
   if (method === "GET") {
     const table = await prisma.table.findFirst({
-      where: { id: Number(tableId) },
+      where: { id: (tableId) },
     });
     const location = await prisma.location.findFirst({
       where: { id: table?.locationId },
@@ -22,7 +22,7 @@ export default async function handler(
       where: { id: companyId },
     });
     let menuCategories = await prisma.menuCategory.findMany({
-      where: { companyId: Number(companyId), isArchived: false },
+      where: { companyId: (companyId), isArchived: false },
     });
 
     const menuCategoryIds = menuCategories.map((item) => item.id);
@@ -69,7 +69,7 @@ export default async function handler(
       },
     });
     const orders = await prisma.order.findMany({
-      where: { tableId: Number(tableId) },
+      where: { tableId: (tableId) },
     });
     return res.status(200).json({
       company,
