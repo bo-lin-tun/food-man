@@ -8,18 +8,18 @@ export interface AddonSlice {
 }
 
 export interface UpdateAddonOptions extends BaseOptions {
-  id: number;
+  id: string;
   name: string;
   price: number;
   addonCategoryId: number;
 }
 
 export interface DeleteAddonOptions extends BaseOptions {
-  id: number;
+  id: string;
 }
 
 export interface CreateAddonOptions extends BaseOptions {
   name: string;
   price: number;
-  addonCategoryId?: number;
+  addonCategoryId?: string;
 }

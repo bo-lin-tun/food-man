@@ -65,6 +65,7 @@ const NewAddon = ({ open, setOpen }: Props) => {
           />
           <TextField
             placeholder="Price"
+type="number"
             sx={{ mb: 2 }}
             onChange={(evt) =>
               setNewAddon({ ...newAddon, price: Number(evt.target.value) })
