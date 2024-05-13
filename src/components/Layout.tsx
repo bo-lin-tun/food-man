@@ -3,6 +3,8 @@ import { useAppSelector } from "@/store/hooks";
 import { Box } from "@mui/material";
 import { useRouter } from "next/router";
 import OrderLayout from "./OrderLayout";
+import { useEffect } from "react";
+import { socket } from "@/utils/socket";
 
 interface Props {
   children: string | JSX.Element | JSX.Element[];
@@ -14,6 +16,33 @@ const Layout = ({ children }: Props) => {
   const { tableId } = router.query;
   const isOrderApp = tableId;
   const isBackofficeApp = router.pathname.includes("/backoffice");
+
+  const socketInitiallize = async () => {
+    await fetch(`${process.env.NEXT_PUBLIC_SOCKET_API_URL}`);
+  };
+
+  useEffect(() => {
+    socketInitiallize();
+
+    socket.connect();
+
+    socket.on("connect_error", (error) => {
+      console.log("error: ", error);
+    });
+
+    socket.on("connect", () => {
+      console.log("connected");
+    });
+
+    socket.on("disconnect", () => {
+      console.log("disconnected");
+    });
+
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
+
   if (isOrderApp) {
     return <OrderLayout>{children}</OrderLayout>;
   }

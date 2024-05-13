@@ -150,7 +150,7 @@ model Order {
 }
 
 model Table {
-    id             String            @id @default(uuid())
+  id             String            @id @default(uuid())
   name       String
   locationId String
   assetUrl   String
@@ -189,5 +189,6 @@ model VerificationCode {
 enum ORDERSTATUS {
   PENDING
   COOKING
+  SEND
   COMPLETE
 }

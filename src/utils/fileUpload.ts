@@ -28,15 +28,15 @@ export const fileUpload = multer({
   }),
 }).array("files", 1);
 
-export const generateLinkForQRCode = (tableId: number) => {
+export const generateLinkForQRCode = (tableId: string) => {
   return `${config.orderAppUrl}?tableId=${tableId}`;
 };
 
-export const getQrCodeUrl = (tableId: number) => {
+export const getQrCodeUrl = (tableId: string) => {
   return `https://msquarefdc.sgp1.cdn.digitaloceanspaces.com/foodie-pos/msquarefdc/qrcode/tableId-${tableId}.png`;
 };
 
-export const qrCodeImageUpload = async (tableId: number) => {
+export const qrCodeImageUpload = async (tableId: string) => {
   try {
     const qrImageData = await QRCode.toDataURL(generateLinkForQRCode(tableId), {
       scale: 20,

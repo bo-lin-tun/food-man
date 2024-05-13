@@ -39,7 +39,9 @@ const Hero = () => {
               position: "relative",
             }}
           >
-            <Link href={`/order?tableId=1`}>
+            <Link
+              href={`/order?tableId=${"971cd91e-b48f-454a-8cf2-7976a5f2ca9e"}`}
+            >
               <Button
                 variant="contained"
                 sx={{
@@ -52,7 +54,7 @@ const Hero = () => {
                 Order App
               </Button>
             </Link>
-            <Link href={`/backoffice`}>
+            <Link href={`/backoffice/orders`}>
               <Button
                 variant="contained"
                 sx={{

@@ -9,12 +9,14 @@ import { useEffect } from "react";
 const ActiveOrder = () => {
   const router = useRouter();
   const orderSeq = router.query.id;
+  console.log("orderSeq: ;", orderSeq);
   const orders = useAppSelector((state) => state.order.items);
   const addons = useAppSelector((state) => state.addon.items);
   const menus = useAppSelector((state) => state.menu.items);
   const tables = useAppSelector((state) => state.table.items);
   const orderItems = formatOrders(orders, addons, menus, tables);
-  const tableId = (router.query.tableId);
+  console.log("orderItems: ", orderItems);
+  const tableId = router.query.tableId;
   const table = tables.find((table) => table.id === tableId);
   const dispatch = useAppDispatch();
   let intervalId: number;

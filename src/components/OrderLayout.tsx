@@ -18,7 +18,7 @@ const OrderLayout = (props: Props) => {
 
   useEffect(() => {
     if (tableId) {
-      dispatch(fetchAppData({ tableId: Number(tableId) }));
+      dispatch(fetchAppData({ tableId: tableId as string }));
     }
   }, [tableId]);
 

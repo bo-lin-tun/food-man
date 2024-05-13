@@ -11,6 +11,11 @@ interface Props {
 
 const OrderCard = ({ orderItem, isAdmin, handleOrderStatuUpdate }: Props) => {
   const addonCategories = useAppSelector((state) => state.addonCategory.items);
+  const orders = useAppSelector((state) => state.order.items);
+
+  const quantity = orders.find((item) => {
+    return item.itemId === orderItem.itemId;
+  });
 
   return (
     <Card
@@ -36,7 +41,7 @@ const OrderCard = ({ orderItem, isAdmin, handleOrderStatuUpdate }: Props) => {
         }}
       >
         <Typography>{orderItem.menu.name}</Typography>
-        <Typography>{orderItem.table.name}</Typography>
+        <Typography>{orderItem.table?.name || "yellow"}</Typography>
       </Box>
       <Box sx={{ px: 2 }}>
         <Box
@@ -50,6 +55,8 @@ const OrderCard = ({ orderItem, isAdmin, handleOrderStatuUpdate }: Props) => {
         >
           <Typography sx={{ fontWeight: "bold" }}>Item Id: </Typography>
           <Typography>{orderItem.itemId}</Typography>
+          <Typography sx={{ fontWeight: "bold" }}>Qt: </Typography>
+          <Typography>{quantity?.quantity || 1}</Typography>
         </Box>
         <Box sx={{ height: 250 * 0.6, overflow: "scroll" }}>
           {orderItem.orderAddons.length > 0 ? (

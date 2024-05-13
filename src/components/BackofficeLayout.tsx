@@ -23,7 +23,7 @@ const BackofficeLayout = ({ children }: Props) => {
       dispatch(fetchAppData({}));
     }
     if (isReady && !session) {
-      router.push("/backoffice");
+      router.push("/backoffice/orders");
     }
   }, [session, isReady]);
 

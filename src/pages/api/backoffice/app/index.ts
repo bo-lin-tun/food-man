@@ -27,7 +27,6 @@ export default async function handler(
     if (!company) return res.status(404).send("Company Not Found!");
 
     if (dbUser.isFirtTime) {
-      console.log("firstTime: ");
       // 3. create new menu category
       const newMenuCategoryName = "Default menu category";
       const menuCategory = await prisma.menuCategory.create({
@@ -181,5 +180,3 @@ export default async function handler(
   }
   res.status(405).send("Method not allowed.");
 }
-
-// 639c7ab9-b049-485f-bb4f-190798ecd9e7 = 639c7ab9-b049-485f-bb4f-190798ecd9e7
