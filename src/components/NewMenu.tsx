@@ -43,8 +43,8 @@ const NewMenu = ({ open, setOpen }: Props) => {
   const dispatch = useAppDispatch();
   const [menuImage, setMenuImage] = useState<File>();
 
-  const handleOnChange = (evt: SelectChangeEvent<number[]>) => {
-    const selectedIds = evt.target.value as number[];
+  const handleOnChange = (evt: SelectChangeEvent<string[]>) => {
+    const selectedIds = evt.target.value as string[];
     setNewMenu({ ...newMenu, menuCategoryIds: selectedIds });
   };
 
@@ -99,12 +99,15 @@ const NewMenu = ({ open, setOpen }: Props) => {
         sx={{ display: "flex", flexDirection: "column", width: 400 }}
       >
         <TextField
+          label="Name"
           placeholder="Name"
-          sx={{ mb: 2 }}
+          sx={{ mb: 2,mt:1 }}
           onChange={(evt) => setNewMenu({ ...newMenu, name: evt.target.value })}
         />
         <TextField
+          label="Price"
           placeholder="Price"
+          type="number"
           sx={{ mb: 2 }}
           onChange={(evt) =>
             setNewMenu({ ...newMenu, price: Number(evt.target.value) })

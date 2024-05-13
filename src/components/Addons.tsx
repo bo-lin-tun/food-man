@@ -10,7 +10,7 @@ import { Addon } from "@prisma/client";
 import { Dispatch, SetStateAction } from "react";
 
 interface Props {
-  addonCategoryId: number;
+  addonCategoryId: string;
   selectedAddons: Addon[];
   setSelectedAddons: Dispatch<SetStateAction<Addon[]>>;
 }

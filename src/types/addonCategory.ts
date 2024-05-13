@@ -10,16 +10,16 @@ export interface AddonCategorySlice {
 export interface CreateAddonCategoryOptions extends BaseOptions {
   name: string;
   isRequired: boolean;
-  menuIds: number[];
+  menuIds: string[];
 }
 
 export interface UpdateAddonCategoryOptions extends BaseOptions {
-  id: number;
+  id: string;
   name: string;
   isRequired: boolean;
-  menuIds: number[];
+  menuIds: string[];
 }
 
 export interface DeleteAddonCategoryOptions extends BaseOptions {
-  id: number;
+  id: string;
 }

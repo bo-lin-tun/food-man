@@ -6,22 +6,22 @@ const testimonials = [
     name: "Tom",
     company: "Tasty Foods Co. Ltd",
     avatar: "/pic1.jpeg",
-    description: `We increased our sale by 120% during the first 3 months of using Foodie POS. Easy and simple to use. 
+    description: `We increased our sale by 120% during the first 3 months of using Food Man. Easy and simple to use. 
       Super duper recommended for everyone who are less tech savy. 5/5`,
   },
   {
     name: "Hailey,",
     company: "Waa T Co. Ltd",
     avatar: "/pic2.jpeg",
-    description: `Our customers love Foodie POS. Quick and easy with QR code ordering. We now spend more time taking 
-      care of our customers instead of taking orders manually. Thanks to Foodie POS!`,
+    description: `Our customers love Food Man. Quick and easy with QR code ordering. We now spend more time taking 
+      care of our customers instead of taking orders manually. Thanks to Food Man!`,
   },
   {
     name: "Zen",
     company: "Swey Mel Co. Ltd",
     avatar: "/pic3.jpeg",
     description: `Integrated system. Easy to use. Very satisfied. Highly recommended for everyone. 
-    Foodie POS customer service is a top-notch! They are always there when we need help. 5 starsss!`,
+    Food Man customer service is a top-notch! They are always there when we need help. 5 starsss!`,
   },
 ];
 

@@ -24,13 +24,19 @@ const Topbar = () => {
       }}
     >
       <Box sx={{ height: 70 }}>
-        <Image src={"/logo.png"} alt="logo" width={150} height={70} />
+        <Image
+          src={"/Food_logo-removebg-preview.png"}
+          alt="logo"
+          width={60}
+          height={60}
+          style={{ marginTop: 9 }}
+        />
       </Box>
       <Box
         sx={{ display: "flex", alignItems: "center", flexDirection: "column" }}
       >
         <Typography variant="h5" color={"secondary"}>
-          Foodie POS
+          Food Man
         </Typography>
         {showLocation && (
           <Typography color={"secondary"} sx={{ fontSize: 12 }}>

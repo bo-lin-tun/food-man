@@ -33,17 +33,17 @@ const Footer = () => {
             <Typography sx={{ color: "#E8F6EF", fontStyle: "italic" }}>
               Hintada Street 39 <br />
               Sanchaung, Yangon <br />
-              contact@foodiepos.com
+              contact@foodman.com
               <br />
               09791563867
             </Typography>
           </Box>
           <Image
             alt="logo"
-            src={"/foodilogo.png"}
-            width={150}
-            height={80}
-            style={{ borderRadius: 10 }}
+            src={"/Food_Man.png"}
+            width={220}
+            height={140}
+          
           />
           <Box>
             <Link href={"/order?tableId=a1a4dad2-5239-44ec-99d3-ed3200f32c53"} style={{ textDecoration: "none" }}>

@@ -10,6 +10,7 @@ import {
   Switch,
   TextField,
 } from "@mui/material";
+import router from "next/router";
 import { useEffect, useState } from "react";
 
 const SettingsPage = () => {
@@ -33,7 +34,7 @@ const SettingsPage = () => {
   if (!comapny || !data) return null;
 
   const handleUpdateCompany = () => {
-    dispatch(updateCompany(data));
+    dispatch(updateCompany(data)), router.push("/backoffice/locations");
   };
 
   return (
@@ -96,6 +97,54 @@ const SettingsPage = () => {
       <Box>
         <ThemeChanger />
       </Box>
+
+
+      <TextField
+
+        placeholder="Restaurant Name"
+        label="Restaurant Name"
+        defaultValue={data.name}
+        sx={{ mb: 2 ,width:400}}
+        onChange={(evt) =>
+          setData({ ...data, id: comapny.id, name: evt.target.value })
+        }
+      />
+      <TextField
+        placeholder="Street"
+        label="Street"
+        defaultValue={data.street}
+        sx={{ mb: 2,width:400 }}
+        onChange={(evt) =>
+          setData({ ...data, id: comapny.id, street: evt.target.value })
+        }
+      />
+      <TextField
+
+        placeholder="Township"
+        label="Township"
+        defaultValue={data.township}
+        sx={{ mb: 2,width:400}}
+        onChange={(evt) =>
+          setData({ ...data, id: comapny.id, township: evt.target.value })
+        }
+      />
+      <TextField
+        placeholder="City"
+        label="City"
+        defaultValue={data.city}
+        sx={{ mb: 2 ,width:400}}
+        onChange={(evt) =>
+          setData({ ...data, id: comapny.id, city: evt.target.value })
+        }
+      />
+      <Button
+        variant="contained"
+        sx={{ mt: 2, width: "fit-content" }}
+        onClick={handleUpdateCompany}
+      >
+        Update
+      </Button>
+
     </Box>
   );
 };

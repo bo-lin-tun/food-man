@@ -3,7 +3,7 @@ import QuantitySelector from "@/components/QuantitySelector";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { addToCart } from "@/store/slices/cartSlice";
 import { CartItem } from "@/types/cart";
-import { Box, Button } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import { Addon, Menu } from "@prisma/client";
 import { nanoid } from "nanoid";
 import Image from "next/image";
@@ -113,6 +113,7 @@ const MenuDetail = () => {
             margin: "0 auto",
           }}
         />
+        <Typography sx={{ fontWeight: "bold" }}>{menu.name}</Typography>
         <Box
           sx={{
             display: "flex",

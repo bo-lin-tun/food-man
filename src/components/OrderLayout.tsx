@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 import OrderAppFooter from "./OrderAppFooter";
 import OrderAppHeader from "./OrderAppHeader";
+import { string } from "zod";
 
 interface Props {
   children: string | JSX.Element | JSX.Element[];
@@ -18,7 +19,7 @@ const OrderLayout = (props: Props) => {
 
   useEffect(() => {
     if (tableId) {
-      dispatch(fetchAppData({ tableId: Number(tableId) }));
+      dispatch(fetchAppData({ tableId: String(tableId) }));
     }
   }, [tableId]);
 
