@@ -28,7 +28,7 @@ const MenusPage = () => {
           const exist = disabledLocationMenus.find(
             (disabledLocationMenu) =>
               disabledLocationMenu.locationId ===
-                Number(localStorage.getItem("selectedLocationId")) &&
+                (localStorage.getItem("selectedLocationId")) &&
               disabledLocationMenu.menuId === item.id
           );
           const isAvailable = exist ? false : true;

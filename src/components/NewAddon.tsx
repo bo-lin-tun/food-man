@@ -34,8 +34,8 @@ const NewAddon = ({ open, setOpen }: Props) => {
   const addonCategories = useAppSelector((state) => state.addonCategory.items);
   const dispatch = useAppDispatch();
 
-  const handleOnChange = (evt: SelectChangeEvent<number>) => {
-    const selectedId = evt.target.value as number;
+  const handleOnChange = (evt: SelectChangeEvent<string>) => {
+    const selectedId = evt.target.value as string;
     setNewAddon({ ...newAddon, addonCategoryId: selectedId });
   };
 
@@ -58,14 +58,17 @@ const NewAddon = ({ open, setOpen }: Props) => {
         >
           <TextField
             placeholder="Name"
+            label="Name"
             sx={{ mb: 2 }}
             onChange={(evt) =>
               setNewAddon({ ...newAddon, name: evt.target.value })
             }
           />
           <TextField
+
+            label="Price"
             placeholder="Price"
-type="number"
+            type="number"
             sx={{ mb: 2 }}
             onChange={(evt) =>
               setNewAddon({ ...newAddon, price: Number(evt.target.value) })

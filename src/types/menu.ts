@@ -14,16 +14,16 @@ export interface GetMenusOptions extends BaseOptions {
 export interface CreateMenuOptions extends BaseOptions {
   name: string;
   price: number;
-  menuCategoryIds: number[];
+  menuCategoryIds: string[];
   assetUrl?: string;
 }
 
 export interface UpdateMenuOptions extends BaseOptions {
-  id: string;
+  id: string ;
   name: string;
   price: number;
   menuCategoryIds: string[];
-  locationId: string;
+  locationId: string | null;
   isAvailable: boolean;
   assetUrl: string | null;
 }

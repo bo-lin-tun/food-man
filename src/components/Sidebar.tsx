@@ -4,6 +4,7 @@ import ClassIcon from "@mui/icons-material/Class";
 import EggIcon from "@mui/icons-material/Egg";
 import LocalDiningIcon from "@mui/icons-material/LocalDining";
 import LocalMallIcon from "@mui/icons-material/LocalMall";
+import ComputerIcon from "@mui/icons-material/Computer";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import SettingsIcon from "@mui/icons-material/Settings";
 import TableBarIcon from "@mui/icons-material/TableBar";
@@ -88,7 +89,7 @@ export const sidebarMenuItems = [
   {
     id: 0,
     label: "Dashboard",
-    icon: <LocalMallIcon />,
+    icon: <ComputerIcon />,
     route: "/backoffice/dashboard",
   },
   {
