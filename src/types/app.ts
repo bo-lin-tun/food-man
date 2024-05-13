@@ -1,3 +1,5 @@
+import { PaletteOptions } from "@mui/material";
+
 export type Theme = "light" | "dark";
 
 export interface AppSlice {
@@ -5,8 +7,8 @@ export interface AppSlice {
   theme: Theme;
   isLoading: boolean;
   error: Error | null;
+  primaryColor: string;
 }
-
 export interface BaseOptions {
   onSuccess?: (data?: any) => void;
   onError?: (data?: any) => void;

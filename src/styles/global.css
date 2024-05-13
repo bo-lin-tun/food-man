@@ -4,3 +4,14 @@ body {
   margin: 0;
   box-sizing: border-box;
 }
+.nothing {
+  background: #4c4c6d;
+  background: #ffe194;
+  background: #e8f6ef;
+  background: #1b9c85;
+
+  background: #e63946;
+  background: #a8dadc;
+  background: #f1faee;
+  background: #1d3557;
+}

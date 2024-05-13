@@ -18,6 +18,7 @@ const initialState: AppSlice = {
   init: false,
   theme: "light",
   isLoading: false,
+  primaryColor: "#000000",
   error: null,
 };
 
@@ -65,6 +66,9 @@ export const fetchAppData = createAsyncThunk(
         setTheme((localStorage.getItem("theme") as Theme) ?? "light")
       );
       thunkApi.dispatch(setAppLoading(false));
+      thunkApi.dispatch(
+        setPrimaryColor(localStorage.getItem("primaryColor") || "#000000")
+      );
       onSuccess && onSuccess();
     } catch (err) {
       onError && onError();
@@ -85,8 +89,12 @@ const appSlice = createSlice({
     setTheme: (state, action: PayloadAction<Theme>) => {
       state.theme = action.payload;
     },
+    setPrimaryColor: (state, action: PayloadAction<string>) => {
+      state.primaryColor = action.payload;
+    },
   },
 });
 
-export const { setInit, setTheme, setAppLoading } = appSlice.actions;
+export const { setInit, setTheme, setAppLoading, setPrimaryColor } =
+  appSlice.actions;
 export default appSlice.reducer;
