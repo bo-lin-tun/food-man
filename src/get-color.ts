@@ -11,14 +11,14 @@ export const getColor = (
   primaryColor: string,
   isDark?: boolean
 ): PaletteOptions => {
-  const lighterSecondary = chroma(primaryColor).brighten(2).hex();
-  const darkerSecondary = chroma(primaryColor).darken(2).hex();
+  const lighterSecondary = chroma(primaryColor).brighten(-0.2).hex();
+  const darkerSecondary = chroma(primaryColor).darken().hex();
 
-  const lighterInfo = chroma(primaryColor).brighten().hex();
+  const lighterInfo = chroma(primaryColor).brighten(4).hex();
   const darkerInfo = chroma(primaryColor).darken().hex();
 
-  const lighterSuccess = chroma(primaryColor).brighten(3).hex();
-  const darkerSuccess = chroma(primaryColor).darken(3).hex();
+  const lighterSuccess = chroma(primaryColor).brighten(4).hex();
+  const darkerSuccess = chroma(primaryColor).darken().hex();
 
   if (isDark)
     return {

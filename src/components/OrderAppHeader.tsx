@@ -15,19 +15,24 @@ const OrderAppHeader = () => {
   const company = useAppSelector((state) => state.company.item);
   const cartItems = useAppSelector((state) => state.cart.items);
   const showCompanyInfo = isHome && company;
-
+  const { theme } = useAppSelector((state) => state.app);
   return (
-    <Box sx={{ position: {md:"sticky",lg:"static",xs:"sticky"}, top: 0, zIndex: {md:5,xs:5} }}>
+    <Box
+      sx={{
+        position: { md: "sticky", lg: "static", xs: "sticky" },
+        top: 0,
+        zIndex: { md: 5, xs: 5 },
+      }}
+    >
       <Box
         sx={{
-          bgcolor: "#1B9C85",
+          bgcolor: theme === "light" ? "secondary.main" : "primary.dark",
           height: 60,
           px: 2,
           display: { xs: "flex", md: "none" },
           justifyContent: "space-between",
           alignItems: "center",
           boxSizing: "border-box",
-
         }}
       >
         <Typography
@@ -35,11 +40,12 @@ const OrderAppHeader = () => {
           sx={{
             fontWeight: "bold",
             color: "info.main",
+            fontFamily: "initial",
           }}
         >
           {company?.name}
         </Typography>
-        <Box sx={{ position: "relative", }}>
+        <Box sx={{ position: "relative" }}>
           {isCartOrActiveOrderPage ? (
             <Home
               onClick={() =>

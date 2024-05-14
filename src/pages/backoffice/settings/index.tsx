@@ -55,48 +55,9 @@ const SettingsPage = () => {
             label="Use dark mode"
           />
         </Box>
-        <TextField
-          defaultValue={data.name}
-          sx={{ mb: 2 }}
-          onChange={(evt) =>
-            setData({ ...data, id: comapny.id, name: evt.target.value })
-          }
-        />
-        <TextField
-          label="street"
-          defaultValue={data.street}
-          sx={{ mb: 2 }}
-          onChange={(evt) =>
-            setData({ ...data, id: comapny.id, street: evt.target.value })
-          }
-        />
-        <TextField
-          label="township"
-          defaultValue={data.township}
-          sx={{ mb: 2 }}
-          onChange={(evt) =>
-            setData({ ...data, id: comapny.id, township: evt.target.value })
-          }
-        />
-        <TextField
-          label="city"
-          defaultValue={data.city}
-          sx={{ mb: 2 }}
-          onChange={(evt) =>
-            setData({ ...data, id: comapny.id, city: evt.target.value })
-          }
-        />
-        <Button
-          variant="contained"
-          sx={{ mt: 2, width: "fit-content" }}
-          onClick={handleUpdateCompany}
-        >
-          Update
-        </Button>
+        
       </Box>
-      <Box>
-        <ThemeChanger />
-      </Box>
+     
 
 
       <TextField
@@ -144,7 +105,9 @@ const SettingsPage = () => {
       >
         Update
       </Button>
-
+ <Box>
+        <ThemeChanger />
+      </Box>
     </Box>
   );
 };
