@@ -78,6 +78,7 @@ export const deleteMenuCategory = createAsyncThunk(
   "menuCategory/deleteMenuCategory",
   async (options: DeleteMenuCategoryOptions, thunkApi) => {
     const { id, onSuccess, onError } = options;
+    if (!id) return;
     try {
       await fetch(`${config.backofficeApiUrl}/menu-categories?id=${id}`, {
         method: "DELETE",

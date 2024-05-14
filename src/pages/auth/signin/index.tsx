@@ -53,6 +53,7 @@ const Signin = () => {
                 </Typography>
                 <AuthInput
                   placeholder="Name"
+                  // @ts-ignore
                   onChange={({ target: { value } }) => {
                     onChange(value);
                   }}
@@ -72,6 +73,7 @@ const Signin = () => {
                 <AuthInput
                   placeholder="Password"
                   type="password"
+                  // @ts-ignore
                   onChange={({ target: { value } }) => {
                     onChange(value);
                   }}

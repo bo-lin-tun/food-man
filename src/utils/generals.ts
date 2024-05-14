@@ -82,9 +82,7 @@ export const formatOrders = (
     return {
       itemId: orderItemId,
       status: currentOrders[0].status,
-      orderAddons: addonIds.length
-        ? orderAddons.sort((a, b) => a.addonCategoryId - b.addonCategoryId)
-        : [],
+      orderAddons: addonIds.length ? orderAddons : [],
       menu: menus.find((item) => item.id === currentOrders[0].menuId) as Menu,
       table: tables.find(
         (item) => item.id === currentOrders[0].tableId

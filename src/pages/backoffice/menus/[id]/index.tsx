@@ -31,7 +31,7 @@ import { ChangeEvent, useEffect, useState } from "react";
 
 const MenuDetail = () => {
   const router = useRouter();
-  const menuId = router.query.id;
+  const menuId = router.query.id as string;
   const menus = useAppSelector((state) => state.menu.items);
   const menuCategories = useAppSelector((state) => state.menuCategory.items);
   const menuAddonCategories = useAppSelector(

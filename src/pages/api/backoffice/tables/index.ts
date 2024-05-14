@@ -35,7 +35,7 @@ export default async function handler(
     });
     return res.status(200).json({ table });
   } else if (method === "DELETE") {
-    const tableId = Number(req.query.id);
+    const tableId = req.query.id as string;
     const table = await prisma.table.findFirst({
       where: { id: tableId },
     });

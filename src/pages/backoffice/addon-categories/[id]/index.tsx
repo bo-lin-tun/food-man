@@ -72,13 +72,13 @@ const AddonCategoryDetail = () => {
 
   const handleOnChange = (evt: SelectChangeEvent<string[]>) => {
     const selectedIds = evt.target.value as string[];
-    setData({ ...data, id: addonCategoryId, menuIds: selectedIds });
+    setData({ ...data, id: addonCategoryId as string, menuIds: selectedIds });
   };
 
   const handleDeleteAddonCategory = () => {
     dispatch(
       deleteAddonCategory({
-        id: addonCategoryId,
+        id: addonCategoryId as string,
         onSuccess: () => {
           dispatch(
             setOpenSnackbar({ message: "Deleted addon category successfully." })

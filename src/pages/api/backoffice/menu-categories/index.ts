@@ -11,7 +11,7 @@ export default async function handler(
     // Data validation
     const { name, locationId } = req.body;
     const isValid = name && locationId;
-console.log(isValid);
+    console.log(isValid);
 
     if (!isValid) return res.status(400).send("Bad request.");
     const location = await prisma.location.findFirst({
@@ -67,7 +67,7 @@ console.log(isValid);
       });
     return res.status(200).json({ menuCategory, disabledLocationMenuCategory });
   } else if (method === "DELETE") {
-    const menuCategoryId = req.query.id;
+    const menuCategoryId = req.query.id as string;
     const menuIds = (
       await prisma.menuCategoryMenu.findMany({
         where: { menuCategoryId, isArchived: false },

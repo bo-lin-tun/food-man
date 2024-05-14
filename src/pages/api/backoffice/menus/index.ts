@@ -20,7 +20,10 @@ export default async function handler(
     const menuCategoryMenus = await prisma.$transaction(
       newMenuCategoryMenu.map((item) =>
         prisma.menuCategoryMenu.create({
-          data: { menuCategoryId: item.menuCategoryId, menuId: item.menuId },
+          data: {
+            menuCategoryId: String(item.menuCategoryId),
+            menuId: String(item.menuId),
+          },
         })
       )
     );
@@ -57,7 +60,7 @@ export default async function handler(
     const menuCategoryMenus = await prisma.$transaction(
       menuCategoryMenusData.map((item) =>
         prisma.menuCategoryMenu.create({
-          data: item,
+          data: item as any,
         })
       )
     );
@@ -101,7 +104,7 @@ export default async function handler(
       .status(200)
       .json({ menu, menuCategoryMenus, disabledLocationMenus });
   } else if (method === "DELETE") {
-    const menuId = (req.query.id);
+    const menuId = req.query.id as string;
     const menu = await prisma.menu.findFirst({ where: { id: menuId } });
     if (!menu) return res.status(400).send("Bad request.");
     await prisma.menuAddonCategory.updateMany({

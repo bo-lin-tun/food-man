@@ -101,7 +101,7 @@ const AddonDetail = () => {
       <FormControl fullWidth>
         <InputLabel>Addon Category</InputLabel>
         <Select
-          value={data.addonCategoryId}
+          value={data.addonCategoryId as string | undefined}
           label="Addon Category"
           sx={{ width: 400 }}
           onChange={handleOnChange}

@@ -69,7 +69,7 @@ const MenuCategoryDetail = () => {
   const handleDeleteMenuCategory = () => {
     dispatch(
       deleteMenuCategory({
-        id: menuCategoryId,
+        id: menuCategoryId as string,
         onSuccess: () => {
           router.push("/backoffice/menu-categories");
           setOpenSnackbar({ message: "Deleted menu category successfully." });
@@ -91,7 +91,11 @@ const MenuCategoryDetail = () => {
         defaultValue={menuCategory.name}
         sx={{ mb: 2, width: 400 }}
         onChange={(evt) =>
-          setData({ ...data, id: menuCategoryId, name: evt.target.value })
+          setData({
+            ...data,
+            id: menuCategoryId as string,
+            name: evt.target.value,
+          })
         }
       />
       <FormControlLabel

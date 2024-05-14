@@ -27,7 +27,7 @@ export default async function handler(
     });
     return res.status(200).json({ addon });
   } else if (method === "DELETE") {
-    const addonId = (req.query.id);
+    const addonId = req.query.id as string;
     const addon = await prisma.addon.findFirst({
       where: { id: addonId },
     });

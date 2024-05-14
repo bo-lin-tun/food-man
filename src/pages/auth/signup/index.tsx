@@ -62,6 +62,7 @@ const Signup = () => {
                 </Typography>
                 <AuthInput
                   placeholder="Name"
+                  // @ts-ignore
                   onChange={({ target: { value } }) => {
                     onChange(value);
                   }}
@@ -80,6 +81,7 @@ const Signup = () => {
                 </Typography>
                 <AuthInput
                   placeholder="Name"
+                  // @ts-ignore
                   onChange={({ target: { value } }) => {
                     onChange(value);
                   }}
@@ -98,6 +100,7 @@ const Signup = () => {
                 </Typography>
                 <AuthInput
                   placeholder="Email"
+                  // @ts-ignore
                   onChange={({ target: { value } }) => {
                     onChange(value);
                   }}
@@ -117,6 +120,7 @@ const Signup = () => {
                 <AuthInput
                   placeholder="Password"
                   type="password"
+                  // @ts-ignore
                   onChange={({ target: { value } }) => {
                     onChange(value);
                   }}

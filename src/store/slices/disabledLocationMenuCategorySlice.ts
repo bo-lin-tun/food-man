@@ -20,7 +20,10 @@ const disabledLocationMenuCategorySlice = createSlice({
     },
     removeDisabledLocationmenuCategory: (
       state,
-      action: PayloadAction<{ locationId: string; menuCategoryId: string}>
+      action: PayloadAction<{
+        locationId: string | null;
+        menuCategoryId: string;
+      }>
     ) => {
       const { locationId, menuCategoryId } = action.payload;
       state.items = state.items.filter(
