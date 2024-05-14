@@ -18,7 +18,7 @@ const quantity = orders.find((item) => {
    
     return item.itemId === orderItem.itemId;
   });
-
+const { theme } = useAppSelector((state) => state.app);
   return (
     <Card
       sx={{
@@ -37,7 +37,7 @@ const quantity = orders.find((item) => {
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
-          bgcolor: "#006769",
+           bgcolor: theme === "light" ? "secondary.main" : "primary.dark",
           color: "white",
           px: 1,
           py: 1,
@@ -56,9 +56,9 @@ const quantity = orders.find((item) => {
             borderBottom: "1px solid lightgray",
           }}
         >
-          <Typography sx={{ fontWeight: "bold" }}>
-            Qty
-            {quantity?.quantity}
+          <Typography sx={{ fontWeight: "bold",p:0.4,color:"red",fontSize:"1.5em" }}>
+          
+                {quantity?.quantity}
           </Typography>
           <Typography sx={{ fontWeight: "bold" }}>
             MMK {orderItem.menu.price}

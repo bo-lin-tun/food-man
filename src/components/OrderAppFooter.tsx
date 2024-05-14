@@ -37,7 +37,7 @@ const OrderAppFooter = () => {
         })
       }
     >
-      <Typography sx={{ color: "secondary.main", userSelect: "none" }}>
+      <Typography sx={{  color: "info.main", userSelect: "none" }}>
        မှာယူထားသည်များကို ကြည့်ရန်နှိပ်ပါ
       </Typography>
     </Box>

@@ -16,7 +16,7 @@ const Topbar = () => {
   return (
     <Box
       sx={{
-        bgcolor: theme === "light" ? "success.dark" : "primary.dark",
+        bgcolor: theme === "light" ? "secondary.main" : "primary.dark",
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between",
@@ -35,11 +35,18 @@ const Topbar = () => {
       <Box
         sx={{ display: "flex", alignItems: "center", flexDirection: "column" }}
       >
-        <Typography variant="h5" color={"secondary"}>
+        <Typography
+          variant="h5"
+          color={theme === "light" ? "info.main" : "primary.dark"}
+          sx={{ fontFamily: "initial" }}
+        >
           Food Man
         </Typography>
         {showLocation && (
-          <Typography color={"secondary"} sx={{ fontSize: 12 }}>
+          <Typography
+            color={theme === "light" ? "info.main" : "primary.dark"}
+            sx={{ fontSize: 12 }}
+          >
             {selectedLocation?.name}
           </Typography>
         )}
