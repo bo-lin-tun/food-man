@@ -27,7 +27,7 @@ const Signin = () => {
       email: data.email,
       password: data.password,
       redirect: true,
-      callbackUrl: "/backoffice",
+      callbackUrl: "/backoffice/orders",
     });
   };
 

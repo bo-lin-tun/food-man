@@ -24,6 +24,10 @@ export default async function handler(
     // });
 
     const totalOrders = await prisma.order.findMany({
+      where: {
+        isArchived: false,
+        status: "COMPLETE",
+      },
       orderBy: {
         createdAt: "asc",
       },

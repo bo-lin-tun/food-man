@@ -5,8 +5,9 @@ import {
   UpdateOrderOptions,
 } from "@/types/order";
 import { config } from "@/utils/config";
-import { Order } from "@prisma/client";
+import { ORDERSTATUS, Order } from "@prisma/client";
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { toast } from "react-toastify";
 
 const initialState: OrderSlice = {
   items: [],
@@ -33,27 +34,30 @@ export const createOrder = createAsyncThunk(
   }
 );
 
+interface OrderUpdateOptions {
+  itemId: string;
+  status: ORDERSTATUS;
+}
+
 export const updateOrder = createAsyncThunk(
   "order/updateOrder",
-  async (options: UpdateOrderOptions, thunkApi) => {
-    const { itemId, status, onSuccess, onError } = options;
-    try {
-      thunkApi.dispatch(setIsLoading(true));
-      const response = await fetch(
-        `${config.orderApiUrl}/orders?itemId=${itemId}`,
-        {
-          method: "PUT",
-          headers: { "content-type": "application/json" },
-          body: JSON.stringify({ status }),
-        }
-      );
-      const { orders } = await response.json();
-      thunkApi.dispatch(setOrders(orders));
-      thunkApi.dispatch(setIsLoading(false));
-      onSuccess && onSuccess(orders);
-    } catch (err) {
-      onError && onError();
+  async (options: OrderUpdateOptions, thunkApi) => {
+    const { itemId, status } = options;
+    thunkApi.dispatch(setIsLoading(true));
+    const response = await fetch(
+      `${config.orderApiUrl}/orders?itemId=${itemId}`,
+      {
+        method: "PUT",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ status }),
+      }
+    );
+    const resData = await response.json();
+    if (!response.ok) {
+      return toast.error(resData.message);
     }
+    thunkApi.dispatch(setOrders(resData.orders));
+    thunkApi.dispatch(setIsLoading(false));
   }
 );
 
@@ -86,8 +90,18 @@ const orderSlice = createSlice({
     setOrders: (state, action: PayloadAction<Order[]>) => {
       state.items = action.payload;
     },
+    addOrders: (state, action: PayloadAction<Order[]>) => {
+      state.items = [...state.items, ...action.payload];
+    },
+    removeOrders: (state, action: PayloadAction<Order[]>) => {
+      if (!action.payload.length) return;
+      const orderIds = action.payload.map((item) => item.id);
+      const orders = state.items.filter((item) => !orderIds.includes(item.id));
+      state.items = [...orders];
+    },
   },
 });
 
-export const { setOrders, setIsLoading } = orderSlice.actions;
+export const { setOrders, setIsLoading, addOrders, removeOrders } =
+  orderSlice.actions;
 export default orderSlice.reducer;

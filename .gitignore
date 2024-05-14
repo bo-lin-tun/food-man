@@ -14,6 +14,7 @@
 
 # production
 /build
+test.txt
 
 # misc
 .DS_Store

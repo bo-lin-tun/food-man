@@ -22,6 +22,8 @@ const Dashboard = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [dailyOrders, setDailyOrders] = useState<DailyOrderType[]>([]);
   const [monthlyOrders, setMonthlyOrders] = useState<MonthlyOrderType[]>([]);
+  console.log(" dailyOrders ", dailyOrders);
+  console.log(" monthlyOrders ", monthlyOrders);
 
   const fetchMetrics = async () => {
     setIsLoading(false);

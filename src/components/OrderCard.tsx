@@ -14,8 +14,8 @@ interface Props {
 const OrderCard = ({ orderItem, isAdmin, handleOrderStatuUpdate }: Props) => {
   const addonCategories = useAppSelector((state) => state.addonCategory.items);
   const orders = useAppSelector((state) => state.order.items);
+
 const quantity = orders.find((item) => {
-   
     return item.itemId === orderItem.itemId;
   });
 const { theme } = useAppSelector((state) => state.app);
@@ -44,7 +44,7 @@ const { theme } = useAppSelector((state) => state.app);
         }}
       >
         <Typography>{orderItem.menu.name}</Typography>
-        <Typography>{orderItem.table.name}</Typography>
+        <Typography>{orderItem.table?.name || "yellow"}</Typography>
       </Box>
       <Box sx={{ px: 2 }}>
         <Box

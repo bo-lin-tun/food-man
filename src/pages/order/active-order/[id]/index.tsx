@@ -9,6 +9,7 @@ import { useEffect } from "react";
 const ActiveOrder = () => {
   const router = useRouter();
   const orderSeq = router.query.id;
+  console.log("orderSeq: ;", orderSeq);
   const orders = useAppSelector((state) => state.order.items);
   const addons = useAppSelector((state) => state.addon.items);
   const menus = useAppSelector((state) => state.menu.items);

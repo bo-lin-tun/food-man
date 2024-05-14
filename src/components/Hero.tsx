@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 
 const Hero = () => {
   const router = useRouter();
+
   return (
     <Box
       sx={{
@@ -29,8 +30,8 @@ const Hero = () => {
               fontSize: { xs: "16px", md: "25px" },
             }}
           >
-            Manage your menu catelog easily with Food Man and entice your
-            customers with QR code ordering system.
+            Manage your menu catalog easily with Food Man and entice your
+            customers with a QR code ordering system.
           </Typography>
           <Box
             sx={{
@@ -39,7 +40,10 @@ const Hero = () => {
               position: "relative",
             }}
           >
-            <Link href={`/order?tableId=cbfd103b-d2ee-408b-b408-e0eb9fcae3bb`}>
+            <Link
+              href={`/order?tableId=971cd91e-b48f-454a-8cf2-7976a5f2ca9e`}
+              passHref
+            >
               <Button
                 variant="contained"
                 sx={{
@@ -52,7 +56,7 @@ const Hero = () => {
                 Order App
               </Button>
             </Link>
-            <Link href={`/backoffice`}>
+            <Link href={`/backoffice/orders`} passHref>
               <Button
                 variant="contained"
                 sx={{

@@ -47,6 +47,7 @@ export const fetchAppData = createAsyncThunk(
         orders,
         company,
       } = appData;
+      // console.log("menuCategories: ", menuCategories);
       thunkApi.dispatch(setInit(true));
       thunkApi.dispatch(setLocations(locations));
       thunkApi.dispatch(setMenuCategories(menuCategories));

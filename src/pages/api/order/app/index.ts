@@ -12,17 +12,18 @@ export default async function handler(
   if (!isValid) return res.status(400).send("Bad Request");
   if (method === "GET") {
     const table = await prisma.table.findFirst({
-      where: { id: (tableId) },
+      where: { id: tableId as string, isArchived: false },
     });
+    if (!table) return res.status(404).send("Table Not Found!");
     const location = await prisma.location.findFirst({
-      where: { id: table?.locationId },
+      where: { id: table?.locationId, isArchived: false },
     });
     const companyId = location?.companyId;
     const company = await prisma.company.findFirst({
-      where: { id: companyId },
+      where: { id: companyId, isArchived: false },
     });
     let menuCategories = await prisma.menuCategory.findMany({
-      where: { companyId: (companyId), isArchived: false },
+      where: { companyId: companyId },
     });
 
     const menuCategoryIds = menuCategories.map((item) => item.id);
@@ -46,7 +47,11 @@ export default async function handler(
     const menuIds = menuCategoryMenus.map((item) => item.menuId);
     const disabledMenuIds = (
       await prisma.disabledLocationMenu.findMany({
-        where: { menuId: { in: menuIds }, locationId: location?.id },
+        where: {
+          menuId: { in: menuIds },
+          locationId: location?.id,
+          isArchived: false,
+        },
       })
     ).map((item) => item.menuId);
     const menus = (
@@ -70,7 +75,7 @@ export default async function handler(
       },
     });
     const orders = await prisma.order.findMany({
-      where: { tableId: (tableId) },
+      where: { tableId: tableId as string },
     });
     return res.status(200).json({
       company,
