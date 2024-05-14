@@ -40,6 +40,7 @@ export default async function handler(
       (item) => !disabledMenuCategoryIds.includes(item.id)
     );
 
+
     const menuCategoryMenus = await prisma.menuCategoryMenu.findMany({
       where: { menuCategoryId: { in: menuCategoryIds }, isArchived: false },
     });

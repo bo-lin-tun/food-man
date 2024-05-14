@@ -17,7 +17,7 @@ const OrderAppHeader = () => {
   const showCompanyInfo = isHome && company;
 
   return (
-    <Box sx={{ position: "sticky", top: 0, zIndex: 5 }}>
+    <Box sx={{ position: {md:"sticky",lg:"static",xs:"sticky"}, top: 0, zIndex: {md:5,xs:5} }}>
       <Box
         sx={{
           bgcolor: "#1B9C85",

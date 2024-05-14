@@ -31,7 +31,7 @@ import { ChangeEvent, useEffect, useState } from "react";
 
 const MenuDetail = () => {
   const router = useRouter();
-  const menuId = (router.query.id);
+  const menuId = router.query.id;
   const menus = useAppSelector((state) => state.menu.items);
   const menuCategories = useAppSelector((state) => state.menuCategory.items);
   const menuAddonCategories = useAppSelector(
@@ -56,9 +56,7 @@ const MenuDetail = () => {
 
   useEffect(() => {
     if (menu) {
-      const selectedLocationId = (
-        localStorage.getItem("selectedLocationId")
-      );
+      const selectedLocationId = localStorage.getItem("selectedLocationId");
       const disabledLocationMenu = disabledLocationMenus.find(
         (item) =>
           item.locationId === selectedLocationId && item.menuId === menuId
@@ -74,8 +72,9 @@ const MenuDetail = () => {
 
   if (!menu || !data) return null;
 
-  const handleOnChange = (evt: SelectChangeEvent<number[]>) => {
-    const selectedIds = evt.target.value as number[];
+  const handleOnChange = (evt: SelectChangeEvent<string[]>) => {
+    const selectedIds = evt.target.value as string[];
+
     setData({ ...data, id: menuId, menuCategoryIds: selectedIds });
   };
 
@@ -165,15 +164,19 @@ const MenuDetail = () => {
         </Button>
       </Box>
       <TextField
+        placeholder="Menu"
+        label="Menu"
         defaultValue={menu.name}
-        sx={{ mb: 2 }}
+        sx={{ mb: 2, width: 500 }}
         onChange={(evt) => {
           setData({ ...data, id: menuId, name: evt.target.value });
         }}
       />
       <TextField
+        placeholder="Price"
+        label="Price"
         defaultValue={menu.price}
-        sx={{ mb: 2 }}
+        sx={{ mb: 2, type: "number", width: 500 }}
         onChange={(evt) =>
           setData({ ...data, id: menuId, price: Number(evt.target.value) })
         }
@@ -183,6 +186,7 @@ const MenuDetail = () => {
         <Select
           multiple
           value={data.menuCategoryIds}
+          sx={{ width: 500 }}
           label="Menu Category"
           onChange={handleOnChange}
           renderValue={(selectedMenuCategoryIds) => {

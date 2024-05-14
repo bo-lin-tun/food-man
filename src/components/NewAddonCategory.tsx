@@ -39,8 +39,8 @@ const NewAddonCategory = ({ open, setOpen }: Props) => {
   const menus = useAppSelector((state) => state.menu.items);
   const dispatch = useAppDispatch();
 
-  const handleOnChange = (evt: SelectChangeEvent<number[]>) => {
-    const selectedIds = evt.target.value as number[];
+  const handleOnChange = (evt: SelectChangeEvent<string[]>) => {
+    const selectedIds = evt.target.value as string[];
     setNewAddonCategory({ ...newAddonCategory, menuIds: selectedIds });
   };
 
@@ -81,10 +81,12 @@ const NewAddonCategory = ({ open, setOpen }: Props) => {
       <DialogTitle>Create new addon category</DialogTitle>
       <DialogContent sx={{ width: 300 }}>
         <TextField
+          label="Name"
+          placeholder="Name"
           onChange={(evt) =>
             setNewAddonCategory({ ...newAddonCategory, name: evt.target.value })
           }
-          sx={{ mb: 2, width: "100%" }}
+          sx={{ mb: 2,mt:1, width: "100%" }}
         />
         <FormControl fullWidth>
           <InputLabel>Menus</InputLabel>

@@ -8,7 +8,7 @@ import { Box, Typography, Zoom } from "@mui/material";
 const features = [
   {
     icon: <MenuBookIcon sx={{ fontSize: "90px", color: "#1B9C85" }} />,
-    text: "Easily manage your menus with Foodie POS",
+    text: "Easily manage your menus with Food Man",
     delay: "1000ms",
   },
   {
@@ -18,7 +18,7 @@ const features = [
   },
   {
     icon: <LocationOn sx={{ fontSize: "90px", color: "#1B9C85" }} />,
-    text: "Foodie POS supports multiple locations for your business.",
+    text: "Food Man supports multiple locations for your business.",
     delay: "1500ms",
   },
   {

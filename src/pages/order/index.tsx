@@ -62,7 +62,7 @@ const OrderApp = () => {
       >
         <Tabs
           TabIndicatorProps={{
-            style: { background: "#1B9C85", },
+            style: { background: "#1B9C85" },
           }}
           value={value}
           onChange={(evt, value) => setValue(value)}

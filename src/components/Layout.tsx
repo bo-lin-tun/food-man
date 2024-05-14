@@ -1,10 +1,12 @@
 import BackofficeLayout from "@/components/BackofficeLayout";
 import { useAppSelector } from "@/store/hooks";
-import { Box } from "@mui/material";
+import { Box, ThemeProvider } from "@mui/material";
 import { useRouter } from "next/router";
 import OrderLayout from "./OrderLayout";
 import { useEffect } from "react";
 import { socket } from "@/utils/socket";
+import { useCreateTheme } from "@/use-create-theme";
+
 
 interface Props {
   children: string | JSX.Element | JSX.Element[];
@@ -42,21 +44,30 @@ const Layout = ({ children }: Props) => {
       socket.disconnect();
     };
   }, []);
+  
+  const primaryColor = useAppSelector((state) => state.app.primaryColor);
+  const { theme: themeValue } = useCreateTheme(primaryColor);
 
   if (isOrderApp) {
-    return <OrderLayout>{children}</OrderLayout>;
+    return (
+      <ThemeProvider theme={themeValue}>
+        <OrderLayout>{children}</OrderLayout>
+      </ThemeProvider>
+    );
   }
 
   if (isBackofficeApp) {
     return (
-      <Box
-        sx={{
-          height: "100%",
-          backgroundColor: theme === "light" ? "info.main" : "primary.light",
-        }}
-      >
-        <BackofficeLayout>{children}</BackofficeLayout>
-      </Box>
+      <ThemeProvider theme={themeValue}>
+        <Box
+          sx={{
+            height: "100%",
+            backgroundColor: theme === "light" ? "info.main" : "primary.light",
+          }}
+        >
+          <BackofficeLayout>{children}</BackofficeLayout>
+        </Box>
+      </ThemeProvider>
     );
   }
 

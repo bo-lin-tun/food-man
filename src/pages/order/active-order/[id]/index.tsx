@@ -15,7 +15,6 @@ const ActiveOrder = () => {
   const menus = useAppSelector((state) => state.menu.items);
   const tables = useAppSelector((state) => state.table.items);
   const orderItems = formatOrders(orders, addons, menus, tables);
-  console.log("orderItems: ", orderItems);
   const tableId = router.query.tableId;
   const table = tables.find((table) => table.id === tableId);
   const dispatch = useAppDispatch();
@@ -52,7 +51,7 @@ const ActiveOrder = () => {
       >
         <Typography
           sx={{
-            color: { xs: "success.main", md: "info.main" },
+            color: { xs: "#151515", md: "info.main" },
             fontSize: { xs: 20, md: 25 },
           }}
         >
@@ -60,12 +59,13 @@ const ActiveOrder = () => {
         </Typography>
         <Typography
           sx={{
-            color: { xs: "success.main", md: "info.main" },
+            color: { xs: "#151515", md: "info.main" },
             fontSize: { xs: 20, md: 25 },
           }}
         >
-          Total price: {orders[0].totalPrice}
+          ကျသင့်ငွေ: MMK  {orders[0].totalPrice} 
         </Typography>
+
       </Box>
       <Box
         sx={{
@@ -74,6 +74,7 @@ const ActiveOrder = () => {
           justifyContent: "center",
           position: "relative",
           top: { md: -200 },
+          ml: { xs: 2 },
         }}
       >
         {orderItems.map((orderItem) => {
@@ -82,6 +83,7 @@ const ActiveOrder = () => {
               key={orderItem.itemId}
               orderItem={orderItem}
               isAdmin={false}
+
             />
           );
         })}

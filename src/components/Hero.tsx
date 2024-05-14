@@ -29,7 +29,7 @@ const Hero = () => {
               fontSize: { xs: "16px", md: "25px" },
             }}
           >
-            Manage your menu catelog easily with Foodie POS and entice your
+            Manage your menu catelog easily with Food Man and entice your
             customers with QR code ordering system.
           </Typography>
           <Box
@@ -42,6 +42,7 @@ const Hero = () => {
             <Link
               href={`/order?tableId=${"971cd91e-b48f-454a-8cf2-7976a5f2ca9e"}`}
             >
+            <Link href={`/order?tableId=cbfd103b-d2ee-408b-b408-e0eb9fcae3bb`}>
               <Button
                 variant="contained"
                 sx={{

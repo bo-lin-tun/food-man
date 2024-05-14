@@ -1,7 +1,7 @@
 import { Box, Button, Typography } from "@mui/material";
 import Link from "next/link";
 import React, { memo } from "react";
-
+import Image from "next/image";
 const AuthWrapper = ({
   children,
   title,
@@ -40,7 +40,14 @@ const AuthWrapper = ({
               gap: "10px",
             }}
           >
-            <Box sx={{ fontSize: "1.6rem", fontWeight: "bold" }}>Logo</Box>
+            <Box sx={{ fontSize: "1.6rem", fontWeight: "bold" }}>
+              <Image
+                src="/Food_Man.png"
+                width={220}
+                height={200}
+                alt="logo for web Food Man"
+              />
+            </Box>
             <Typography sx={{ fontSize: "1.2rem" }}>{title}</Typography>
           </Box>
           <Box>{children}</Box>

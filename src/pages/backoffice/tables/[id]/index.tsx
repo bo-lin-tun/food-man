@@ -16,7 +16,7 @@ import { useEffect, useState } from "react";
 
 const TableDetail = () => {
   const router = useRouter();
-  const tableId = (router.query.id);
+  const tableId = router.query.id;
   const tables = useAppSelector((state) => state.table.items);
   const table = tables.find((item) => item.id === tableId);
   const [data, setData] = useState<UpdateTableOptions>();
@@ -44,7 +44,12 @@ const TableDetail = () => {
         onSuccess: () => {
           router.push("/backoffice/tables");
 
-          dispatch(setOpenSnackbar({ message: "Updated table                                                                                                                                                                                    successfully." }));
+          dispatch(
+            setOpenSnackbar({
+              message:
+                "Updated table                                                                                                                                                                                    successfully.",
+            })
+          );
         },
       })
     );
@@ -67,8 +72,10 @@ const TableDetail = () => {
         </Button>
       </Box>
       <TextField
+        placeholder="Name"
+        label="Name"
         defaultValue={data.name}
-        sx={{ mb: 2 }}
+        sx={{ mb: 2,width:400 }}
         onChange={(evt) =>
           setData({ ...data, id: table.id, name: evt.target.value })
         }

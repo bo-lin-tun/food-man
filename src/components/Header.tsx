@@ -53,7 +53,7 @@ const Header = () => {
           mt: 4,
         }}
       >
-      Ｆｏｏｄｉｅ Ｐｏｓ
+      🍟🥪 𝓕𝓸𝓸𝓭 𝓜𝓪𝓷 🥙🍖
       </Typography>
     </Box>
   );

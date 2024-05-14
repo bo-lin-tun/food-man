@@ -29,7 +29,7 @@ import { useEffect, useState } from "react";
 
 const AddonCategoryDetail = () => {
   const router = useRouter();
-  const addonCategoryId = (router.query.id);
+  const addonCategoryId = router.query.id;
   const addonCategories = useAppSelector((state) => state.addonCategory.items);
   const menuAddonCategories = useAppSelector(
     (state) => state.menuAddonCategory.items
@@ -70,8 +70,8 @@ const AddonCategoryDetail = () => {
     );
   };
 
-  const handleOnChange = (evt: SelectChangeEvent<number[]>) => {
-    const selectedIds = evt.target.value as number[];
+  const handleOnChange = (evt: SelectChangeEvent<string[]>) => {
+    const selectedIds = evt.target.value as string[];
     setData({ ...data, id: addonCategoryId, menuIds: selectedIds });
   };
 
@@ -97,8 +97,10 @@ const AddonCategoryDetail = () => {
         </Button>
       </Box>
       <TextField
+        label="Name"
+        placeholder="Name"
         defaultValue={addonCategory.name}
-        sx={{ mb: 2 }}
+        sx={{ mb: 2, width: 400 }}
         onChange={(evt) => setData({ ...data, name: evt.target.value })}
       />
       <FormControl fullWidth sx={{ my: 1 }}>
@@ -107,6 +109,7 @@ const AddonCategoryDetail = () => {
           multiple
           value={data.menuIds}
           label="Menus"
+          sx={{ width: 500 }}
           onChange={handleOnChange}
           renderValue={(selectedMenuIds) => {
             return selectedMenuIds
