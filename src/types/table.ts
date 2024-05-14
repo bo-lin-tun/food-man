@@ -8,16 +8,16 @@ export interface TableSlice {
 }
 
 export interface UpdateTableOptions extends BaseOptions {
-  id: number;
+  id:string;
   name: string;
-  locationId: number;
+  locationId:string;
 }
 
 export interface DeleteTableOptions extends BaseOptions {
-  id: number;
+  id:string;
 }
 
 export interface CreateTableOptions extends BaseOptions {
   name: string;
-  locationId?: number;
+  locationId?:string | null;
 }

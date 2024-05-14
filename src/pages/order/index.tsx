@@ -55,8 +55,9 @@ const OrderApp = () => {
       <Box
         sx={{
           position: "sticky",
-          top: 0,
+          top: 60,
           bgcolor: "info.main",
+
         }}
       >
         <Tabs
@@ -91,7 +92,9 @@ const OrderApp = () => {
         sx={{
           display: "flex",
           flexWrap: "wrap",
-          px: 2,
+          justifyContent: { xs: "center", sm: "center" },
+          mt: 2,
+
         }}
       >
         {renderMenus()}

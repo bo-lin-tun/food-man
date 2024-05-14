@@ -28,7 +28,7 @@ const AddonCategories = ({
               <Typography variant="h6" sx={{ userSelect: "none" }}>
                 {item.name}
               </Typography>
-              <Chip label={item.isRequired ? "Required" : "Optional"} />
+              <Chip label={item.isRequired ? "တစ်ခုရွေးပါ" : "နှစ်သက်ရာရွေးပါ"} />
             </Box>
             <Box sx={{ pl: 1, mt: 2 }}>
               <Addons

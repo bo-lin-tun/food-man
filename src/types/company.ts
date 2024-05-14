@@ -8,9 +8,9 @@ export interface CompanySlice {
 }
 
 export interface UpdateCompanyOptions extends BaseOptions {
-  id: number;
-  name: string;
-  street: string;
-  township: string;
-  city: string;
+  id: string;
+  name: string | null;
+  street: string | null;
+  township: string | null;
+  city: string | null;
 }

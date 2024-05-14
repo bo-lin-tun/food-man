@@ -56,6 +56,7 @@ export const deleteTable = createAsyncThunk(
   "table/deleteTable",
   async (options: DeleteTableOptions, thunkApi) => {
     const { id, onSuccess, onError } = options;
+    if (!id) return;
     try {
       await fetch(`${config.backofficeApiUrl}/tables?id=${id}`, {
         method: "DELETE",
@@ -83,7 +84,7 @@ const tableSlice = createSlice({
     addTable: (state, action: PayloadAction<Table>) => {
       state.items = [...state.items, action.payload];
     },
-    removeTable: (state, action: PayloadAction<{ id: number }>) => {
+    removeTable: (state, action: PayloadAction<{ id: string }>) => {
       state.items = state.items.filter((item) => item.id !== action.payload.id);
     },
   },

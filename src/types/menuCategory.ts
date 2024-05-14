@@ -9,16 +9,16 @@ export interface MenuCategorySlice {
 
 export interface CreateMenuCategoryOptions extends BaseOptions {
   name: string;
-  locationId: number;
+  locationId: string | null;
 }
 
 export interface UpdateMenuCategoryOptions extends BaseOptions {
-  id: number;
+  id: string;
   name: string;
-  locationId: number;
+  locationId: string | null;
   isAvailable: boolean;
 }
 
 export interface DeleteMenuCategoryOptions extends BaseOptions {
-  id: number;
+  id: string | null;
 }

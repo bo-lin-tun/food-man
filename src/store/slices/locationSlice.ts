@@ -43,7 +43,7 @@ const locationSlice = createSlice({
         state.selectedLocation = action.payload[0];
       } else {
         const selectedLocation = state.items.find(
-          (item) => item.id === Number(selectedLocationId)
+          (item) => item.id === (selectedLocationId)
         );
         if (selectedLocation) {
           state.selectedLocation = selectedLocation;

@@ -15,6 +15,17 @@ export const getCartTotalPrice = (cart: CartItem[]) => {
   return totalPrice;
 };
 
+export const getOrderTotalPrice = (cart: CartItem) => {
+  const menuPrice = cart.menu.price * cart.quantity;
+
+  const addonPrice = cart.addons.reduce((prev, curr) => {
+    return (prev += curr.price);
+  }, 0);
+  const totalAddonPrice = addonPrice * cart.quantity;
+
+  return menuPrice + totalAddonPrice;
+};
+
 export const formatOrders = (
   orders: Order[],
   addons: Addon[],
@@ -27,6 +38,7 @@ export const formatOrders = (
     const exist = orderItemIds.find((orderItemId) => orderItemId === itemId);
     if (!exist) orderItemIds.push(itemId);
   });
+  // part
   const orderItems: OrderItem[] = orderItemIds.map((orderItemId) => {
     const currentOrders = orders.filter(
       (order) => order.itemId === orderItemId
@@ -40,6 +52,7 @@ export const formatOrders = (
         const exist = orderAddons.find(
           (item) => item.addonCategoryId === addon.addonCategoryId
         );
+        // part
         if (exist) {
           orderAddons = orderAddons.map((item) => {
             const isSameParent = item.addonCategoryId === addon.addonCategoryId;
@@ -69,9 +82,7 @@ export const formatOrders = (
     return {
       itemId: orderItemId,
       status: currentOrders[0].status,
-      orderAddons: addonIds.length
-        ? orderAddons.sort((a, b) => a.addonCategoryId - b.addonCategoryId)
-        : [],
+      orderAddons: addonIds.length ? orderAddons : [],
       menu: menus.find((item) => item.id === currentOrders[0].menuId) as Menu,
       table: tables.find(
         (item) => item.id === currentOrders[0].tableId

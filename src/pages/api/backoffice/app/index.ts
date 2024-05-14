@@ -17,24 +17,16 @@ export default async function handler(
     const name = user?.name as string;
     const email = user?.email as string;
     const dbUser = await prisma.user.findFirst({ where: { email } });
-    if (!dbUser) {
-      // 1. create new company for user and assign user to it.
-      const newCompanyName = "Ah Wa Sarr";
-      const newCompanyStreet = "Hintada Street 21";
-      const newCompanyTownship = "Sanchaung";
-      const newCompanyCity = "Yangon";
-      const company = await prisma.company.create({
-        data: {
-          name: newCompanyName,
-          street: newCompanyStreet,
-          township: newCompanyTownship,
-          city: newCompanyCity,
-        },
-      });
-      // 2. create new user
-      await prisma.user.create({
-        data: { name, email, companyId: company.id },
-      });
+    if (!dbUser) return res.status(404).send("User Not Found!");
+
+    const company = await prisma.company.findFirst({
+      where: {
+        id: dbUser.companyId,
+      },
+    });
+    if (!company) return res.status(404).send("Company Not Found!");
+
+    if (dbUser.isFirtTime) {
       // 3. create new menu category
       const newMenuCategoryName = "Default menu category";
       const menuCategory = await prisma.menuCategory.create({
@@ -94,6 +86,15 @@ export default async function handler(
       table = await prisma.table.update({
         data: { assetUrl },
         where: { id: table.id },
+      });
+
+      await prisma.user.update({
+        where: {
+          id: dbUser.id,
+        },
+        data: {
+          isFirtTime: false,
+        },
       });
 
       return res.status(200).json({

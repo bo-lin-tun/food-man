@@ -15,12 +15,18 @@ const OrderAppHeader = () => {
   const company = useAppSelector((state) => state.company.item);
   const cartItems = useAppSelector((state) => state.cart.items);
   const showCompanyInfo = isHome && company;
-
+  const { theme } = useAppSelector((state) => state.app);
   return (
-    <Box sx={{ position: "relative" }}>
+    <Box
+      sx={{
+        position: { md: "sticky", lg: "static", xs: "sticky" },
+        top: 0,
+        zIndex: { md: 5, xs: 5 },
+      }}
+    >
       <Box
         sx={{
-          bgcolor: "#1B9C85",
+          bgcolor: theme === "light" ? "secondary.main" : "primary.dark",
           height: 60,
           px: 2,
           display: { xs: "flex", md: "none" },
@@ -34,6 +40,7 @@ const OrderAppHeader = () => {
           sx={{
             fontWeight: "bold",
             color: "info.main",
+            fontFamily: "initial",
           }}
         >
           {company?.name}
@@ -54,7 +61,7 @@ const OrderAppHeader = () => {
             />
           ) : (
             <>
-              <ShoppingCartCheckoutIcon
+              {/* <ShoppingCartCheckoutIcon
                 onClick={() =>
                   router.push({ pathname: "/order/cart", query: router.query })
                 }
@@ -62,15 +69,32 @@ const OrderAppHeader = () => {
                   fontSize: "40px",
                   color: "#FFE194",
                 }}
+              /> */}
+
+              <Image
+                src="/notiIcon.png"
+                width={50}
+                height={50}
+                alt="Picture of the author"
+                onClick={() =>
+                  router.push({ pathname: "/order/cart", query: router.query })
+                }
               />
+
               {cartItems.length > 0 && (
                 <Typography
                   sx={{
-                    textAlign: "right",
                     color: "#E8F6EF",
                     position: "absolute",
-                    top: -10,
+                    top: -5,
                     right: -10,
+                    bgcolor: "#FC4100",
+                    borderRadius: "50%",
+                    padding: 1,
+
+                    with: 15,
+                    height: 15,
+                    textAlign: "center",
                   }}
                 >
                   {cartItems.length}
@@ -111,7 +135,7 @@ const OrderAppHeader = () => {
             />
           ) : (
             <>
-              <ShoppingCartCheckoutIcon
+              {/* <ShoppingCartCheckoutIcon
                 onClick={() =>
                   router.push({ pathname: "/order/cart", query: router.query })
                 }
@@ -119,16 +143,32 @@ const OrderAppHeader = () => {
                   fontSize: "40px",
                   color: "#FFE194",
                 }}
+              /> */}
+
+              <Image
+                src="/notiIcon.png"
+                width={40}
+                height={40}
+                alt="Picture of the author"
+                onClick={() =>
+                  router.push({ pathname: "/order/cart", query: router.query })
+                }
               />
+
               {cartItems.length > 0 && (
                 <Typography
-                  variant="h5"
                   sx={{
-                    textAlign: "right",
                     color: "#E8F6EF",
                     position: "absolute",
                     top: -10,
-                    right: -10,
+                    right: -18,
+                    bgcolor: "#FC4100",
+                    borderRadius: "50%",
+                    padding: 1,
+
+                    with: 10,
+                    height: 10,
+                    textAlign: "center",
                   }}
                 >
                   {cartItems.length}

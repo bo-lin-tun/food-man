@@ -23,20 +23,20 @@ export const fileUpload = multer({
     bucket: "msquarefdc",
     acl: "public-read",
     key: (request, file, cb) => {
-      cb(null, `foodie-pos/msquarefdc/${Date.now()}_${file.originalname}`);
+      cb(null, `foodie-pos/bo-lin-tun/${Date.now()}_${file.originalname}`);
     },
   }),
 }).array("files", 1);
 
-export const generateLinkForQRCode = (tableId: number) => {
+export const generateLinkForQRCode = (tableId: string) => {
   return `${config.orderAppUrl}?tableId=${tableId}`;
 };
 
-export const getQrCodeUrl = (tableId: number) => {
+export const getQrCodeUrl = (tableId: string) => {
   return `https://msquarefdc.sgp1.cdn.digitaloceanspaces.com/foodie-pos/msquarefdc/qrcode/tableId-${tableId}.png`;
 };
 
-export const qrCodeImageUpload = async (tableId: number) => {
+export const qrCodeImageUpload = async (tableId: string) => {
   try {
     const qrImageData = await QRCode.toDataURL(generateLinkForQRCode(tableId), {
       scale: 20,

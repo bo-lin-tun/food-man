@@ -1,4 +1,5 @@
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { setOpenSnackbar } from "@/store/slices/snackbarSlice";
 import { deleteTable, updateTable } from "@/store/slices/tableSlice";
 import { UpdateTableOptions } from "@/types/table";
 import {
@@ -15,7 +16,7 @@ import { useEffect, useState } from "react";
 
 const TableDetail = () => {
   const router = useRouter();
-  const tableId = Number(router.query.id);
+  const tableId = router.query.id;
   const tables = useAppSelector((state) => state.table.items);
   const table = tables.find((item) => item.id === tableId);
   const [data, setData] = useState<UpdateTableOptions>();
@@ -36,6 +37,22 @@ const TableDetail = () => {
 
   const handleUpdateTable = () => {
     dispatch(updateTable(data));
+
+    dispatch(
+      updateTable({
+        ...data,
+        onSuccess: () => {
+          router.push("/backoffice/tables");
+
+          dispatch(
+            setOpenSnackbar({
+              message:
+                "Updated table                                                                                                                                                                                    successfully.",
+            })
+          );
+        },
+      })
+    );
   };
 
   const handleDeleteTable = () => {
@@ -55,8 +72,10 @@ const TableDetail = () => {
         </Button>
       </Box>
       <TextField
+        placeholder="Name"
+        label="Name"
         defaultValue={data.name}
-        sx={{ mb: 2 }}
+        sx={{ mb: 2,width:400 }}
         onChange={(evt) =>
           setData({ ...data, id: table.id, name: evt.target.value })
         }

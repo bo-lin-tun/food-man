@@ -49,11 +49,11 @@ const Header = () => {
         sx={{
           position: "absolute",
           fontWeight: "bold",
-          color: "#4C4C6D",
+          color: "#F7C566",
           mt: 4,
         }}
       >
-        Foodie POS
+      🍟🥪 𝓕𝓸𝓸𝓭 𝓜𝓪𝓷 🥙🍖
       </Typography>
     </Box>
   );

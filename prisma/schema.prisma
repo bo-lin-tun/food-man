@@ -8,11 +8,11 @@ datasource db {
 }
 
 model Company {
-  id             Int            @id @default(autoincrement())
+  id             String            @id @default(uuid())
   name           String
-  street         String
-  township       String
-  city           String
+  street         String?
+  township       String?
+  city           String?
   isArchived     Boolean        @default(false)
   createdAt      DateTime       @default(now())
   updatedAt      DateTime       @updatedAt
@@ -22,12 +22,12 @@ model Company {
 }
 
 model Location {
-  id                           Int                            @id @default(autoincrement())
+   id             String            @id @default(uuid())
   name                         String
   street                       String
   township                     String
   city                         String
-  companyId                    Int
+  companyId                    String
   isArchived                   Boolean                        @default(false)
   createdAt                    DateTime                       @default(now())
   updatedAt                    DateTime                       @updatedAt
@@ -38,9 +38,9 @@ model Location {
 }
 
 model MenuCategory {
-  id                           Int                            @id @default(autoincrement())
+    id             String            @id @default(uuid())
   name                         String
-  companyId                    Int
+  companyId                    String
   isArchived                   Boolean                        @default(false)
   createdAt                    DateTime                       @default(now())
   updatedAt                    DateTime                       @updatedAt
@@ -50,9 +50,9 @@ model MenuCategory {
 }
 
 model DisabledLocationMenuCategory {
-  id             Int          @id @default(autoincrement())
-  locationId     Int
-  menuCategoryId Int
+    id             String            @id @default(uuid())
+  locationId     String
+  menuCategoryId String
   isArchived     Boolean      @default(false)
   createdAt      DateTime     @default(now())
   updatedAt      DateTime     @updatedAt
@@ -61,7 +61,7 @@ model DisabledLocationMenuCategory {
 }
 
 model Menu {
-  id                   Int                    @id @default(autoincrement())
+    id             String            @id @default(uuid())
   name                 String
   price                Int                    @default(0)
   description          String?
@@ -76,9 +76,9 @@ model Menu {
 }
 
 model DisabledLocationMenu {
-  id         Int      @id @default(autoincrement())
-  locationId Int
-  menuId     Int
+    id             String            @id @default(uuid())
+  locationId String
+  menuId     String
   isArchived Boolean  @default(false)
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
@@ -87,9 +87,9 @@ model DisabledLocationMenu {
 }
 
 model MenuCategoryMenu {
-  id             Int          @id @default(autoincrement())
-  menuCategoryId Int
-  menuId         Int
+    id             String            @id @default(uuid())
+  menuCategoryId  String
+  menuId         String
   isArchived     Boolean      @default(false)
   createdAt      DateTime     @default(now())
   updatedAt      DateTime     @updatedAt
@@ -98,7 +98,7 @@ model MenuCategoryMenu {
 }
 
 model AddonCategory {
-  id                Int                 @id @default(autoincrement())
+    id             String            @id @default(uuid())
   name              String
   isRequired        Boolean             @default(true)
   isArchived        Boolean             @default(false)
@@ -109,9 +109,9 @@ model AddonCategory {
 }
 
 model MenuAddonCategory {
-  id              Int           @id @default(autoincrement())
-  menuId          Int
-  addonCategoryId Int
+    id             String            @id @default(uuid())
+  menuId          String
+  addonCategoryId String
   isArchived      Boolean       @default(false)
   createdAt       DateTime      @default(now())
   updatedAt       DateTime      @updatedAt
@@ -120,10 +120,10 @@ model MenuAddonCategory {
 }
 
 model Addon {
-  id              Int           @id @default(autoincrement())
+    id             String            @id @default(uuid())
   name            String
   price           Int           @default(0)
-  addonCategoryId Int
+  addonCategoryId String
   isArchived      Boolean       @default(false)
   createdAt       DateTime      @default(now())
   updatedAt       DateTime      @updatedAt
@@ -132,15 +132,15 @@ model Addon {
 }
 
 model Order {
-  id         Int         @id @default(autoincrement())
-  menuId     Int
-  addonId    Int?
+    id             String            @id @default(uuid())
+  menuId     String
+  addonId    String?
   quantity   Int
   orderSeq   String
   itemId     String
   status     ORDERSTATUS
   totalPrice Int
-  tableId    Int
+  tableId    String
   isArchived Boolean     @default(false)
   createdAt  DateTime    @default(now())
   updatedAt  DateTime    @updatedAt
@@ -150,9 +150,9 @@ model Order {
 }
 
 model Table {
-  id         Int      @id @default(autoincrement())
+  id             String            @id @default(uuid())
   name       String
-  locationId Int
+  locationId String
   assetUrl   String
   isArchived Boolean  @default(false)
   createdAt  DateTime @default(now())
@@ -162,15 +162,33 @@ model Table {
 }
 
 model User {
-  id        Int     @id @default(autoincrement())
+  id             String            @id @default(uuid())
   email     String
   name      String?
-  companyId Int
+  password  String?
+  emailVerified   DateTime?
+  role      UserRole    @default(SUB_ADMIN)
+  companyId String
+  isFirtTime  Boolean   @default(true)
   company   Company @relation(fields: [companyId], references: [id])
+}
+
+enum UserRole {
+  AMDIN
+  SUB_ADMIN
+}
+
+model VerificationCode {
+    id             String            @id @default(uuid())
+  email             String  
+  token             String    @unique
+
+  @@unique([email, token])
 }
 
 enum ORDERSTATUS {
   PENDING
   COOKING
+  SEND
   COMPLETE
 }

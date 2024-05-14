@@ -24,7 +24,10 @@ export default async function handler(
     const menuAddonCategories = await prisma.$transaction(
       newMenuAddonCategory.map((item) =>
         prisma.menuAddonCategory.create({
-          data: { menuId: item.menuId, addonCategoryId: item.addonCategoryId },
+          data: {
+            menuId: String(item.menuId),
+            addonCategoryId: String(item.addonCategoryId),
+          },
         })
       )
     );
@@ -50,20 +53,20 @@ export default async function handler(
     const menuAddonCategories = await prisma.$transaction(
       menuAddonCategoryData.map((item) =>
         prisma.menuAddonCategory.create({
-          data: item,
+          data: item as any,
         })
       )
     );
     return res.status(200).json({ addonCategory, menuAddonCategories });
   } else if (method === "DELETE") {
-    const addonCategoryId = Number(req.query.id);
+    const addonCategoryId = req.query.id;
     const addonCategory = await prisma.addonCategory.findFirst({
-      where: { id: addonCategoryId },
+      where: { id: addonCategoryId as string },
     });
     if (!addonCategory) return res.status(400).send("Bad request.");
     await prisma.addonCategory.update({
       data: { isArchived: true },
-      where: { id: addonCategoryId },
+      where: { id: addonCategoryId as string },
     });
     return res.status(200).send("Deleted.");
   }

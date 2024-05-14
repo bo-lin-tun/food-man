@@ -26,7 +26,7 @@ const menuCategoryMenuSlice = createSlice({
     },
     removeMenuCategoryMenu: (
       state,
-      action: PayloadAction<{ menuCategoryId: number }>
+      action: PayloadAction<{ menuCategoryId: string }>
     ) => {
       state.items = state.items.filter(
         (item) => item.menuCategoryId !== action.payload.menuCategoryId

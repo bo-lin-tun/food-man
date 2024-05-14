@@ -10,7 +10,7 @@ import { Addon } from "@prisma/client";
 import { Dispatch, SetStateAction } from "react";
 
 interface Props {
-  addonCategoryId: number;
+  addonCategoryId: string;
   selectedAddons: Addon[];
   setSelectedAddons: Dispatch<SetStateAction<Addon[]>>;
 }
@@ -43,7 +43,7 @@ const Addons = ({
               control={
                 addonCategory.isRequired ? (
                   <Radio
-                    color="success"
+                    color="secondary"
                     checked={
                       selectedAddons.find((item) => item.id === addon.id)
                         ? true
@@ -59,7 +59,7 @@ const Addons = ({
                   />
                 ) : (
                   <Checkbox
-                    color="success"
+                   color="secondary"
                     checked={
                       selectedAddons.find((item) => item.id === addon.id)
                         ? true

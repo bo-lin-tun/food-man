@@ -21,7 +21,7 @@ import { useEffect, useState } from "react";
 
 const MenuCategoryDetail = () => {
   const router = useRouter();
-  const menuCategoryId = Number(router.query.id);
+  const menuCategoryId = router.query.id;
   const menuCategories = useAppSelector((state) => state.menuCategory.items);
   const menuCategory = menuCategories.find(
     (item) => item.id === menuCategoryId
@@ -35,9 +35,7 @@ const MenuCategoryDetail = () => {
 
   useEffect(() => {
     if (menuCategory) {
-      const selectedLocationId = Number(
-        localStorage.getItem("selectedLocationId")
-      );
+      const selectedLocationId = localStorage.getItem("selectedLocationId");
       const disalbedLocationmenuCategory = disabledLocationmenuCategories.find(
         (item) =>
           item.locationId === selectedLocationId &&
@@ -57,11 +55,13 @@ const MenuCategoryDetail = () => {
     dispatch(
       updateMenuCategory({
         ...data,
-        locationId: Number(localStorage.getItem("selectedLocationId")),
-        onSuccess: () =>
+        locationId: localStorage.getItem("selectedLocationId"),
+        onSuccess: () => {
+          router.push("/backoffice/menu-categories");
           dispatch(
             setOpenSnackbar({ message: "Updated menu category successfully." })
-          ),
+          );
+        },
       })
     );
   };
@@ -69,7 +69,7 @@ const MenuCategoryDetail = () => {
   const handleDeleteMenuCategory = () => {
     dispatch(
       deleteMenuCategory({
-        id: menuCategoryId,
+        id: menuCategoryId as string,
         onSuccess: () => {
           router.push("/backoffice/menu-categories");
           setOpenSnackbar({ message: "Deleted menu category successfully." });
@@ -86,10 +86,16 @@ const MenuCategoryDetail = () => {
         </Button>
       </Box>
       <TextField
+        placeholder="Menu Category Name"
+        label="Menu Category Name"
         defaultValue={menuCategory.name}
-        sx={{ mb: 2 }}
+        sx={{ mb: 2, width: 400 }}
         onChange={(evt) =>
-          setData({ ...data, id: menuCategoryId, name: evt.target.value })
+          setData({
+            ...data,
+            id: menuCategoryId as string,
+            name: evt.target.value,
+          })
         }
       />
       <FormControlLabel

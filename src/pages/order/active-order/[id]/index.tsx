@@ -9,12 +9,13 @@ import { useEffect } from "react";
 const ActiveOrder = () => {
   const router = useRouter();
   const orderSeq = router.query.id;
+  console.log("orderSeq: ;", orderSeq);
   const orders = useAppSelector((state) => state.order.items);
   const addons = useAppSelector((state) => state.addon.items);
   const menus = useAppSelector((state) => state.menu.items);
   const tables = useAppSelector((state) => state.table.items);
   const orderItems = formatOrders(orders, addons, menus, tables);
-  const tableId = Number(router.query.tableId);
+  const tableId = router.query.tableId;
   const table = tables.find((table) => table.id === tableId);
   const dispatch = useAppDispatch();
   let intervalId: number;
@@ -50,7 +51,7 @@ const ActiveOrder = () => {
       >
         <Typography
           sx={{
-            color: { xs: "success.main", md: "info.main" },
+            color: { xs: "#151515", md: "info.main" },
             fontSize: { xs: 20, md: 25 },
           }}
         >
@@ -58,12 +59,13 @@ const ActiveOrder = () => {
         </Typography>
         <Typography
           sx={{
-            color: { xs: "success.main", md: "info.main" },
+            color: { xs: "#151515", md: "info.main" },
             fontSize: { xs: 20, md: 25 },
           }}
         >
-          Total price: {orders[0].totalPrice}
+          ကျသင့်ငွေ: MMK  {orders[0].totalPrice} 
         </Typography>
+
       </Box>
       <Box
         sx={{
@@ -72,6 +74,7 @@ const ActiveOrder = () => {
           justifyContent: "center",
           position: "relative",
           top: { md: -200 },
+          ml: { xs: 2 },
         }}
       >
         {orderItems.map((orderItem) => {
@@ -80,6 +83,7 @@ const ActiveOrder = () => {
               key={orderItem.itemId}
               orderItem={orderItem}
               isAdmin={false}
+
             />
           );
         })}

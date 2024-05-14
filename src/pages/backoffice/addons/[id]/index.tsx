@@ -23,7 +23,7 @@ import { useEffect, useState } from "react";
 
 const AddonDetail = () => {
   const router = useRouter();
-  const addonId = Number(router.query.id);
+  const addonId = router.query.id;
   const addons = useAppSelector((state) => state.addon.items);
   const addonCategories = useAppSelector((state) => state.addonCategory.items);
   const addon = addons.find((item) => item.id === addonId);
@@ -44,8 +44,8 @@ const AddonDetail = () => {
 
   if (!addon || !data) return null;
 
-  const handleOnChange = (evt: SelectChangeEvent<number>) => {
-    const selectedId = evt.target.value as number;
+  const handleOnChange = (evt: SelectChangeEvent<string>) => {
+    const selectedId = evt.target.value as string;
     setData({ ...data, id: addon.id, addonCategoryId: selectedId });
   };
 
@@ -53,8 +53,10 @@ const AddonDetail = () => {
     dispatch(
       updateAddon({
         ...data,
-        onSuccess: () =>
-          dispatch(setOpenSnackbar({ message: "Updated addon successfully." })),
+        onSuccess: () => {
+          router.push("/backoffice/addons");
+          dispatch(setOpenSnackbar({ message: "Updated addon successfully." }));
+        },
       })
     );
   };
@@ -79,15 +81,19 @@ const AddonDetail = () => {
         </Button>
       </Box>
       <TextField
+        placeholder="Name"
+        label="Name"
         defaultValue={data.name}
-        sx={{ mb: 2 }}
+        sx={{ mb: 2, width: 400 }}
         onChange={(evt) =>
           setData({ ...data, id: addon.id, name: evt.target.value })
         }
       />
       <TextField
+        placeholder="Price"
+        label="Price"
         defaultValue={data.price}
-        sx={{ mb: 2 }}
+        sx={{ mb: 2, type: "number", width: 400 }}
         onChange={(evt) =>
           setData({ ...data, id: addon.id, price: Number(evt.target.value) })
         }
@@ -95,8 +101,9 @@ const AddonDetail = () => {
       <FormControl fullWidth>
         <InputLabel>Addon Category</InputLabel>
         <Select
-          value={data.addonCategoryId}
+          value={data.addonCategoryId as string | undefined}
           label="Addon Category"
+          sx={{ width: 400 }}
           onChange={handleOnChange}
           renderValue={(selectedAddonCategoryId) => {
             return (

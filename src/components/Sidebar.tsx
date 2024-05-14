@@ -4,6 +4,7 @@ import ClassIcon from "@mui/icons-material/Class";
 import EggIcon from "@mui/icons-material/Egg";
 import LocalDiningIcon from "@mui/icons-material/LocalDining";
 import LocalMallIcon from "@mui/icons-material/LocalMall";
+import ComputerIcon from "@mui/icons-material/Computer";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import SettingsIcon from "@mui/icons-material/Settings";
 import TableBarIcon from "@mui/icons-material/TableBar";
@@ -24,13 +25,13 @@ const SideBar = () => {
     <Box
       sx={{
         minWidth: 250,
-        backgroundColor: theme === "light" ? "success.main" : "primary.dark",
+     bgcolor: theme === "light" ? "secondary.main" : "primary.dark",
         borderTopRightRadius: "20px",
         minHeight: "100%",
       }}
     >
       <List sx={{ p: 0 }}>
-        {sidebarMenuItems.slice(0, 7).map((item) => (
+        {sidebarMenuItems.slice(0, 8).map((item) => (
           <Link
             key={item.id}
             href={item.route}
@@ -41,12 +42,12 @@ const SideBar = () => {
               sx={{ "&.hover": { backgroundColor: "blue" } }}
             >
               <ListItemButton>
-                <ListItemIcon sx={{ color: "info.main" }}>
+                <ListItemIcon sx={{ color:  theme === "light" ? "info.main" : "primary.dark" }}>
                   {item.icon}
                 </ListItemIcon>
                 <ListItemText
                   primary={item.label}
-                  sx={{ color: "info.main" }}
+                  sx={{ color:  theme === "light" ? "info.main" : "primary.dark" }}
                 />
               </ListItemButton>
             </ListItem>
@@ -66,12 +67,12 @@ const SideBar = () => {
           >
             <ListItem disablePadding>
               <ListItemButton>
-                <ListItemIcon sx={{ color: "info.main" }}>
+                <ListItemIcon sx={{ color:  theme === "light" ? "info.main" : "primary.dark" }}>
                   {item.icon}
                 </ListItemIcon>
                 <ListItemText
                   primary={item.label}
-                  sx={{ color: "info.main" }}
+                  sx={{ color:  theme === "light" ? "info.main" : "primary.dark", }}
                 />
               </ListItemButton>
             </ListItem>
@@ -85,6 +86,12 @@ const SideBar = () => {
 export default SideBar;
 
 export const sidebarMenuItems = [
+  {
+    id: 0,
+    label: "Dashboard",
+    icon: <ComputerIcon />,
+    route: "/backoffice/dashboard",
+  },
   {
     id: 1,
     label: "Orders",

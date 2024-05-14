@@ -29,7 +29,7 @@ import { useEffect, useState } from "react";
 
 const AddonCategoryDetail = () => {
   const router = useRouter();
-  const addonCategoryId = Number(router.query.id);
+  const addonCategoryId = router.query.id;
   const addonCategories = useAppSelector((state) => state.addonCategory.items);
   const menuAddonCategories = useAppSelector(
     (state) => state.menuAddonCategory.items
@@ -60,23 +60,25 @@ const AddonCategoryDetail = () => {
     dispatch(
       updateAddonCategory({
         ...data,
-        onSuccess: () =>
+        onSuccess: () => {
+          router.push("/backoffice/addon-categories");
           dispatch(
             setOpenSnackbar({ message: "Updated addon category successfully." })
-          ),
+          );
+        },
       })
     );
   };
 
-  const handleOnChange = (evt: SelectChangeEvent<number[]>) => {
-    const selectedIds = evt.target.value as number[];
-    setData({ ...data, id: addonCategoryId, menuIds: selectedIds });
+  const handleOnChange = (evt: SelectChangeEvent<string[]>) => {
+    const selectedIds = evt.target.value as string[];
+    setData({ ...data, id: addonCategoryId as string, menuIds: selectedIds });
   };
 
   const handleDeleteAddonCategory = () => {
     dispatch(
       deleteAddonCategory({
-        id: addonCategoryId,
+        id: addonCategoryId as string,
         onSuccess: () => {
           dispatch(
             setOpenSnackbar({ message: "Deleted addon category successfully." })
@@ -95,8 +97,10 @@ const AddonCategoryDetail = () => {
         </Button>
       </Box>
       <TextField
+        label="Name"
+        placeholder="Name"
         defaultValue={addonCategory.name}
-        sx={{ mb: 2 }}
+        sx={{ mb: 2, width: 400 }}
         onChange={(evt) => setData({ ...data, name: evt.target.value })}
       />
       <FormControl fullWidth sx={{ my: 1 }}>
@@ -105,6 +109,7 @@ const AddonCategoryDetail = () => {
           multiple
           value={data.menuIds}
           label="Menus"
+          sx={{ width: 500 }}
           onChange={handleOnChange}
           renderValue={(selectedMenuIds) => {
             return selectedMenuIds
@@ -139,7 +144,7 @@ const AddonCategoryDetail = () => {
             onChange={(evt, value) => setData({ ...data, isRequired: value })}
           />
         }
-        label="Required"
+        label="Required‌"
         sx={{ mb: 4 }}
       />
       <Button

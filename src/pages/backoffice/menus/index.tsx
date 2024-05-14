@@ -21,14 +21,14 @@ const MenusPage = () => {
         sx={{
           display: "flex",
           flexWrap: "wrap",
-          justifyContent: { xs: "center", sm: "flex-start" },
+          justifyContent: { xs: "center", sm: "center" },
         }}
       >
         {menus.map((item) => {
           const exist = disabledLocationMenus.find(
             (disabledLocationMenu) =>
               disabledLocationMenu.locationId ===
-                Number(localStorage.getItem("selectedLocationId")) &&
+                (localStorage.getItem("selectedLocationId")) &&
               disabledLocationMenu.menuId === item.id
           );
           const isAvailable = exist ? false : true;

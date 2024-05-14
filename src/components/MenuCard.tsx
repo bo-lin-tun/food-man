@@ -16,8 +16,9 @@ const MenuCard = ({ menu, href, isAvailable }: Props) => {
       href={href}
       style={{
         textDecoration: "none",
-        marginRight: "15px",
+        marginRight: "8px",
         marginBottom: "20px",
+        marginLeft: "8px",
       }}
     >
       <Card

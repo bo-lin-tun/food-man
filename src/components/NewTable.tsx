@@ -28,7 +28,7 @@ const NewTable = ({ open, setOpen }: Props) => {
   useEffect(() => {
     setNewTable({
       ...newTable,
-      locationId: Number(localStorage.getItem("selectedLocationId")),
+      locationId: (localStorage.getItem("selectedLocationId")),
     });
   }, []);
 

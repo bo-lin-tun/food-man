@@ -12,7 +12,8 @@ import { useRouter } from "next/router";
 const Cart = () => {
   const cartItems = useAppSelector((state) => state.cart.items);
   const router = useRouter();
-  const tableId = Number(router.query.tableId);
+  const tableId = router.query.tableId as string;
+
   const dispatch = useAppDispatch();
 
   const renderAddons = (addons: Addon[]) => {
@@ -43,7 +44,7 @@ const Cart = () => {
   };
 
   const confirmOrder = async () => {
-    const isValid = tableId;
+    const isValid = tableId as string;
     if (!isValid) return alert("Table Id");
     dispatch(
       createOrder({
@@ -63,16 +64,17 @@ const Cart = () => {
   return (
     <Box>
       <Typography
-        color={"info.main"}
         variant="h4"
         sx={{
           position: "relative",
           top: { md: -180, lg: -240 },
           textAlign: "center",
-          fontSize: { md: 30, lg: 40 },
+          fontSize: { md: "2em", lg: "2.5em", xs: "1.4em" },
+          marginTop: { md: -0.7, sm: 3.5, xs: 3.5 },
+          marginBottom: { md: -0.7, sm: 3.5, xs: 3.5 },
         }}
       >
-        Review your order
+        မှာယူရန် ရွေးထားသောစာရင်း
       </Typography>
       <Box
         sx={{
@@ -86,7 +88,9 @@ const Cart = () => {
         }}
       >
         {!cartItems.length ? (
-          <Typography>Your cart is empty.</Typography>
+          <Typography sx={{ fontSize: "1.15em", marginTop: 15 }}>
+            မရှိသေးပါ။
+          </Typography>
         ) : (
           <Box
             sx={{
@@ -149,12 +153,16 @@ const Cart = () => {
             })}
             <Divider />
             <Box sx={{ display: "flex", justifyContent: "flex-end", mt: 2 }}>
-              <Typography color="primary" sx={{ fontSize: { sm: 22 } }}>
-                Total: {getCartTotalPrice(cartItems)}
+              <Typography
+                variant="h5"
+                color="primary"
+                sx={{ fontSize: { sm: 22 } }}
+              >
+                ကျသင့်ငွေ : {getCartTotalPrice(cartItems)}
               </Typography>
             </Box>
             <Box sx={{ mt: 3, textAlign: "center" }} onClick={confirmOrder}>
-              <Button variant="contained">Confirm order</Button>
+              <Button variant="contained">မှာယူရန် သေချာပါသည်</Button>
             </Box>
           </Box>
         )}
