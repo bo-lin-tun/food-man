@@ -1,13 +1,13 @@
 import { Server as HttpServer } from "http";
 import { NextApiRequest } from "next";
-import { Server as ServerIO } from "socket.io";
+import { Server as ServerIO } from "http";
 import { NextApiResponseWithSocket } from "@/utils/server";
 
-export const config = {
-  api: {
-    bodyParser: false,
-  },
-};
+// export const config = {
+//   api: {
+//     bodyParser: false,
+//   },
+// }; 
 
 const ioHandler = (req: NextApiRequest, res: NextApiResponseWithSocket) => {
   if (!res.socket.server.io) {

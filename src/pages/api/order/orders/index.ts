@@ -1,7 +1,7 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import { CartItem } from "@/types/cart";
 import { prisma } from "@/utils/db";
-import { getOrderTotalPrice } from "@/utils/generals";
+import { getCartTotalPrice, getOrderTotalPrice } from "@/utils/generals";
 import { NextApiResponseWithSocket } from "@/utils/server";
 import { ORDERSTATUS, Order } from "@prisma/client";
 import { nanoid } from "nanoid";
@@ -26,10 +26,10 @@ export default async function handler(
     const exist = await prisma.order.findMany({
       where: {
         orderSeq,
-        // createdAt: {
-        //   gte: startOfDay,
-        //   lte: endOfDay,
-        // },
+        createdAt: {
+          gte: startOfDay,
+          lte: endOfDay,
+         },
       },
     });
 
@@ -53,10 +53,10 @@ export default async function handler(
       },
     });
     const orderSeq = order ? order.orderSeq : nanoid();
-    // const totalPrice = order
-    //   ? order.totalPrice + getCartTotalPrice(cartItems)
-    //   : getCartTotalPrice(cartItems);
-    //
+    const totalPrice = order
+     ? order.totalPrice + getCartTotalPrice(cartItems)
+     : getCartTotalPrice(cartItems);
+    
     let new_orders = [] as Order[];
     for (const item of cartItems) {
       const cartItem = item as CartItem;
@@ -93,10 +93,10 @@ export default async function handler(
         new_orders.push(newOrder);
       }
     }
-    // await prisma.order.updateMany({
-    //   data: { totalPrice },
-    //   where: { orderSeq },
-    // });
+    await prisma.order.updateMany({
+     data: { totalPrice },
+      where: { orderSeq },
+   });
     res?.socket?.server?.io?.emit("new_order", {
       orders: new_orders,
       table: foundedTable,

@@ -13,7 +13,7 @@
 import type { Server as HTTPServer } from "http";
 import type { NextApiResponse } from "next";
 import type { Socket as NetSocket } from "net";
-import { Server as IOServer } from "socket.io";
+import { Server as IOServer } from "";
 
 interface SocketServer extends HTTPServer {
   io?: IOServer | undefined;

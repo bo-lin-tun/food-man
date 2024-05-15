@@ -81,7 +81,8 @@ const OrderCard = ({
           <Box sx={{ width: "80%" }}>{table.name}</Box>
           <Box sx={{ width: "20%" }}>
             OrderDate :{" "}
-            {format(new Date(orderDate?.createdAt as Date), DATE_FORMAT)}
+{/* Format ထည့်ရန် */}
+             {(new Date(orderDate?.createdAt as Date), DATE_FORMAT)}
           </Box>
         </AccordionSummary>
         <AccordionDetails id={id}>
@@ -132,7 +133,7 @@ const OrderCard = ({
                       <Box> x {order.quantity}</Box>
                     </Box>
                     <Box sx={{ flex: "2 1 45%", fontSize: "15px" }}>
-                      {foundedAddons[0].name}
+                      {foundedAddons[0]?.name}
                     </Box>
                     <Box sx={{ flex: "1 1 10%" }}>
                       {status === "COMPLETE" ? (
