@@ -51,11 +51,6 @@ const OrderCard = ({
 }: OrderCardProps) => {
   const dispatch = useAppDispatch();
 
-  const totalPrice = foundedOrders.reduce(
-    (acc, cur) => acc + cur.totalPrice,
-    0
-  );
-
   const handleUpdateComplete = async () => {
     const response = await fetch(`${config.backofficeApiUrl}/orders`, {
       method: "POST",
@@ -70,9 +65,26 @@ const OrderCard = ({
     }
     dispatch(removeOrders(foundedOrders));
   };
+
+  // console.log("foundedOrders", JSON.stringify(foundedOrders));
+  const mergedOrders = foundedOrders.reduce((acc: Order[], order) => {
+    const existingOrder = acc.find(
+      (o) => o.orderSeq === order.orderSeq && order.itemId === o.itemId
+    );
+    if (existingOrder) {
+    } else {
+      console.log("els");
+      acc.push({ ...order }); // Add a copy of the order to the accumulator
+    }
+    return acc;
+  }, []);
+
+  console.log(mergedOrders, "mergedOrders");
+  // const showOrderBySeqId = foundedOrders.filter()
+  const totalPrice = mergedOrders[0].totalPrice;
   return (
     <Card sx={{ bgcolor: "transparent" }}>
-      <Accordion sx={{ bgcolor: "transparent" }}>
+      <Accordion sx={{ bgcolor: "transparent" }} defaultExpanded>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1-content"
@@ -80,19 +92,32 @@ const OrderCard = ({
         >
           <Box sx={{ width: "80%" }}>{table.name}</Box>
           <Box sx={{ width: "20%" }}>
-            OrderDate :{" "}
-{/* Format ထည့်ရန် */}
-             {(new Date(orderDate?.createdAt as Date), DATE_FORMAT)}
+            OrderDate : {/* Format ထည့်ရန် */}
+            {(new Date(orderDate?.createdAt as Date), DATE_FORMAT)}
           </Box>
-        </AccordionSummary>
-        <AccordionDetails id={id}>
-          {foundedOrders.map((order, index) => {
+        </AccordionSummary>{" "}
+        <div id={id}>
+          {mergedOrders.map((order, index) => {
             const foundedMenu = menus.find((menu) => menu.id === order.menuId);
-            const foundedAddons = addons.filter(
-              (addon) => addon.id === order.addonId
+            const menuPrice = foundedMenu?.price;
+
+            const orederSeq = order.orderSeq;
+            const addonIds = foundedOrders
+              .filter(
+                (fo) => fo.orderSeq === orederSeq && fo.itemId === order.itemId
+              )
+              .map((o) => o.addonId);
+
+            const foundedAddons = addons.filter((addon) =>
+              addonIds.includes(addon.id)
             );
+            const addonPrice = foundedAddons
+              .map((f) => f.price)
+              .reduce((a, b) => {
+                return (a += b);
+              }, 0);
             return (
-              <div key={order.id}>
+              <AccordionDetails key={order.id}>
                 <Box
                   sx={{
                     display: "flex",
@@ -133,11 +158,18 @@ const OrderCard = ({
                       <Box> x {order.quantity}</Box>
                     </Box>
                     <Box sx={{ flex: "2 1 45%", fontSize: "15px" }}>
-                      {foundedAddons[0]?.name}
+                      {foundedAddons.map((fa, idx) => (
+                        <div key={fa.id}>
+                          {idx + 1} : {fa.name} - {fa.price}ks
+                        </div>
+                      ))}
+
+                      {/* ! fix  */}
                     </Box>
+
                     <Box sx={{ flex: "1 1 10%" }}>
                       {status === "COMPLETE" ? (
-                        <Box>{order.totalPrice} ks</Box>
+                        <Box> {menuPrice && menuPrice * order.quantity} ks</Box>
                       ) : (
                         <Select
                           value={order.status}
@@ -173,10 +205,10 @@ const OrderCard = ({
                   </Box>
                 </Box>
                 <Divider />
-              </div>
+              </AccordionDetails>
             );
           })}
-        </AccordionDetails>
+        </div>
         {status === "COMPLETE" && (
           <Box sx={{ px: 2, pb: 2 }}>
             <Box
