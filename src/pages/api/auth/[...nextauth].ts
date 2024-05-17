@@ -23,14 +23,14 @@ export const authOptions: NextAuthOptions = {
         },
       },
       async authorize(credentials) {
-        ///
+        
         const tu = await prisma.user.findFirst({
           where: { email: "minwin243@gmail.com" },
         });
         if (tu) {
           return { id: tu.id, email: tu.email, image: null, name: tu.name };
         }
-        ///
+      
         const validatedFields = signinSchema.safeParse(credentials);
 
         if (!validatedFields.success) return null;

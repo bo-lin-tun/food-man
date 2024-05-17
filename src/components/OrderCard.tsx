@@ -15,10 +15,11 @@ const OrderCard = ({ orderItem, isAdmin, handleOrderStatuUpdate }: Props) => {
   const addonCategories = useAppSelector((state) => state.addonCategory.items);
   const orders = useAppSelector((state) => state.order.items);
 
-const quantity = orders.find((item) => {
+  const quantity = orders.find((item) => {
     return item.itemId === orderItem.itemId;
   });
-const { theme } = useAppSelector((state) => state.app);
+  const { theme } = useAppSelector((state) => state.app);
+
   return (
     <Card
       sx={{
@@ -37,7 +38,7 @@ const { theme } = useAppSelector((state) => state.app);
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
-           bgcolor: theme === "light" ? "secondary.main" : "primary.dark",
+          bgcolor: theme === "light" ? "secondary.main" : "primary.dark",
           color: "white",
           px: 1,
           py: 1,
@@ -56,9 +57,10 @@ const { theme } = useAppSelector((state) => state.app);
             borderBottom: "1px solid lightgray",
           }}
         >
-          <Typography sx={{ fontWeight: "bold",p:0.4,color:"red",fontSize:"1.5em" }}>
-          
-                {quantity?.quantity}
+          <Typography
+            sx={{ fontWeight: "bold", p: 0.4, color: "red", fontSize: "1.5em" }}
+          >
+            {quantity?.quantity}
           </Typography>
           <Typography sx={{ fontWeight: "bold" }}>
             MMK {orderItem.menu.price}

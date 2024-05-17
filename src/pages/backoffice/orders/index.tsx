@@ -35,7 +35,7 @@ const OrdersPage = () => {
   );
   const orderTables = tables.filter((item) => orderTableIds.includes(item.id));
   const orderDate = filterOrders.find((item) => item.tableId === tables[0].id);
-
+  console.log("orderTables", orderTables);
   const handleOrderStatuUpdate = ({
     itemId,
     status,
@@ -53,19 +53,19 @@ const OrdersPage = () => {
     }
   }, [orders, status]);
 
-  useEffect(() => {
-    socket.on(
-      "new_order",
-      ({ orders, table }: { orders: Order[]; table: Table }) => {
-        dispatch(addOrders(orders));
-        toast.success(`New order from ${table.name}`);
-      }
-    );
+  // useEffect(() => {
+  //   socket.on(
+  //     "new_order",
+  //     ({ orders, table }: { orders: Order[]; table: Table }) => {
+  //       dispatch(addOrders(orders));
+  //       toast.success(`New order from ${table.name}`);
+  //     }
+  //   );
 
-    return () => {
-      socket.off("new_order");
-    };
-  }, []);
+  //   return () => {
+  //     socket.off("new_order");
+  //   };
+  // }, []);
 
   const printPrice = ({ id }: { id: string }) => {
     if (!id) return;

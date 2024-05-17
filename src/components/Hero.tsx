@@ -1,9 +1,29 @@
+import { config } from "@/utils/config";
 import { Box, Button, Slide, Typography } from "@mui/material";
+import { Table } from "@prisma/client";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 
 const Hero = () => {
   const router = useRouter();
+  const [tableId, setTableId] = useState("");
+
+  useEffect(() => {
+    const fetchTableId = async () => {
+      const response = await fetch(`${config.orderApiUrl}/get-table-id`);
+
+      if (response.ok) {
+        const table = (await response.json()) as Table | null;
+
+        if (table) {
+          setTableId(table.id);
+        }
+      }
+    };
+    fetchTableId();
+  }, []);
+  console.log(tableId, "dfs");
 
   return (
     <Box
@@ -40,10 +60,7 @@ const Hero = () => {
               position: "relative",
             }}
           >
-            <Link
-              href={`/order?tableId=971cd91e-b48f-454a-8cf2-7976a5f2ca9e`}
-              passHref
-            >
+            <Link href={`/order?tableId=${tableId}`} passHref>
               <Button
                 variant="contained"
                 sx={{

@@ -7,7 +7,6 @@ import { useEffect } from "react";
 import { socket } from "@/utils/socket";
 import { useCreateTheme } from "@/use-create-theme";
 
-
 interface Props {
   children: string | JSX.Element | JSX.Element[];
 }
@@ -20,7 +19,7 @@ const Layout = ({ children }: Props) => {
   const isBackofficeApp = router.pathname.includes("/backoffice");
 
   const socketInitiallize = async () => {
-    await fetch(`${process.env.NEXT_PUBLIC_SOCKET_API_URL}`);
+    await fetch(`${process.env.NEXT_PUBLIC_SOCKET_API_URL!}`);
   };
 
   useEffect(() => {
@@ -44,7 +43,7 @@ const Layout = ({ children }: Props) => {
       socket.disconnect();
     };
   }, []);
-  
+
   const primaryColor = useAppSelector((state) => state.app.primaryColor);
   const { theme: themeValue } = useCreateTheme(primaryColor);
 
