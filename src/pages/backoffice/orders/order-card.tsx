@@ -144,7 +144,7 @@ const OrderCard = ({
                     >
                       <Box>
                         <Image
-                          src={foundedMenu?.assetUrl || ""}
+                          src={foundedMenu?.assetUrl || "/default-menu.png"}
                           alt="menu/img"
                           width={800}
                           height={800}

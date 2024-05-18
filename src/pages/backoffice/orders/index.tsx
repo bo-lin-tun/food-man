@@ -70,6 +70,7 @@ const OrdersPage = () => {
   const printPrice = ({ id }: { id: string }) => {
     if (!id) return;
     const printContent = document.getElementById(`${id}`);
+    console.log("pc", printContent);
     if (printContent) {
       const printWindow = window.open("", "_blank");
       if (printWindow) {
