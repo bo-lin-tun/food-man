@@ -41,7 +41,7 @@ const Hero = () => {
             }}
           >
             <Link
-              href={`/order?tableId=6c120a5c-823c-4161-a9c1-03feac7eff36`}
+              href={`/order?tableId=3447d17c-6124-409d-8cf2-259c51961145`}
               passHref
             >
               <Button

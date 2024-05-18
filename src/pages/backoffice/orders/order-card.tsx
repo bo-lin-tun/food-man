@@ -16,8 +16,9 @@ import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import { config } from "@/utils/config";
 import { toast } from "react-toastify";
-import { useAppDispatch } from "@/store/hooks";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { removeOrders } from "@/store/slices/orderSlice";
+import { OrderItem } from "@/types/order";
 
 type ORDERUPDATETYPE = {
   itemId: string;
@@ -33,6 +34,7 @@ interface OrderCardProps {
   foundedOrders: Order[];
   menus: Menu[];
   addons: Addon[];
+ orderItem: OrderItem;
   handleOrderStatuUpdate: ({ itemId, status }: ORDERUPDATETYPE) => void;
   status?: ORDERSTATUS;
   printPrice: ({ id }: { id: string }) => void;
@@ -45,6 +47,7 @@ const OrderCard = ({
   foundedOrders,
   menus,
   addons,
+ orderItem,
   handleOrderStatuUpdate,
   status,
   printPrice,
@@ -55,6 +58,11 @@ const OrderCard = ({
     (acc, cur) => acc + cur.totalPrice,
     0
   );
+
+
+const addon = useAppSelector((state) => state.addon.items);
+
+
 
   const handleUpdateComplete = async () => {
     const response = await fetch(`${config.backofficeApiUrl}/orders`, {
@@ -81,15 +89,16 @@ const OrderCard = ({
           <Box sx={{ width: "80%" }}>{table.name}</Box>
           <Box sx={{ width: "20%" }}>
             OrderDate :{" "}
-{/* Format ထည့်ရန် */}
-             {(new Date(orderDate?.createdAt as Date), DATE_FORMAT)}
+
+             {format(new Date(orderDate?.createdAt as Date), DATE_FORMAT)}
           </Box>
         </AccordionSummary>
         <AccordionDetails id={id}>
           {foundedOrders.map((order, index) => {
             const foundedMenu = menus.find((menu) => menu.id === order.menuId);
-            const foundedAddons = addons.filter(
+            const foundedAddons =addon.filter(
               (addon) => addon.id === order.addonId
+
             );
             return (
               <div key={order.id}>
@@ -137,7 +146,8 @@ const OrderCard = ({
                     </Box>
                     <Box sx={{ flex: "1 1 10%" }}>
                       {status === "COMPLETE" ? (
-                        <Box>{order.totalPrice} ks</Box>
+                      <Box>{order.totalPrice} ks</Box>
+//  <Box>{foundedMenu?.price} ks</Box> 
                       ) : (
                         <Select
                           value={order.status}

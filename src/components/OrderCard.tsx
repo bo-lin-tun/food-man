@@ -43,7 +43,7 @@ const { theme } = useAppSelector((state) => state.app);
           py: 1,
         }}
       >
-        <Typography>{orderItem.menu.name}</Typography>
+        <Typography>{orderItem.menu?.name}</Typography>
         <Typography>{orderItem.table?.name || "yellow"}</Typography>
       </Box>
       <Box sx={{ px: 2 }}>
@@ -61,10 +61,10 @@ const { theme } = useAppSelector((state) => state.app);
                 {quantity?.quantity}
           </Typography>
           <Typography sx={{ fontWeight: "bold" }}>
-            MMK {orderItem.menu.price}
+            MMK {orderItem.menu?.price}
           </Typography>
           <Image
-            src={orderItem.menu.assetUrl || "/default-menu.png"}
+            src={orderItem.menu?.assetUrl || "/default-menu.png"}
             alt="menu-image"
             width={120}
             height={120}
