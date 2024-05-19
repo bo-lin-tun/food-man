@@ -65,7 +65,7 @@ const SettingsPage = () => {
         placeholder="Restaurant Name"
         label="Restaurant Name"
         defaultValue={data.name}
-        sx={{ mb: 2 ,width:400}}
+        sx={{ mb: 2 ,width:400,mr:1}}
         onChange={(evt) =>
           setData({ ...data, id: comapny.id, name: evt.target.value })
         }
@@ -74,7 +74,7 @@ const SettingsPage = () => {
         placeholder="Street"
         label="Street"
         defaultValue={data.street}
-        sx={{ mb: 2,width:400 }}
+        sx={{ mb: 2,width:400, }}
         onChange={(evt) =>
           setData({ ...data, id: comapny.id, street: evt.target.value })
         }
@@ -84,7 +84,7 @@ const SettingsPage = () => {
         placeholder="Township"
         label="Township"
         defaultValue={data.township}
-        sx={{ mb: 2,width:400}}
+        sx={{ mb: 2,width:400,mr:1}}
         onChange={(evt) =>
           setData({ ...data, id: comapny.id, township: evt.target.value })
         }
@@ -100,7 +100,7 @@ const SettingsPage = () => {
       />
       <Button
         variant="contained"
-        sx={{ mt: 2, width: "fit-content" }}
+        sx={{ mt: 2, width: "fit-content",display:"block" }}
         onClick={handleUpdateCompany}
       >
         Update

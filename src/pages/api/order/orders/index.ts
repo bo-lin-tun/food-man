@@ -29,7 +29,7 @@ export default async function handler(
         createdAt: {
           gte: startOfDay,
           lte: endOfDay,
-         },
+        },
       },
     });
 
@@ -54,9 +54,9 @@ export default async function handler(
     });
     const orderSeq = order ? order.orderSeq : nanoid();
     const totalPrice = order
-     ? order.totalPrice + getCartTotalPrice(cartItems)
-     : getCartTotalPrice(cartItems);
-    
+      ? order.totalPrice + getCartTotalPrice(cartItems)
+      : getCartTotalPrice(cartItems);
+
     let new_orders = [] as Order[];
     for (const item of cartItems) {
       const cartItem = item as CartItem;
@@ -94,9 +94,9 @@ export default async function handler(
       }
     }
     await prisma.order.updateMany({
-     data: { totalPrice },
+      data: { totalPrice },
       where: { orderSeq },
-   });
+    });
     res?.socket?.server?.io?.emit("new_order", {
       orders: new_orders,
       table: foundedTable,
@@ -117,9 +117,9 @@ export default async function handler(
       },
     });
     if (!existingTable) return res.status(400).send({ message: "Bad request" });
-    const updatedOrder = await prisma.order.update({
+    const updatedOrder = await prisma.order.updateMany({
       where: {
-        id: exist.id,
+        itemId: exist.itemId,
       },
       data: {
         status: req.body.status as ORDERSTATUS,

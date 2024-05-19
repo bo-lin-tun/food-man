@@ -1,13 +1,16 @@
 -- CreateEnum
-CREATE TYPE "ORDERSTATUS" AS ENUM ('PENDING', 'COOKING', 'COMPLETE');
+CREATE TYPE "UserRole" AS ENUM ('AMDIN', 'SUB_ADMIN');
+
+-- CreateEnum
+CREATE TYPE "ORDERSTATUS" AS ENUM ('PENDING', 'COOKING', 'SEND', 'COMPLETE');
 
 -- CreateTable
 CREATE TABLE "Company" (
-    "id" SERIAL NOT NULL,
+    "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
-    "street" TEXT NOT NULL,
-    "township" TEXT NOT NULL,
-    "city" TEXT NOT NULL,
+    "street" TEXT,
+    "township" TEXT,
+    "city" TEXT,
     "isArchived" BOOLEAN NOT NULL DEFAULT false,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
@@ -17,12 +20,12 @@ CREATE TABLE "Company" (
 
 -- CreateTable
 CREATE TABLE "Location" (
-    "id" SERIAL NOT NULL,
+    "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "street" TEXT NOT NULL,
     "township" TEXT NOT NULL,
     "city" TEXT NOT NULL,
-    "companyId" INTEGER NOT NULL,
+    "companyId" TEXT NOT NULL,
     "isArchived" BOOLEAN NOT NULL DEFAULT false,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
@@ -32,9 +35,9 @@ CREATE TABLE "Location" (
 
 -- CreateTable
 CREATE TABLE "MenuCategory" (
-    "id" SERIAL NOT NULL,
+    "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
-    "companyId" INTEGER NOT NULL,
+    "companyId" TEXT NOT NULL,
     "isArchived" BOOLEAN NOT NULL DEFAULT false,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
@@ -44,9 +47,9 @@ CREATE TABLE "MenuCategory" (
 
 -- CreateTable
 CREATE TABLE "DisabledLocationMenuCategory" (
-    "id" SERIAL NOT NULL,
-    "locationId" INTEGER NOT NULL,
-    "menuCategoryId" INTEGER NOT NULL,
+    "id" TEXT NOT NULL,
+    "locationId" TEXT NOT NULL,
+    "menuCategoryId" TEXT NOT NULL,
     "isArchived" BOOLEAN NOT NULL DEFAULT false,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
@@ -56,7 +59,7 @@ CREATE TABLE "DisabledLocationMenuCategory" (
 
 -- CreateTable
 CREATE TABLE "Menu" (
-    "id" SERIAL NOT NULL,
+    "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "price" INTEGER NOT NULL DEFAULT 0,
     "description" TEXT,
@@ -70,9 +73,9 @@ CREATE TABLE "Menu" (
 
 -- CreateTable
 CREATE TABLE "DisabledLocationMenu" (
-    "id" SERIAL NOT NULL,
-    "locationId" INTEGER NOT NULL,
-    "menuId" INTEGER NOT NULL,
+    "id" TEXT NOT NULL,
+    "locationId" TEXT NOT NULL,
+    "menuId" TEXT NOT NULL,
     "isArchived" BOOLEAN NOT NULL DEFAULT false,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
@@ -82,9 +85,9 @@ CREATE TABLE "DisabledLocationMenu" (
 
 -- CreateTable
 CREATE TABLE "MenuCategoryMenu" (
-    "id" SERIAL NOT NULL,
-    "menuCategoryId" INTEGER NOT NULL,
-    "menuId" INTEGER NOT NULL,
+    "id" TEXT NOT NULL,
+    "menuCategoryId" TEXT NOT NULL,
+    "menuId" TEXT NOT NULL,
     "isArchived" BOOLEAN NOT NULL DEFAULT false,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
@@ -94,7 +97,7 @@ CREATE TABLE "MenuCategoryMenu" (
 
 -- CreateTable
 CREATE TABLE "AddonCategory" (
-    "id" SERIAL NOT NULL,
+    "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "isRequired" BOOLEAN NOT NULL DEFAULT true,
     "isArchived" BOOLEAN NOT NULL DEFAULT false,
@@ -106,9 +109,9 @@ CREATE TABLE "AddonCategory" (
 
 -- CreateTable
 CREATE TABLE "MenuAddonCategory" (
-    "id" SERIAL NOT NULL,
-    "menuId" INTEGER NOT NULL,
-    "addonCategoryId" INTEGER NOT NULL,
+    "id" TEXT NOT NULL,
+    "menuId" TEXT NOT NULL,
+    "addonCategoryId" TEXT NOT NULL,
     "isArchived" BOOLEAN NOT NULL DEFAULT false,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
@@ -118,10 +121,10 @@ CREATE TABLE "MenuAddonCategory" (
 
 -- CreateTable
 CREATE TABLE "Addon" (
-    "id" SERIAL NOT NULL,
+    "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "price" INTEGER NOT NULL DEFAULT 0,
-    "addonCategoryId" INTEGER NOT NULL,
+    "addonCategoryId" TEXT NOT NULL,
     "isArchived" BOOLEAN NOT NULL DEFAULT false,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
@@ -131,15 +134,15 @@ CREATE TABLE "Addon" (
 
 -- CreateTable
 CREATE TABLE "Order" (
-    "id" SERIAL NOT NULL,
-    "menuId" INTEGER NOT NULL,
-    "addonId" INTEGER,
+    "id" TEXT NOT NULL,
+    "menuId" TEXT NOT NULL,
+    "addonId" TEXT,
     "quantity" INTEGER NOT NULL,
     "orderSeq" TEXT NOT NULL,
     "itemId" TEXT NOT NULL,
     "status" "ORDERSTATUS" NOT NULL,
     "totalPrice" INTEGER NOT NULL,
-    "tableId" INTEGER NOT NULL,
+    "tableId" TEXT NOT NULL,
     "isArchived" BOOLEAN NOT NULL DEFAULT false,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
@@ -149,9 +152,9 @@ CREATE TABLE "Order" (
 
 -- CreateTable
 CREATE TABLE "Table" (
-    "id" SERIAL NOT NULL,
+    "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
-    "locationId" INTEGER NOT NULL,
+    "locationId" TEXT NOT NULL,
     "assetUrl" TEXT NOT NULL,
     "isArchived" BOOLEAN NOT NULL DEFAULT false,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -162,13 +165,32 @@ CREATE TABLE "Table" (
 
 -- CreateTable
 CREATE TABLE "User" (
-    "id" SERIAL NOT NULL,
+    "id" TEXT NOT NULL,
     "email" TEXT NOT NULL,
     "name" TEXT,
-    "companyId" INTEGER NOT NULL,
+    "password" TEXT,
+    "emailVerified" TIMESTAMP(3),
+    "role" "UserRole" NOT NULL DEFAULT 'SUB_ADMIN',
+    "companyId" TEXT NOT NULL,
+    "isFirtTime" BOOLEAN NOT NULL DEFAULT true,
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
 );
+
+-- CreateTable
+CREATE TABLE "VerificationCode" (
+    "id" TEXT NOT NULL,
+    "email" TEXT NOT NULL,
+    "token" TEXT NOT NULL,
+
+    CONSTRAINT "VerificationCode_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateIndex
+CREATE UNIQUE INDEX "VerificationCode_token_key" ON "VerificationCode"("token");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "VerificationCode_email_token_key" ON "VerificationCode"("email", "token");
 
 -- AddForeignKey
 ALTER TABLE "Location" ADD CONSTRAINT "Location_companyId_fkey" FOREIGN KEY ("companyId") REFERENCES "Company"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

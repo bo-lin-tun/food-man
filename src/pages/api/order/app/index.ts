@@ -23,7 +23,7 @@ export default async function handler(
       where: { id: companyId, isArchived: false },
     });
     let menuCategories = await prisma.menuCategory.findMany({
-      where: { companyId: companyId },
+      where: { companyId: companyId ,isArchived:false},
     });
 
     const menuCategoryIds = menuCategories.map((item) => item.id);

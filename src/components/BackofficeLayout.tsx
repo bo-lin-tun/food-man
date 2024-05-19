@@ -6,6 +6,10 @@ import { useRouter } from "next/router";
 import { ReactNode, useEffect } from "react";
 import SideBar from "./Sidebar";
 import Topbar from "./Topbar";
+import { Order, Table } from "@prisma/client";
+import { addOrders } from "@/store/slices/orderSlice";
+import { toast } from "react-toastify";
+import { socket } from "@/utils/socket";
 
 interface Props {
   children: ReactNode;
@@ -26,6 +30,20 @@ const BackofficeLayout = ({ children }: Props) => {
       router.push("/backoffice/orders");
     }
   }, [session, isReady]);
+
+  useEffect(() => {
+    socket.on(
+      "new_order",
+      ({ orders, table }: { orders: Order[]; table: Table }) => {
+        dispatch(addOrders(orders));
+        toast.success(`New order from ${table.name}`);
+      }
+    );
+
+    return () => {
+      socket.off("new_order");
+    };
+  }, []);
 
   return (
     <Box sx={{ minHeight: "100vh" }}>

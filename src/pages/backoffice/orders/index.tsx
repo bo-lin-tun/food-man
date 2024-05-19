@@ -35,7 +35,7 @@ const OrdersPage = () => {
   );
   const orderTables = tables.filter((item) => orderTableIds.includes(item.id));
   const orderDate = filterOrders.find((item) => item.tableId === tables[0].id);
-
+  console.log("orderTables", orderTables);
   const handleOrderStatuUpdate = ({
     itemId,
     status,
@@ -53,29 +53,33 @@ const OrdersPage = () => {
     }
   }, [orders, status]);
 
-  useEffect(() => {
-    socket.on(
-      "new_order",
-      ({ orders, table }: { orders: Order[]; table: Table }) => {
-        dispatch(addOrders(orders));
-        toast.success(`New order from ${table.name}`);
-      }
-    );
+  // useEffect(() => {
+  //   socket.on(
+  //     "new_order",
+  //     ({ orders, table }: { orders: Order[]; table: Table }) => {
+  //       dispatch(addOrders(orders));
+  //       toast.success(`New order from ${table.name}`);
+  //     }
+  //   );
 
-    return () => {
-      socket.off("new_order");
-    };
-  }, []);
+  //   return () => {
+  //     socket.off("new_order");
+  //   };
+  // }, []);
 
   const printPrice = ({ id }: { id: string }) => {
     if (!id) return;
     const printContent = document.getElementById(`${id}`);
+   
     if (printContent) {
       const printWindow = window.open("", "_blank");
       if (printWindow) {
         printWindow.document.write(`<html><head><title>Print</title>`);
         printWindow.document.write("</head><body>");
         printWindow.document.write(printContent.innerHTML);
+      
+
+
         printWindow.document.write("</body></html>");
         printWindow.document.close();
         printWindow.print();

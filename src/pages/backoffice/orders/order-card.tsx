@@ -25,7 +25,7 @@ type ORDERUPDATETYPE = {
   status: ORDERSTATUS;
 };
 
-const DATE_FORMAT = "yyyy-MM-dd HH:mm";
+const DATE_FORMAT = "yyyy-MM-dd HH:mm ";
 
 interface OrderCardProps {
   id: string;
@@ -34,7 +34,7 @@ interface OrderCardProps {
   foundedOrders: Order[];
   menus: Menu[];
   addons: Addon[];
- orderItem: OrderItem;
+  orderItem: OrderItem;
   handleOrderStatuUpdate: ({ itemId, status }: ORDERUPDATETYPE) => void;
   status?: ORDERSTATUS;
   printPrice: ({ id }: { id: string }) => void;
@@ -47,22 +47,14 @@ const OrderCard = ({
   foundedOrders,
   menus,
   addons,
- orderItem,
+  orderItem,
   handleOrderStatuUpdate,
   status,
   printPrice,
 }: OrderCardProps) => {
   const dispatch = useAppDispatch();
 
-  const totalPrice = foundedOrders.reduce(
-    (acc, cur) => acc + cur.totalPrice,
-    0
-  );
-
-
-const addon = useAppSelector((state) => state.addon.items);
-
-
+  const addon = useAppSelector((state) => state.addon.items);
 
   const handleUpdateComplete = async () => {
     const response = await fetch(`${config.backofficeApiUrl}/orders`, {
@@ -78,9 +70,24 @@ const addon = useAppSelector((state) => state.addon.items);
     }
     dispatch(removeOrders(foundedOrders));
   };
+
+  // console.log("foundedOrders", JSON.stringify(foundedOrders));
+  const mergedOrders = foundedOrders.reduce((acc: Order[], order) => {
+    const existingOrder = acc.find(
+      (o) => o.orderSeq === order.orderSeq && order.itemId === o.itemId
+    );
+    if (existingOrder) {
+    } else {
+      acc.push({ ...order }); // Add a copy of the order to the accumulator
+    }
+    return acc;
+  }, []);
+
+  // const showOrderBySeqId = foundedOrders.filter()
+  const totalPrice = mergedOrders[0].totalPrice;
   return (
     <Card sx={{ bgcolor: "transparent" }}>
-      <Accordion sx={{ bgcolor: "transparent" }}>
+      <Accordion sx={{ bgcolor: "transparent" }} defaultExpanded>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1-content"
@@ -89,19 +96,32 @@ const addon = useAppSelector((state) => state.addon.items);
           <Box sx={{ width: "80%" }}>{table.name}</Box>
           <Box sx={{ width: "20%" }}>
             OrderDate :{" "}
-
-             {format(new Date(orderDate?.createdAt as Date), DATE_FORMAT)}
+            {(new Date(orderDate?.createdAt as Date), DATE_FORMAT)}
           </Box>
-        </AccordionSummary>
-        <AccordionDetails id={id}>
-          {foundedOrders.map((order, index) => {
+        </AccordionSummary>{" "}
+        <div id={id}>
+          {mergedOrders.map((order, index) => {
             const foundedMenu = menus.find((menu) => menu.id === order.menuId);
-            const foundedAddons =addon.filter(
-              (addon) => addon.id === order.addonId
 
+            const menuPrice = foundedMenu?.price;
+
+            const orederSeq = order.orderSeq;
+            const addonIds = foundedOrders
+              .filter(
+                (fo) => fo.orderSeq === orederSeq && fo.itemId === order.itemId
+              )
+              .map((o) => o.addonId);
+
+            const foundedAddons = addons.filter((addon) =>
+              addonIds.includes(addon.id)
             );
+            const addonPrice = foundedAddons
+              .map((f) => f.price)
+              .reduce((a, b) => {
+                return (a += b);
+              }, 0);
             return (
-              <div key={order.id}>
+              <AccordionDetails key={order.id}>
                 <Box
                   sx={{
                     display: "flex",
@@ -142,12 +162,19 @@ const addon = useAppSelector((state) => state.addon.items);
                       <Box> x {order.quantity}</Box>
                     </Box>
                     <Box sx={{ flex: "2 1 45%", fontSize: "15px" }}>
-                      {foundedAddons[0]?.name}
+                      {foundedAddons.map((fa, idx) => (
+                        <div key={fa.id}>
+                          {idx + 1} : {fa.name} - {fa.price}ks
+                        </div>
+                      ))}
+
+                      {/* ! fix  */}
                     </Box>
+
                     <Box sx={{ flex: "1 1 10%" }}>
                       {status === "COMPLETE" ? (
-                      <Box>{order.totalPrice} ks</Box>
-//  <Box>{foundedMenu?.price} ks</Box> 
+                        // <Box> {menuPrice && menuPrice * order.quantity} kss</Box>
+                        <Box> {order.totalPrice} ks</Box>
                       ) : (
                         <Select
                           value={order.status}
@@ -183,10 +210,10 @@ const addon = useAppSelector((state) => state.addon.items);
                   </Box>
                 </Box>
                 <Divider />
-              </div>
+              </AccordionDetails>
             );
           })}
-        </AccordionDetails>
+        </div>
         {status === "COMPLETE" && (
           <Box sx={{ px: 2, pb: 2 }}>
             <Box
