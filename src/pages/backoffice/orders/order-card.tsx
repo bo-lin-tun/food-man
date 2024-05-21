@@ -147,6 +147,7 @@ const OrderCard = ({
                           src={foundedMenu?.assetUrl || "/default-menu.png"}
                           alt="menu/img"
                           width={800}
+                          className="removePrintImage"
                           height={800}
                           style={{
                             width: "36px",

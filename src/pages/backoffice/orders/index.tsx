@@ -70,6 +70,10 @@ const OrdersPage = () => {
   const printPrice = ({ id }: { id: string }) => {
     if (!id) return;
     const printContent = document.getElementById(`${id}`);
+    const imageTags = document.querySelectorAll(".removePrintImage");
+    imageTags.forEach((imgTag) => {
+      imgTag.remove();
+    });
     console.log("pc", printContent);
     if (printContent) {
       const printWindow = window.open("", "_blank");
