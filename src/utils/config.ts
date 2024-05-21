@@ -7,6 +7,7 @@ interface Config {
   spaceSecretAccessKey: string;
   spaceEndpoint: string;
   orderAppUrl: string;
+  imageServerUrl: string;
 }
 
 export const config: Config = {
@@ -18,4 +19,5 @@ export const config: Config = {
   spaceSecretAccessKey: process.env.SPACE_SECRET_ACCESS_KEY || "",
   spaceEndpoint: process.env.SPACE_ENDPOINT || "",
   orderAppUrl: process.env.ORDER_APP_URL || "",
+  imageServerUrl: process.env.NEXT_PUBLIC_IMAGE_SERVER_URL || "",
 };

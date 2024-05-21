@@ -50,16 +50,19 @@ const NewMenu = ({ open, setOpen }: Props) => {
 
   const handleCreateMenu = async () => {
     dispatch(setLoadingMenu(true));
+    console.log("handle create meneu");
     const newMenuPayload = { ...newMenu };
     if (menuImage) {
       const formData = new FormData();
-      formData.append("files", menuImage);
-      const response = await fetch(`${config.backofficeApiUrl}/assets`, {
+      formData.append("foodman", menuImage);
+      console.log("form append");
+      const response = await fetch(`${config.imageServerUrl}`, {
         method: "POST",
         body: formData,
       });
-      const { assetUrl } = await response.json();
-      newMenuPayload.assetUrl = assetUrl;
+      const data = await response.json();
+      console.log("image-urlad", data);
+      newMenuPayload.assetUrl = data.url;
     }
     dispatch(
       createMenu({
@@ -101,7 +104,7 @@ const NewMenu = ({ open, setOpen }: Props) => {
         <TextField
           label="Name"
           placeholder="Name"
-          sx={{ mb: 2,mt:1 }}
+          sx={{ mb: 2, mt: 1 }}
           onChange={(evt) => setNewMenu({ ...newMenu, name: evt.target.value })}
         />
         <TextField

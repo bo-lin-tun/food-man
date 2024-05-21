@@ -15,3 +15,7 @@ body {
   background: #f1faee;
   background: #1d3557;
 }
+
+.shadowImage {
+  opacity: 0 !important;
+}

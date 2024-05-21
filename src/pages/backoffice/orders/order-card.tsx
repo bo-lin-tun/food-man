@@ -31,11 +31,11 @@ const DATE_FORMAT = "yyyy-MM-dd  HH:mm";
 interface OrderCardProps {
   id: string;
   table: Table;
-  orderDate: Order;
+  orderDate?: Order;
   foundedOrders: Order[];
   menus: Menu[];
   addons: Addon[];
-  orderItem: OrderItem;
+  orderItem?: OrderItem;
   handleOrderStatuUpdate: ({ itemId, status }: ORDERUPDATETYPE) => void;
   status?: ORDERSTATUS;
   printPrice: ({ id }: { id: string }) => void;
@@ -98,7 +98,7 @@ const OrderCard = ({
           <Box sx={{ width: "80%" }}>{table.name}</Box>
           <Box sx={{ width: "20%" }}>
             OrderDate :{" "}
-            {(new Date(orderDate?.createdAt as Date), DATE_FORMAT)}
+            {orderDate && orderDate.createdAt && format(new Date(orderDate?.createdAt as Date), DATE_FORMAT)}
           </Box>
         </AccordionSummary>{" "}
         <div id={id}>
@@ -150,9 +150,10 @@ const OrderCard = ({
                     >
                       <Box>
                         <Image
-                          src={foundedMenu?.assetUrl || ""}
+                          src={foundedMenu?.assetUrl || "/default-menu.png"}
                           alt="menu/img"
                           width={800}
+                          className="removePrintImage"
                           height={800}
                           style={{
                             width: "36px",
