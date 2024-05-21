@@ -7,7 +7,8 @@ import {
   Button,
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { format } from "date-fns";
+import { format} from "date-fns";
+
 import React from "react";
 import { Addon, Menu, ORDERSTATUS, Order, Table } from "@prisma/client";
 import Image from "next/image";
@@ -25,12 +26,12 @@ type ORDERUPDATETYPE = {
   status: ORDERSTATUS;
 };
 
-const DATE_FORMAT = "yyyy-MM-dd HH:mm ";
+const DATE_FORMAT = "yyyy-MM-dd  HH:mm";
 
 interface OrderCardProps {
   id: string;
   table: Table;
-  orderDate?: Order;
+  orderDate: Order;
   foundedOrders: Order[];
   menus: Menu[];
   addons: Addon[];
@@ -85,6 +86,7 @@ const OrderCard = ({
 
   // const showOrderBySeqId = foundedOrders.filter()
   const totalPrice = mergedOrders[0].totalPrice;
+
   return (
     <Card sx={{ bgcolor: "transparent" }}>
       <Accordion sx={{ bgcolor: "transparent" }} defaultExpanded>
@@ -193,16 +195,24 @@ const OrderCard = ({
                           }}
                         >
                           <MenuItem value={ORDERSTATUS.PENDING}>
-                            {ORDERSTATUS.PENDING}
+                            <Box sx={{ color: "#FF5F00", fontWeight: "bold" }}>
+                              {ORDERSTATUS.PENDING}
+                            </Box>
                           </MenuItem>
                           <MenuItem value={ORDERSTATUS.COOKING}>
-                            {ORDERSTATUS.COOKING}
+                            <Box sx={{ color: "#C73659", fontWeight: "bold" }}>
+                              {ORDERSTATUS.COOKING}
+                            </Box>
                           </MenuItem>
                           <MenuItem value={ORDERSTATUS.SEND}>
-                            {ORDERSTATUS.SEND}
+                            <Box sx={{ color: "#0A6847", fontWeight: "bold" }}>
+                              {ORDERSTATUS.SEND}
+                            </Box>
                           </MenuItem>
                           <MenuItem value={ORDERSTATUS.COMPLETE}>
-                            {ORDERSTATUS.COMPLETE}
+                            <Box sx={{ color: "#87A922", fontWeight: "bold" }}>
+                              {ORDERSTATUS.COMPLETE}
+                            </Box>
                           </MenuItem>
                         </Select>
                       )}

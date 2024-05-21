@@ -70,15 +70,13 @@ const OrdersPage = () => {
   const printPrice = ({ id }: { id: string }) => {
     if (!id) return;
     const printContent = document.getElementById(`${id}`);
-   
+
     if (printContent) {
       const printWindow = window.open("", "_blank");
       if (printWindow) {
         printWindow.document.write(`<html><head><title>Print</title>`);
         printWindow.document.write("</head><body>");
         printWindow.document.write(printContent.innerHTML);
-      
-
 
         printWindow.document.write("</body></html>");
         printWindow.document.close();
@@ -111,16 +109,24 @@ const OrdersPage = () => {
             sx={{ margin: "0px" }}
           >
             <ToggleButton value={ORDERSTATUS.PENDING}>
-              {ORDERSTATUS.PENDING}
+              <Box sx={{ color: "#FF5F00", fontWeight: "bold" }}>
+                {ORDERSTATUS.PENDING}
+              </Box>
             </ToggleButton>
             <ToggleButton value={ORDERSTATUS.COOKING}>
-              {ORDERSTATUS.COOKING}
+              <Box sx={{ color: "#C73659", fontWeight: "bold" }}>
+                {ORDERSTATUS.COOKING}
+              </Box>
             </ToggleButton>
             <ToggleButton value={ORDERSTATUS.SEND}>
-              {ORDERSTATUS.SEND}
+              <Box sx={{ color: "#0A6847", fontWeight: "bold" }}>
+                {ORDERSTATUS.SEND}
+              </Box>
             </ToggleButton>
             <ToggleButton value={ORDERSTATUS.COMPLETE}>
-              {ORDERSTATUS.COMPLETE}
+              <Box sx={{ color: "#87A922", fontWeight: "bold" }}>
+                {ORDERSTATUS.COMPLETE}
+              </Box>
             </ToggleButton>
           </StyledToggleButtonGroup>
         </Paper>
