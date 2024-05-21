@@ -72,6 +72,7 @@ export default async function handler(
       await prisma.menuCategoryMenu.findMany({
         where: { menuCategoryId, isArchived: false },
       })
+
     ).map((item) => item.menuId);
     const menuIdsPromise = menuIds.map(async (menuId) => {
       const menuData = { menuId, count: 1 };

@@ -44,7 +44,7 @@ const OrderCard = ({ orderItem, isAdmin, handleOrderStatuUpdate }: Props) => {
           py: 1,
         }}
       >
-        <Typography>{orderItem.menu.name}</Typography>
+        <Typography>{orderItem.menu?.name}</Typography>
         <Typography>{orderItem.table?.name || "yellow"}</Typography>
       </Box>
       <Box sx={{ px: 2 }}>
@@ -60,13 +60,13 @@ const OrderCard = ({ orderItem, isAdmin, handleOrderStatuUpdate }: Props) => {
           <Typography
             sx={{ fontWeight: "bold", p: 0.4, color: "red", fontSize: "1.5em" }}
           >
-            {quantity?.quantity}
+            Qty {quantity?.quantity}
           </Typography>
           <Typography sx={{ fontWeight: "bold" }}>
-            MMK {orderItem.menu.price}
+            {orderItem.menu?.price} Ks
           </Typography>
           <Image
-            src={orderItem.menu.assetUrl || "/default-menu.png"}
+            src={orderItem.menu?.assetUrl || "/default-menu.png"}
             alt="menu-image"
             width={120}
             height={120}
@@ -84,17 +84,20 @@ const OrderCard = ({ orderItem, isAdmin, handleOrderStatuUpdate }: Props) => {
                   <Typography>{addonCategory.name}</Typography>
                   {orderAddon.addons.map((addon) => {
                     return (
-                      <Typography
-                        key={addon.id}
-                        sx={{
-                          fontSize: 14,
-                          ml: 2,
-                          fontStyle: "italic",
-                          fontWeight: "bold",
-                        }}
-                      >
-                        {addon.name}
-                      </Typography>
+                      <Box>
+                        <Typography
+                          key={addon.id}
+                          sx={{
+                            fontSize: 14,
+                            ml: 2,
+                            fontStyle: "italic",
+                            fontWeight: "bold",
+                          }}
+                        >
+                          {addon.name}
+                        </Typography>
+                        <Typography> {addon.price} Ks</Typography>
+                      </Box>
                     );
                   })}
                 </Box>
@@ -142,7 +145,9 @@ const OrderCard = ({ orderItem, isAdmin, handleOrderStatuUpdate }: Props) => {
                 }
                 sx={{ maxHeight: 30 }}
               >
-                <MenuItem value={ORDERSTATUS.PENDING}>
+
+                <MenuItem value={ORDERSTATUS.PENDING} >
+
                   {ORDERSTATUS.PENDING}
                 </MenuItem>
                 <MenuItem value={ORDERSTATUS.COOKING}>

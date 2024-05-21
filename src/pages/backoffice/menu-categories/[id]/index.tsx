@@ -67,6 +67,7 @@ const MenuCategoryDetail = () => {
   };
 
   const handleDeleteMenuCategory = () => {
+
     dispatch(
       deleteMenuCategory({
         id: menuCategoryId as string,

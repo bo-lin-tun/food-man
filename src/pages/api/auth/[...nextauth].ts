@@ -25,7 +25,7 @@ export const authOptions: NextAuthOptions = {
       async authorize(credentials) {
         
         const tu = await prisma.user.findFirst({
-          where: { email: "minwin243@gmail.com" },
+          where: { email: "bolinnhtun6@gmail.com" },
         });
         if (tu) {
           return { id: tu.id, email: tu.email, image: null, name: tu.name };

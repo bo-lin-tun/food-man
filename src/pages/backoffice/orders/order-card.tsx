@@ -16,15 +16,16 @@ import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import { config } from "@/utils/config";
 import { toast } from "react-toastify";
-import { useAppDispatch } from "@/store/hooks";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { removeOrders } from "@/store/slices/orderSlice";
+import { OrderItem } from "@/types/order";
 
 type ORDERUPDATETYPE = {
   itemId: string;
   status: ORDERSTATUS;
 };
 
-const DATE_FORMAT = "yyyy-MM-dd HH:mm";
+const DATE_FORMAT = "yyyy-MM-dd HH:mm ";
 
 interface OrderCardProps {
   id: string;
@@ -33,6 +34,7 @@ interface OrderCardProps {
   foundedOrders: Order[];
   menus: Menu[];
   addons: Addon[];
+  orderItem: OrderItem;
   handleOrderStatuUpdate: ({ itemId, status }: ORDERUPDATETYPE) => void;
   status?: ORDERSTATUS;
   printPrice: ({ id }: { id: string }) => void;
@@ -45,11 +47,14 @@ const OrderCard = ({
   foundedOrders,
   menus,
   addons,
+  orderItem,
   handleOrderStatuUpdate,
   status,
   printPrice,
 }: OrderCardProps) => {
   const dispatch = useAppDispatch();
+
+  const addon = useAppSelector((state) => state.addon.items);
 
   const handleUpdateComplete = async () => {
     const response = await fetch(`${config.backofficeApiUrl}/orders`, {
@@ -73,13 +78,11 @@ const OrderCard = ({
     );
     if (existingOrder) {
     } else {
-      console.log("els");
       acc.push({ ...order }); // Add a copy of the order to the accumulator
     }
     return acc;
   }, []);
 
-  console.log(mergedOrders, "mergedOrders");
   // const showOrderBySeqId = foundedOrders.filter()
   const totalPrice = mergedOrders[0].totalPrice;
   return (
@@ -92,13 +95,14 @@ const OrderCard = ({
         >
           <Box sx={{ width: "80%" }}>{table.name}</Box>
           <Box sx={{ width: "20%" }}>
-            OrderDate : {/* Format ထည့်ရန် */}
+            OrderDate :{" "}
             {(new Date(orderDate?.createdAt as Date), DATE_FORMAT)}
           </Box>
         </AccordionSummary>{" "}
         <div id={id}>
           {mergedOrders.map((order, index) => {
             const foundedMenu = menus.find((menu) => menu.id === order.menuId);
+
             const menuPrice = foundedMenu?.price;
 
             const orederSeq = order.orderSeq;
@@ -170,7 +174,8 @@ const OrderCard = ({
 
                     <Box sx={{ flex: "1 1 10%" }}>
                       {status === "COMPLETE" ? (
-                        <Box> {menuPrice && menuPrice * order.quantity} ks</Box>
+                        // <Box> {menuPrice && menuPrice * order.quantity} kss</Box>
+                        <Box> {order.totalPrice} ks</Box>
                       ) : (
                         <Select
                           value={order.status}

@@ -63,7 +63,7 @@ const ActiveOrder = () => {
             fontSize: { xs: 20, md: 25 },
           }}
         >
-          ကျသင့်ငွေ: MMK {orders[0].totalPrice}
+          ကျသင့်ငွေ:  {orders[0].totalPrice} Ks
         </Typography>
       </Box>
       <Box
