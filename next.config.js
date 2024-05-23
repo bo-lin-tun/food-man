@@ -3,13 +3,18 @@ const nextConfig = {
   images: {
     remotePatterns: [
       {
-        protocol: "https",
-        hostname: "msquarefdc.sgp1.digitaloceanspaces.com",
+        protocol: "*", // Wildcard for any protocol
+        hostname: "*", // Wildcard for any hostname
       },
-      {
-        protocol: "http",
-        hostname: "***",
-      },
+
+      // {
+      //   protocol: "https",
+      //   hostname: "msquarefdc.sgp1.digitaloceanspaces.com",
+      // },
+      // {
+      //   protocol: "http",
+      //   hostname: "***",
+      // },
     ],
   },
 };
