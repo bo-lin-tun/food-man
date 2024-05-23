@@ -7,7 +7,9 @@ import { useEffect, useState } from "react";
 
 const Hero = () => {
   const router = useRouter();
-  const [tableId, setTableId] = useState("");
+  const [tableId, setTableId] = useState(
+    "3447d17c-6124-409d-8cf2-259c51961145"
+  );
 
   useEffect(() => {
     const fetchTableId = async () => {
@@ -60,14 +62,11 @@ const Hero = () => {
               position: "relative",
             }}
           >
-
-            <Link
+            {/* <Link
               href={`/order?tableId=3447d17c-6124-409d-8cf2-259c51961145`}
               passHref
-            >
-
-            {/* <Link href={`/order?tableId=${tableId}`} passHref> */}
-
+            > */}
+            <Link href={`/order?tableId=${tableId}`} passHref>
               <Button
                 variant="contained"
                 sx={{
