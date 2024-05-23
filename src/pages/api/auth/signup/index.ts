@@ -8,6 +8,7 @@ import { welcomEmail } from "@/utils/welcome-mail-template";
 import { generateRandomNumber } from "@/utils/generate-random";
 import { emailVerificationTemplate } from "@/utils/verify-email-template";
 import { UserRole } from "@prisma/client";
+import { config } from "@/utils/config";
 
 const SALT_ROUNDS = 10;
 const transport = new MailTransport();
@@ -83,7 +84,7 @@ export default async function handler(
         },
       });
       const userName = name.charAt(0).toLocaleUpperCase() + name.slice(1);
-      const emailVerifyLink = `http://localhost:3000/api/auth/email-verify/${verifyCode.token}`;
+      const emailVerifyLink = `${config.apiBaseUrl}/auth/email-verify/${verifyCode.token}`;
       await transport.sendMail({
         from: user.email,
         to: process.env.SMTP_USER,

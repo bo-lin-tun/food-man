@@ -5,6 +5,7 @@ import Grid from "@mui/material/Unstable_Grid2";
 import { Typography } from "@mui/material";
 import DailyOverView from "./daily-sale-chart";
 import MonthlySaleChart from "./monly-sale-chart";
+import { config } from "@/utils/config";
 
 interface DailyOrderType {
   date: string;
@@ -26,9 +27,7 @@ const Dashboard = () => {
   const fetchMetrics = async () => {
     setIsLoading(false);
     try {
-      const response = await fetch(
-        `http://localhost:3000/api/backoffice/dashboard`
-      );
+      const response = await fetch(`${config.backofficeApiUrl}/dashboard`);
       const resDatas = await response.json();
       setDailyOrders(resDatas.daily);
       setMonthlyOrders(resDatas.monthly);

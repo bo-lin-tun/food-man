@@ -8,6 +8,7 @@ interface Config {
   spaceEndpoint: string;
   orderAppUrl: string;
   imageServerUrl: string;
+  apiBaseUrl: string;
 }
 
 export const config: Config = {
@@ -20,4 +21,5 @@ export const config: Config = {
   spaceEndpoint: process.env.SPACE_ENDPOINT || "",
   orderAppUrl: process.env.ORDER_APP_URL || "",
   imageServerUrl: process.env.NEXT_PUBLIC_IMAGE_SERVER_URL || "",
+  apiBaseUrl: process.env.NEXT_PUBLIC_API_BASE_URL || "",
 };
