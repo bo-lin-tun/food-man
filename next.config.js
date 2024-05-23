@@ -3,7 +3,7 @@ const nextConfig = {
   images: {
     remotePatterns: [
       {
-        protocol: "*", // Wildcard for any protocol
+        protocol: "http", // Wildcard for any protocol
         hostname: "*", // Wildcard for any hostname
       },
 
