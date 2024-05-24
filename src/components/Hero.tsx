@@ -7,7 +7,9 @@ import { useEffect, useState } from "react";
 
 const Hero = () => {
   const router = useRouter();
-  const [tableId, setTableId] = useState("");
+  const [tableId, setTableId] = useState(
+    "3447d17c-6124-409d-8cf2-259c51961145"
+  );
 
   const fetchTableId = async () => {
     const response = await fetch(`${config.orderApiUrl}/get-table-id`);
@@ -60,7 +62,7 @@ const Hero = () => {
               position: "relative",
             }}
           >
-            <Link href={`/order?tableId=7d2f8238-1659-40c5-ab51-fb5e2ab5556c`}>
+            <Link href={`/order?tableId=${tableId}`} passHref>
               <Button
                 variant="contained"
                 sx={{

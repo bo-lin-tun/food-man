@@ -48,41 +48,102 @@ const NewMenu = ({ open, setOpen }: Props) => {
     setNewMenu({ ...newMenu, menuCategoryIds: selectedIds });
   };
 
+  // const handleCreateMenu = async () => {
+  //   dispatch(setLoadingMenu(true));
+  //   console.log("handle create meneu");
+  //   const newMenuPayload = { ...newMenu };
+  //   if (menuImage) {
+  //     const formData = new FormData();
+  //     formData.append("foodman", menuImage);
+  //     console.log("form append");
+  //     const response = await fetch(`${config.imageServerUrl}`, {
+  //       method: "POST",
+  //       body: formData,
+  //     });
+  //     const data = await response.json();
+  //     console.log("image-urlad", data);
+  //     newMenuPayload.assetUrl = data.url;
+  //   }
+  //   dispatch(
+  //     createMenu({
+  //       ...newMenuPayload,
+  //       onSuccess: () => {
+  //         setOpen(false);
+  //         dispatch(setLoadingMenu(false));
+  //       },
+  //       onError: () => {
+  //         dispatch(
+  //           setOpenSnackbar({
+  //             message: "Error occurred when creating menu.",
+  //             autoHideDuration: 2000,
+  //             severity: "error",
+  //           })
+  //         );
+  //         dispatch(setLoadingMenu(false));
+  //       },
+  //     })
+  //   );
+  // };
+
   const handleCreateMenu = async () => {
     dispatch(setLoadingMenu(true));
-    console.log("handle create meneu");
-    const newMenuPayload = { ...newMenu };
-    if (menuImage) {
-      const formData = new FormData();
-      formData.append("foodman", menuImage);
-      console.log("form append");
+    console.log("handle create menu");
+
+    // Create a new FormData object
+    const formData = new FormData();
+
+    // Append the image file to the FormData object
+    formData.append("foodman", menuImage || "");
+
+    console.log("form append");
+
+    try {
+      // Send a POST request to the image upload endpoint
       const response = await fetch(`${config.imageServerUrl}`, {
         method: "POST",
         body: formData,
       });
+
+      // Parse the JSON response
       const data = await response.json();
       console.log("image-urlad", data);
+
+      // Update the newMenuPayload with the image URL
+      const newMenuPayload = { ...newMenu };
       newMenuPayload.assetUrl = data.url;
+
+      // Dispatch createMenu action with the updated payload
+      dispatch(
+        createMenu({
+          ...newMenuPayload,
+          onSuccess: () => {
+            setOpen(false);
+            dispatch(setLoadingMenu(false));
+          },
+          onError: () => {
+            dispatch(
+              setOpenSnackbar({
+                message: "Error occurred when creating menu.",
+                autoHideDuration: 2000,
+                severity: "error",
+              })
+            );
+            dispatch(setLoadingMenu(false));
+          },
+        })
+      );
+    } catch (error) {
+      console.error("Error occurred during image upload:", error);
+      // Handle error if image upload fails
+      dispatch(
+        setOpenSnackbar({
+          message: "Error occurred during image upload.",
+          autoHideDuration: 2000,
+          severity: "error",
+        })
+      );
+      dispatch(setLoadingMenu(false));
     }
-    dispatch(
-      createMenu({
-        ...newMenuPayload,
-        onSuccess: () => {
-          setOpen(false);
-          dispatch(setLoadingMenu(false));
-        },
-        onError: () => {
-          dispatch(
-            setOpenSnackbar({
-              message: "Error occurred when creating menu.",
-              autoHideDuration: 2000,
-              severity: "error",
-            })
-          );
-          dispatch(setLoadingMenu(false));
-        },
-      })
-    );
   };
 
   const onFileSelected = (files: File[]) => {

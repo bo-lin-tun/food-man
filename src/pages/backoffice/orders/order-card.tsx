@@ -7,7 +7,7 @@ import {
   Button,
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { format} from "date-fns";
+import { format } from "date-fns";
 
 import React from "react";
 import { Addon, Menu, ORDERSTATUS, Order, Table } from "@prisma/client";
@@ -72,6 +72,10 @@ const OrderCard = ({
     dispatch(removeOrders(foundedOrders));
   };
 
+  if (!foundedOrders || foundedOrders.length === 0) {
+    return null;
+  }
+
   // console.log("foundedOrders", JSON.stringify(foundedOrders));
   const mergedOrders = foundedOrders.reduce((acc: Order[], order) => {
     const existingOrder = acc.find(
@@ -98,7 +102,9 @@ const OrderCard = ({
           <Box sx={{ width: "80%" }}>{table.name}</Box>
           <Box sx={{ width: "20%" }}>
             OrderDate :{" "}
-            {orderDate && orderDate.createdAt && format(new Date(orderDate?.createdAt as Date), DATE_FORMAT)}
+            {orderDate &&
+              orderDate.createdAt &&
+              format(new Date(orderDate?.createdAt as Date), DATE_FORMAT)}
           </Box>
         </AccordionSummary>{" "}
         <div id={id}>
@@ -117,11 +123,11 @@ const OrderCard = ({
             const foundedAddons = addons.filter((addon) =>
               addonIds.includes(addon.id)
             );
-            const addonPrice = foundedAddons
-              .map((f) => f.price)
-              .reduce((a, b) => {
-                return (a += b);
-              }, 0);
+            // const addonPrice = foundedAddons
+            //   .map((f) => f.price)
+            //   .reduce((a, b) => {
+            //     return (a += b);
+            //   }, 0);
             return (
               <AccordionDetails key={order.id}>
                 <Box
