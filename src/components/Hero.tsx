@@ -9,21 +9,21 @@ const Hero = () => {
   const router = useRouter();
   const [tableId, setTableId] = useState("");
 
-  useEffect(() => {
-    const fetchTableId = async () => {
-      const response = await fetch(`${config.orderApiUrl}/get-table-id`);
+  const fetchTableId = async () => {
+    const response = await fetch(`${config.orderApiUrl}/get-table-id`);
 
-      if (response.ok) {
-        const table = (await response.json()) as Table | null;
+    if (response.ok) {
+      const table = (await response.json()) as Table | null;
 
-        if (table) {
-          setTableId(table.id);
-        }
+      if (table) {
+        setTableId(table.id);
       }
-    };
+    }
+  };
+
+  useEffect(() => {
     fetchTableId();
   }, []);
-  console.log(tableId, "dfs");
 
   return (
     <Box
@@ -60,14 +60,7 @@ const Hero = () => {
               position: "relative",
             }}
           >
-
-            <Link
-              href={`/order?tableId=3447d17c-6124-409d-8cf2-259c51961145`}
-              passHref
-            >
-
-            {/* <Link href={`/order?tableId=${tableId}`} passHref> */}
-
+            <Link href={`/order?tableId=7d2f8238-1659-40c5-ab51-fb5e2ab5556c`}>
               <Button
                 variant="contained"
                 sx={{

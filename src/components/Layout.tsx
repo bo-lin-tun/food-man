@@ -3,9 +3,10 @@ import { useAppSelector } from "@/store/hooks";
 import { Box, ThemeProvider } from "@mui/material";
 import { useRouter } from "next/router";
 import OrderLayout from "./OrderLayout";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { socket } from "@/utils/socket";
 import { useCreateTheme } from "@/use-create-theme";
+import { Table } from "@prisma/client";
 
 interface Props {
   children: string | JSX.Element | JSX.Element[];
@@ -17,32 +18,46 @@ const Layout = ({ children }: Props) => {
   const { tableId } = router.query;
   const isOrderApp = tableId;
   const isBackofficeApp = router.pathname.includes("/backoffice");
+  const tables = useAppSelector((state) => state.table.items);
+  const isLoading = useAppSelector((state) => state.app.isLoading);
+  const [curTable, setCurTable] = useState<Table>();
 
   const socketInitiallize = async () => {
     await fetch(`${process.env.NEXT_PUBLIC_SOCKET_API_URL!}`);
   };
 
   useEffect(() => {
-    socketInitiallize();
+    if (tables.length) {
+      setCurTable(tables[0]);
+    }
+  }, [tables]);
+  console.log("test");
 
-    socket.connect();
+  useEffect(() => {
+    if (curTable) {
+      socketInitiallize();
 
-    socket.on("connect_error", (error) => {
-      console.log("error: ", error);
-    });
+      socket.auth = { locationId: curTable.locationId };
 
-    socket.on("connect", () => {
-      console.log("connected");
-    });
+      socket.connect();
 
-    socket.on("disconnect", () => {
-      console.log("disconnected");
-    });
+      socket.on("connect_error", (error) => {
+        console.log("error: ", error);
+      });
 
-    return () => {
-      socket.disconnect();
-    };
-  }, []);
+      socket.on("connect", () => {
+        console.log("connected");
+      });
+
+      socket.on("disconnect", () => {
+        console.log("disconnected");
+      });
+
+      return () => {
+        socket.disconnect();
+      };
+    }
+  }, [curTable]);
 
   const primaryColor = useAppSelector((state) => state.app.primaryColor);
   const { theme: themeValue } = useCreateTheme(primaryColor);
