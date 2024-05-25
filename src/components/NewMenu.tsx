@@ -99,18 +99,18 @@ const NewMenu = ({ open, setOpen }: Props) => {
 
     try {
       // Send a POST request to the image upload endpoint
-      const response = await fetch(`${config.imageServerUrl}`, {
-        method: "POST",
-        body: formData,
-      });
+      // const response = await fetch(`${config.apiBaseUrl}`, {
+      //   method: "POST",
+      //   body: formData,
+      // });
 
-      // Parse the JSON response
-      const data = await response.json();
-      console.log("image-urlad", data);
+      // // Parse the JSON response
+      // const data = await response.json();
+      // console.log("image-urlad", data);
 
       // Update the newMenuPayload with the image URL
       const newMenuPayload = { ...newMenu };
-      newMenuPayload.assetUrl = data.url;
+      newMenuPayload.assetUrl = "";
 
       // Dispatch createMenu action with the updated payload
       dispatch(

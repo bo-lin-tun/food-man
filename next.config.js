@@ -25,7 +25,7 @@ const nextConfig = {
     return [
       {
         // Set CORS headers to allow requests from any origin
-        source: "http://150.95.82.174:3001/images/foodman", // Adjust the source path as needed
+        source: "/api/:path*", // Adjust the source path as needed
         headers: [
           {
             key: "Access-Control-Allow-Origin",
