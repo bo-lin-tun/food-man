@@ -16,11 +16,14 @@ const OrderLayout = (props: Props) => {
   const { tableId } = router.query;
   const dispatch = useAppDispatch();
 
+  const fetchTable = async () => {
+    if (!tableId) return;
+    dispatch(fetchAppData({ tableId: tableId as string }));
+  };
+
   useEffect(() => {
-    if (tableId) {
-      dispatch(fetchAppData({ tableId: tableId as string }));
-    }
-  }, [tableId]);
+    fetchTable();
+  }, []);
 
   return (
     <Box

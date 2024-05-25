@@ -11,21 +11,21 @@ const Hero = () => {
     "3447d17c-6124-409d-8cf2-259c51961145"
   );
 
-  useEffect(() => {
-    const fetchTableId = async () => {
-      const response = await fetch(`${config.orderApiUrl}/get-table-id`);
+  const fetchTableId = async () => {
+    const response = await fetch(`${config.orderApiUrl}/get-table-id`);
 
-      if (response.ok) {
-        const table = (await response.json()) as Table | null;
+    if (response.ok) {
+      const table = (await response.json()) as Table | null;
 
-        if (table) {
-          setTableId(table.id);
-        }
+      if (table) {
+        setTableId(table.id);
       }
-    };
+    }
+  };
+
+  useEffect(() => {
     fetchTableId();
   }, []);
-  console.log(tableId, "dfs");
 
   return (
     <Box
@@ -62,10 +62,6 @@ const Hero = () => {
               position: "relative",
             }}
           >
-            {/* <Link
-              href={`/order?tableId=3447d17c-6124-409d-8cf2-259c51961145`}
-              passHref
-            > */}
             <Link href={`/order?tableId=${tableId}`} passHref>
               <Button
                 variant="contained"

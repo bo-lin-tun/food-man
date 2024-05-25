@@ -45,15 +45,16 @@ const Header = () => {
         </Box>
       </Slide>
       <Typography
-        variant="h2"
+        variant="h3"
         sx={{
           position: "absolute",
           fontWeight: "bold",
           color: "#F7C566",
-          mt: 4,
+          mt: { xs: { mt: -2 } },
+          fontSize: { xs: { fontSize: "1em" } },
         }}
       >
-      🍟🥪 𝓕𝓸𝓸𝓭 𝓜𝓪𝓷 🥙🍖
+        🥪 𝓕𝓸𝓸𝓭 𝓜𝓪𝓷
       </Typography>
     </Box>
   );

@@ -53,24 +53,23 @@ const OrdersPage = () => {
     }
   }, [orders, status]);
 
-  // useEffect(() => {
-  //   socket.on(
-  //     "new_order",
-  //     ({ orders, table }: { orders: Order[]; table: Table }) => {
-  //       dispatch(addOrders(orders));
-  //       toast.success(`New order from ${table.name}`);
-  //     }
-  //   );
+  useEffect(() => {
+    socket.on(
+      "new_order",
+      ({ orders, table }: { orders: Order[]; table: Table }) => {
+        dispatch(addOrders(orders));
+        toast.success(`New order from ${table.name}`);
+      }
+    );
 
-  //   return () => {
-  //     socket.off("new_order");
-  //   };
-  // }, []);
+    return () => {
+      socket.off("new_order");
+    };
+  }, []);
 
   const printPrice = ({ id }: { id: string }) => {
     if (!id) return;
     const printContent = document.getElementById(`${id}`);
-
 
     const imageTags = document.querySelectorAll(".removePrintImage");
     imageTags.forEach((imgTag) => {
