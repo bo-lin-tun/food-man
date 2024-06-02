@@ -116,10 +116,10 @@ export default async function handler(
       const company = await prisma.company.findFirst({
         where: { id: companyId },
       });
-      const locations = await prisma.location.findMany({
+      const locations = await prisma.location.findFirst({
         where: { companyId, isArchived: false },
       });
-      const locationIds = locations.map((item) => item.id);
+      console.log("locaion: ", locations);
       const menuCategories = await prisma.menuCategory.findMany({
         where: { companyId, isArchived: false },
       });
@@ -154,7 +154,7 @@ export default async function handler(
         },
       });
       const tables = await prisma.table.findMany({
-        where: { locationId: { in: locationIds }, isArchived: false },
+        where: { locationId: locations?.id, isArchived: false },
       });
       const orders = await prisma.order.findMany({
         where: {
@@ -164,7 +164,7 @@ export default async function handler(
       });
       return res.status(200).json({
         company,
-        locations,
+        locations: [locations],
         menuCategories,
         menus,
         menuCategoryMenus,

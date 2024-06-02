@@ -182,8 +182,8 @@ const OrderCard = ({
 
                     <Box sx={{ flex: "1 1 10%" }}>
                       {status === "COMPLETE" ? (
-                        // <Box> {menuPrice && menuPrice * order.quantity} kss</Box>
-                        <Box> {order.totalPrice} ks</Box>
+                         <Box> {menuPrice && menuPrice * order.quantity} kss</Box>
+                        // <Box> {order.totalPrice} ks</Box>
                       ) : (
                         <Select
                           value={order.status}

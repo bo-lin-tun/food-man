@@ -1,6 +1,7 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import { prisma } from "@/utils/db";
 import type { NextApiRequest, NextApiResponse } from "next";
+import { exit } from "process";
 
 export default async function handler(
   req: NextApiRequest,
@@ -67,14 +68,22 @@ export default async function handler(
     );
 
     if (locationId && isAvailable === false) {
+
+console.log("locationid",locationId);
+console.log("isAvailable",isAvailable);
+
       const exist = await prisma.disabledLocationMenu.findFirst({
         where: { menuId: id, locationId },
       });
+console.log("Exit",exist);
+
       if (!exist) {
         await prisma.disabledLocationMenu.create({
           data: { locationId, menuId: id },
         });
       }
+
+
     } else if (locationId && isAvailable === true) {
       console.log("locationId 1: ", locationId);
       console.log("isAvailable: ", isAvailable);

@@ -29,6 +29,7 @@ const Dashboard = () => {
     try {
       const response = await fetch(`${config.backofficeApiUrl}/dashboard`);
       const resDatas = await response.json();
+      console.log("Hekkp0",resDatas);
       setDailyOrders(resDatas.daily);
       setMonthlyOrders(resDatas.monthly);
     } catch (error) {

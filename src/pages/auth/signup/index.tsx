@@ -23,6 +23,8 @@ const Signup = () => {
     },
   });
 
+
+
   const handleRegister = async (data: z.infer<typeof signupSchema>) => {
     setIsPending(true);
     const response = await fetch(`${config.apiBaseUrl}/auth/signup`, {

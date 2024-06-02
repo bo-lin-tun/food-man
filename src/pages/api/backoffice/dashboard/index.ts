@@ -12,7 +12,7 @@ export default async function handler(
     const startOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
     const endOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0);
 
-    // const ordersWithinCurrentMonth = await prisma.order.findMany({
+    // const ordersWithinCurrentMonth  = await prisma.order.findMany({
     //   where: {
     //     createdAt: {
     //       // Filter orders where createdAt is greater than or equal to the start of the current month
@@ -25,7 +25,7 @@ export default async function handler(
 
     const totalOrders = await prisma.order.findMany({
       where: {
-        isArchived: false,
+        isArchived:true,
         status: "COMPLETE",
       },
       orderBy: {

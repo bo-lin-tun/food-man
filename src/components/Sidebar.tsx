@@ -31,7 +31,7 @@ const SideBar = () => {
       }}
     >
       <List sx={{ p: 0 }}>
-        {sidebarMenuItems.slice(0, 7).map((item) => (
+        {sidebarMenuItems.slice(0, 8).map((item) => (
           <Link
             key={item.id}
             href={item.route}
