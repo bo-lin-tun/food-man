@@ -19,7 +19,6 @@ const Layout = ({ children }: Props) => {
   const isOrderApp = tableId;
   const isBackofficeApp = router.pathname.includes("/backoffice");
   const tables = useAppSelector((state) => state.table.items);
-  const isLoading = useAppSelector((state) => state.app.isLoading);
   const [curTable, setCurTable] = useState<Table>();
 
   const socketInitiallize = async () => {

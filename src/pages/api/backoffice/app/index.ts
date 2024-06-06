@@ -119,7 +119,6 @@ export default async function handler(
       const locations = await prisma.location.findFirst({
         where: { companyId, isArchived: false },
       });
-      console.log("locaion: ", locations);
       const menuCategories = await prisma.menuCategory.findMany({
         where: { companyId, isArchived: false },
       });

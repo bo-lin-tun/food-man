@@ -37,7 +37,6 @@ export default async function handler(
     return res.status(200).json({ orders: exist });
   } else if (method === "POST") {
     const { tableId, cartItems } = req.body;
-    // console.log("cartItem: ", cartItems);
     const isValid = tableId && cartItems.length;
     if (!isValid) return res.status(400).send("Bad request.");
     const foundedTable = await prisma.table.findFirst({
@@ -97,10 +96,11 @@ export default async function handler(
       data: { totalPrice },
       where: { orderSeq },
     });
-    res?.socket?.server?.io?.emit("new_order", {
+    res?.socket?.server?.io?.to(foundedTable.locationId).emit("new_order", {
       orders: new_orders,
       table: foundedTable,
     });
+
     const orders = await prisma.order.findMany({ where: { orderSeq } });
     return res.status(200).json({ orders });
   } else if (method === "PUT") {
