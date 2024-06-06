@@ -52,7 +52,7 @@ export default async function handler(
     /*  if (exist.assetUrl && exist.assetUrl !== assetUrl) {
       await deleteOldMenuImage(assetUrl);
     } */
-    // update menuCategoryMenu table
+    // update menuCategoryMenu table ff
     await prisma.menuCategoryMenu.deleteMany({ where: { menuId: id } });
     const menuCategoryMenusData: { menuId: number; menuCategoryId: number }[] =
       menuCategoryIds.map((item: number) => ({

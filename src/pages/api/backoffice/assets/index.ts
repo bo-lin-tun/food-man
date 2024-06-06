@@ -1,5 +1,6 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import { fileUpload } from "@/utils/fileUpload";
+import { upload } from "@/utils/serverImage";
 import { Request, Response } from "express";
 
 export const config = {
@@ -20,6 +21,10 @@ export default function handler(req: Request, res: Response) {
         const assetUrl = file.location;
         res.status(200).json({ assetUrl });
       });
+
+const Text = upload.any
+console.log("Text",Text);
+
     }
   } catch (err) {
     res.status(500).send("Internal Server Error");
