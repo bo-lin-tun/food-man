@@ -25,7 +25,7 @@ export class MailTransport {
     try {
       await this.transport.sendMail(options);
     } catch (error) {
-      console.log("send mail error: ", error);
+
       throw new Error("Failed to send email");
     }
   }

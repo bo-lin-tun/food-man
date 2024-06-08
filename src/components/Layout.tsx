@@ -30,7 +30,7 @@ const Layout = ({ children }: Props) => {
       setCurTable(tables[0]);
     }
   }, [tables]);
-  console.log("test");
+ 
 
   useEffect(() => {
     if (curTable) {
@@ -41,15 +41,15 @@ const Layout = ({ children }: Props) => {
       socket.connect();
 
       socket.on("connect_error", (error) => {
-        console.log("error: ", error);
+        
       });
 
       socket.on("connect", () => {
-        console.log("connected");
+       
       });
 
       socket.on("disconnect", () => {
-        console.log("disconnected");
+      
       });
 
       return () => {

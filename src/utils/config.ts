@@ -12,6 +12,9 @@ interface Config {
   uploadUrl: string;
 }
 
+
+
+
 export const config: Config = {
   backofficeApiUrl: process.env.NEXT_PUBLIC_BACKOFFICE_API_URL || "",
   orderApiUrl: process.env.NEXT_PUBLIC_ORDER_API_URL || "",
@@ -22,7 +25,8 @@ export const config: Config = {
   spaceEndpoint: process.env.SPACE_ENDPOINT || "",
   orderAppUrl: process.env.ORDER_APP_URL || "",
   imageServerUrl: process.env.NEXT_PUBLIC_IMAGE_SERVER_URL || "",
-  apiBaseUrl: "https://food-man.vercel.app/api",
-  // apiBaseUrl: process.env.NEXT_PUBLIC_API_BASE_URL || "",
+  // apiBaseUrl: "https://food-man.vercel.app/api",
+   apiBaseUrl: process.env.NEXT_PUBLIC_API_BASE_URL || "",
   uploadUrl: process.env.NEXT_PUBLIC_UPLOAD_URL || "",
 };
+  

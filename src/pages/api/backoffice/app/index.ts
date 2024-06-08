@@ -1,6 +1,6 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import { prisma } from "@/utils/db";
-import { getQrCodeUrl, qrCodeImageUpload } from "@/utils/fileUpload";
+import { getQrCodePath, qrCodeImageUpload } from "@/utils/fileUpload";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../../auth/[...nextauth]";
@@ -16,7 +16,9 @@ export default async function handler(
     const user = session.user;
     const name = user?.name as string;
     const email = user?.email as string;
+  
     const dbUser = await prisma.user.findFirst({ where: { email } });
+
     if (!dbUser) return res.status(404).send("User Not Found!");
 
     const company = await prisma.company.findFirst({
@@ -24,6 +26,7 @@ export default async function handler(
         id: dbUser.companyId,
       },
     });
+
     if (!company) return res.status(404).send("Company Not Found!");
 
     if (dbUser.isFirtTime) {
@@ -63,7 +66,7 @@ export default async function handler(
         newAddonsData.map((addon) => prisma.addon.create({ data: addon }))
       );
       // 9. create new location
-      const newLocationName = "Sanchaung";
+      const newLocationName = " ";
       const newLocationStreet = "Sanchaung";
       const newLocationTownship = "Sanchaung";
       const newLocationCity = "Sanchaung";
@@ -82,7 +85,7 @@ export default async function handler(
         data: { name: newTableName, locationId: location.id, assetUrl: "" },
       });
       await qrCodeImageUpload(table.id);
-      const assetUrl = getQrCodeUrl(table.id);
+      const assetUrl = getQrCodePath(table.id);
       table = await prisma.table.update({
         data: { assetUrl },
         where: { id: table.id },

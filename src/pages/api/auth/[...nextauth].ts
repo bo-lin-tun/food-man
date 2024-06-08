@@ -22,15 +22,14 @@ export const authOptions: NextAuthOptions = {
           placeholder: "your password",
         },
       },
-      async authorize(credentials) {
-        
+      async authorize(credentials: any) {
         const tu = await prisma.user.findFirst({
-          where: { email: "bolinnhtun6@gmail.com" },
+          where: { email: credentials.email as string },
         });
         if (tu) {
           return { id: tu.id, email: tu.email, image: null, name: tu.name };
         }
-      
+
         const validatedFields = signinSchema.safeParse(credentials);
 
         if (!validatedFields.success) return null;

@@ -48,7 +48,7 @@ export default async function handler(
       data: { name, price, assetUrl },
       where: { id },
     });
-    console.log("locationId: ", locationId);
+  
     /*  if (exist.assetUrl && exist.assetUrl !== assetUrl) {
       await deleteOldMenuImage(assetUrl);
     } */
@@ -69,13 +69,12 @@ export default async function handler(
 
     if (locationId && isAvailable === false) {
 
-console.log("locationid",locationId);
-console.log("isAvailable",isAvailable);
+
 
       const exist = await prisma.disabledLocationMenu.findFirst({
         where: { menuId: id, locationId },
       });
-console.log("Exit",exist);
+
 
       if (!exist) {
         await prisma.disabledLocationMenu.create({
@@ -85,12 +84,11 @@ console.log("Exit",exist);
 
 
     } else if (locationId && isAvailable === true) {
-      console.log("locationId 1: ", locationId);
-      console.log("isAvailable: ", isAvailable);
+   
       const exist = await prisma.disabledLocationMenu.findFirst({
         where: { menuId: id, locationId },
       });
-      console.log("existing: ", exist);
+  
       if (exist) {
         await prisma.disabledLocationMenu.delete({
           where: { id: exist.id },

@@ -11,7 +11,7 @@ export default async function handler(
     // Data validation
     const { name, locationId } = req.body;
     const isValid = name && locationId;
-    console.log(isValid);
+
 
     if (!isValid) return res.status(400).send("Bad request.");
     const location = await prisma.location.findFirst({
