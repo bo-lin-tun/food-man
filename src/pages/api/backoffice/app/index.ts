@@ -63,7 +63,7 @@ export default async function handler(
         newAddonsData.map((addon) => prisma.addon.create({ data: addon }))
       );
       // 9. create new location
-      const newLocationName = "";
+      const newLocationName = "Sanchaung";
       const newLocationStreet = "Sanchaung";
       const newLocationTownship = "Sanchaung";
       const newLocationCity = "Sanchaung";

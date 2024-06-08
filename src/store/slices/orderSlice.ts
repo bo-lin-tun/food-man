@@ -96,8 +96,7 @@ const orderSlice = createSlice({
     removeOrders: (state, action: PayloadAction<Order[]>) => {
       if (!action.payload.length) return;
       const orderIds = action.payload.map((item) => item.id);
-      const orders = state.items.filter((item) => !orderIds.includes(item.id));
-      state.items = [...orders];
+      state.items = state.items.filter((item) => !orderIds.includes(item.id));
     },
   },
 });

@@ -2,7 +2,7 @@ import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { addOrders, updateOrder } from "@/store/slices/orderSlice";
 import { Box, Paper, ToggleButton, ToggleButtonGroup } from "@mui/material";
 import { ORDERSTATUS, Order, Table } from "@prisma/client";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { toggleButtonGroupClasses } from "@mui/material/ToggleButtonGroup";
 import { styled } from "@mui/material/styles";
 import { socket } from "@/utils/socket";
@@ -24,7 +24,6 @@ const OrdersPage = () => {
   const dispatch = useAppDispatch();
   const [filterOrders, setFilterOrders] = useState<Order[]>([]);
   const [status, setStatus] = useState<ORDERSTATUS>("PENDING");
-  const [printId, setPrintId] = useState<string>("");
   const orders = useAppSelector((state) => state.order.items);
   const addons = useAppSelector((state) => state.addon.items);
   const menus = useAppSelector((state) => state.menu.items);
@@ -35,7 +34,6 @@ const OrdersPage = () => {
   );
   const orderTables = tables.filter((item) => orderTableIds.includes(item.id));
   const orderDate = filterOrders.find((item) => item.tableId === tables[0].id);
-  console.log("orderTables", orderTables);
   const handleOrderStatuUpdate = ({
     itemId,
     status,
@@ -47,10 +45,8 @@ const OrdersPage = () => {
   };
 
   useEffect(() => {
-    if (orders.length) {
-      const filterOrders = orders.filter((item) => item.status === status);
-      setFilterOrders(filterOrders);
-    }
+    const filterOrders = orders.filter((item) => item.status === status);
+    setFilterOrders(filterOrders);
   }, [orders, status]);
 
   useEffect(() => {
@@ -75,7 +71,6 @@ const OrdersPage = () => {
     imageTags.forEach((imgTag) => {
       imgTag.remove();
     });
-    console.log("pc", printContent);
 
     if (printContent) {
       const printWindow = window.open("", "_blank");
