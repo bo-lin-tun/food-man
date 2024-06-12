@@ -2,23 +2,23 @@
 const nextConfig = {
   images: {
     remotePatterns: [
-      // {
-      //   protocol: "https",
-      //   hostname: "msquarefdc.sgp1.digitaloceanspaces.com",
-      // },
+      {
+        protocol: "https",
+        hostname: "msquarefdc.sgp1.digitaloceanspaces.com",
+      },
       {
         protocol: "https",
         hostname: "***",
       },
 
-      // {
-      //   protocol: "https",
-      //   hostname: "msquarefdc.sgp1.digitaloceanspaces.com",
-      // },
-      // {
-      //   protocol: "http",
-      //   hostname: "***",
-      // },
+      {
+        protocol: "https",
+        hostname: "msquarefdc.sgp1.digitaloceanspaces.com",
+      },
+      {
+        protocol: "http",
+        hostname: "***",
+      },
     ],
   },
   async headers() {
@@ -45,8 +45,3 @@ const nextConfig = {
   },
 };
 
-module.exports = {
-  images: {
-    domains: ['localhost:3000'],
-  },
-}
