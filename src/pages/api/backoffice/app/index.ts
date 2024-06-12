@@ -1,6 +1,6 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import { prisma } from "@/utils/db";
-import { getQrCodePath, qrCodeImageUpload } from "@/utils/fileUpload";
+import { getQrCodeUrl, qrCodeImageUpload } from "@/utils/fileUpload";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../../auth/[...nextauth]";
@@ -85,7 +85,7 @@ export default async function handler(
         data: { name: newTableName, locationId: location.id, assetUrl: "" },
       });
       await qrCodeImageUpload(table.id);
-      const assetUrl = getQrCodePath(table.id);
+      const assetUrl = getQrCodeUrl(table.id);
       table = await prisma.table.update({
         data: { assetUrl },
         where: { id: table.id },
