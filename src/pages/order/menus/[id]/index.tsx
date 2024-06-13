@@ -105,6 +105,7 @@ const MenuDetail = () => {
       >
         <Image
           src={menu.assetUrl || "/default-menu.png"}
+//Hello Error
           alt="menu-image"
           width={150}
           height={150}
