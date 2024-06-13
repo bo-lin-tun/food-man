@@ -5,5 +5,6 @@ import { useAppSelector } from "./store/hooks";
 
 export const useCreateTheme = (primaryColor: string) => {
   const theme = createTheme(getDesignTokens(primaryColor));
+
   return { theme };
 };

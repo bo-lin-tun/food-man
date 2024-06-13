@@ -13,6 +13,7 @@ import { setMenuCategories } from "./menuCategorySlice";
 import { setMenus } from "./menuSlice";
 import { setOrders } from "./orderSlice";
 import { setTables } from "./tableSlice";
+import { Company } from "@prisma/client";
 
 const initialState: AppSlice = {
   init: false,
@@ -47,7 +48,7 @@ export const fetchAppData = createAsyncThunk(
         orders,
         company,
       } = appData;
-    
+
       thunkApi.dispatch(setInit(true));
       thunkApi.dispatch(setLocations(locations));
       thunkApi.dispatch(setMenuCategories(menuCategories));
@@ -67,9 +68,18 @@ export const fetchAppData = createAsyncThunk(
         setTheme((localStorage.getItem("theme") as Theme) ?? "light")
       );
       thunkApi.dispatch(setAppLoading(false));
+      const primaryColor = localStorage.getItem("primaryColor") || "#000000";
+
+      let com = company as Company;
+
       thunkApi.dispatch(
-        setPrimaryColor(localStorage.getItem("primaryColor") || "#000000")
+        setPrimaryColor(
+          `#${com.mainTheme}` ||
+            localStorage.getItem("primaryColor") ||
+            "#000000"
+        )
       );
+
       onSuccess && onSuccess();
     } catch (err) {
       onError && onError();

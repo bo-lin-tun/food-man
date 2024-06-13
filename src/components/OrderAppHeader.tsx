@@ -1,9 +1,10 @@
 import { useAppSelector } from "@/store/hooks";
 import Home from "@mui/icons-material/Home";
 import ShoppingCartCheckoutIcon from "@mui/icons-material/ShoppingCartCheckout";
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, useTheme } from "@mui/material";
 import Image from "next/image";
 import { useRouter } from "next/router";
+import WaveSvg from "./WaveSvg";
 
 const OrderAppHeader = () => {
   const { isLoading } = useAppSelector((state) => state.app);
@@ -16,6 +17,8 @@ const OrderAppHeader = () => {
   const cartItems = useAppSelector((state) => state.cart.items);
   const showCompanyInfo = isHome && company;
   const { theme } = useAppSelector((state) => state.app);
+  const muiTheme = useTheme();
+
   return (
     <Box
       sx={{
@@ -177,15 +180,18 @@ const OrderAppHeader = () => {
             </>
           )}
         </Box>
-
-        <Image
+        {
+          // svg wave
+        }
+        {/* <Image
           src="/order-app-header.svg"
           width={0}
           height={0}
           sizes="100vw"
           style={{ width: "100%", height: "auto" }}
           alt="header-image"
-        />
+        /> */}
+        <WaveSvg color={muiTheme.palette.primary.dark} />
         {showCompanyInfo && (
           <Box sx={{ position: "absolute" }}>
             <Box sx={{ textAlign: "center" }}>
