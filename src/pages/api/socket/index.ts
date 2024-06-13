@@ -13,7 +13,10 @@ declare module "socket.io" {
 const ioHandler = (req: NextApiRequest, res: NextApiResponseWithSocket) => {
   if (!res.socket.server.io) {
     const httpServer: HttpServer = res.socket.server as any;
-    const io = new ServerIO(httpServer);
+    const io = new ServerIO(httpServer, {
+      path: "/api/socket",
+      addTrailingSlash: false,
+    });
     let locationId: string;
     io.use(async (socket, next) => {
       locationId = socket.handshake.auth.locationId;
