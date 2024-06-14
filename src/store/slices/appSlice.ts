@@ -71,14 +71,23 @@ export const fetchAppData = createAsyncThunk(
       const primaryColor = localStorage.getItem("primaryColor") || "#000000";
 
       let com = company as Company;
+console.log("")
 
-      thunkApi.dispatch(
-        setPrimaryColor(
-          `#${com.mainTheme}` ||
-            localStorage.getItem("primaryColor") ||
-            "#000000"
-        )
-      );
+
+
+   if (com.mainTheme) {
+        thunkApi.dispatch(
+          setPrimaryColor(
+            `#${com.mainTheme}` ||
+              localStorage.getItem("primaryColor") ||
+              "#000000"
+          )
+        );
+      } else {
+        thunkApi.dispatch(
+          setPrimaryColor(localStorage.getItem("primaryColor") || "#000000")
+        );
+      }
 
       onSuccess && onSuccess();
     } catch (err) {

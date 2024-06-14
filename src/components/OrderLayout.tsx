@@ -14,7 +14,7 @@ interface Props {
 
 const OrderLayout = (props: Props) => {
   const { isLoading } = useAppSelector((state) => state.app);
-  const [mainTheme, setMainTheme] = useState("");
+  const [mainTheme, setMainTheme] = useState("#000000");
   const router = useRouter();
   const { tableId } = router.query;
   const dispatch = useAppDispatch();
@@ -29,7 +29,7 @@ const OrderLayout = (props: Props) => {
       .then((data) => {
         const { theme } = data as { theme: string | null };
         if (theme) {
-          setMainTheme(`#${theme}`);
+         setMainTheme(`#${theme? theme : '000000'}`);
         }
       })
       .catch((err) => console.log({ err }));

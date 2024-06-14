@@ -1,7 +1,7 @@
 import { PaletteOptions } from "@mui/material";
 import chroma from "chroma-js";
 
-// Base colors
+// Base colors kk
 
 // Generate lighter and darker shades for secondary, info, and success colors based on the primary color
 
@@ -11,6 +11,7 @@ export const getColor = (
   primaryColor: string,
   isDark?: boolean
 ): PaletteOptions => {
+  console.log("hhh", primaryColor);
   const lighterSecondary = chroma(primaryColor).brighten(-0.2).hex();
   const darkerSecondary = chroma(primaryColor).darken().hex();
 
