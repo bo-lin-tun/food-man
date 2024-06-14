@@ -75,7 +75,7 @@ const OrdersPage = () => {
     }
     return toast.error("At this time, can't do this action!");
   };
-
+// if (!orderTables || orderTables.length === 0) return null;
   return (
     <Box>
       <Box sx={{ display: "flex", justifyContent: "flex-end", mb: 2 }}>
@@ -121,27 +121,29 @@ const OrdersPage = () => {
           </StyledToggleButtonGroup>
         </Paper>
       </Box>
-      <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
-        {orderTables.map((item) => {
-          const foundedOrders = filterOrders.filter(
-            (order) => order.tableId === item.id
-          );
-          return (
-            <OrderCard
-              id={item.id}
-              key={item.id}
-              addons={addons}
-              menus={menus}
-              handleOrderStatuUpdate={handleOrderStatuUpdate}
-              foundedOrders={foundedOrders}
-              table={item}
-              orderDate={orderDate}
-              status={status}
-              printPrice={printPrice}
-            />
-          );
-        })}
-      </Box>
+         {!orderTables || orderTables.length === 0 ? null : (
+        <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
+          {orderTables.map((item) => {
+            const foundedOrders = filterOrders.filter(
+              (order) => order.tableId === item.id
+            );
+            return (
+              <OrderCard
+                id={item.id}
+                key={item.id}
+                addons={addons}
+                menus={menus}
+                handleOrderStatuUpdate={handleOrderStatuUpdate}
+                foundedOrders={foundedOrders}
+                table={item}
+                orderDate={orderDate}
+                status={status}
+                printPrice={printPrice}
+              />
+            );
+          })}
+        </Box>
+      )}
     </Box>
   );
 };
