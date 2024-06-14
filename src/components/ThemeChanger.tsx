@@ -1,5 +1,6 @@
-import { useAppDispatch } from "@/store/hooks";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { setPrimaryColor } from "@/store/slices/appSlice";
+import { config } from "@/utils/config";
 import { Box, Button } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { HexColorPicker } from "react-colorful";
@@ -16,7 +17,13 @@ const ThemeChanger = () => {
   const handleSubmit = () => {
     if (window && color) {
       window.localStorage.setItem("primaryColor", color);
+      console.log({ color });
       dispatch(setPrimaryColor);
+      //!
+      fetch(`${config.backofficeApiUrl}/theme?theme=${color.slice(1)}`).catch(
+        (err) => console.log({ err })
+      );
+
       window.location.reload();
     }
   };
