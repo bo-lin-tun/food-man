@@ -12,26 +12,29 @@ declare module "socket.io" {
 
 const ioHandler = (req: NextApiRequest, res: NextApiResponseWithSocket) => {
   if (!res.socket.server.io) {
-    const httpServer: HttpServer = res.socket.server as any;
-    const io = new ServerIO(httpServer, {
+    const io = new ServerIO(res.socket.server, {
       path: "/api/socket",
-      addTrailingSlash: false,
       cors: {
         origin: "https://food-man-test.vercel.app",
         methods: ["GET", "POST"],
         credentials: true,
       },
     });
-    let locationId: string;
-    io.use(async (socket, next) => {
-      locationId = socket.handshake.auth.locationId;
+
+    io.on("connection", (socket) => {
+      const locationId = socket.handshake.auth.locationId;
       if (!locationId) {
-        return next(new Error("invalid locationId"));
+        socket.disconnect(true);
+        return;
       }
-      socket.locationId = locationId;
       socket.join(locationId);
-      next();
+      console.log(`Socket connected: ${socket.id} in room: ${locationId}`);
+
+      socket.on("disconnect", () => {
+        console.log(`Socket disconnected: ${socket.id}`);
+      });
     });
+
     res.socket.server.io = io;
   }
   res.end();
