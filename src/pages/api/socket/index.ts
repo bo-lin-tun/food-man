@@ -16,6 +16,11 @@ const ioHandler = (req: NextApiRequest, res: NextApiResponseWithSocket) => {
     const io = new ServerIO(httpServer, {
       path: "/api/socket",
       addTrailingSlash: false,
+      cors: {
+        origin: "http://localhost:3000",
+        methods: ["GET", "POST"],
+        credentials: true,
+      },
     });
     let locationId: string;
     io.use(async (socket, next) => {
