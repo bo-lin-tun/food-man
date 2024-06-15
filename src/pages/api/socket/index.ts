@@ -17,7 +17,7 @@ const ioHandler = (req: NextApiRequest, res: NextApiResponseWithSocket) => {
       path: "/api/socket",
       addTrailingSlash: false,
       cors: {
-        origin: "https://food-man.vercel.app",
+        origin: "https://food-man-test.vercel.app",
         methods: ["GET", "POST"],
         credentials: true,
       },

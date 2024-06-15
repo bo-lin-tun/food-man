@@ -45,9 +45,9 @@ const Layout = ({ children }: Props) => {
 
       socket.on("disconnect", () => {});
 
-      // return () => {
-      //   socket.disconnect();
-      // };
+      return () => {
+        socket.disconnect();
+      };
     }
   }, [curTable]);
 
