@@ -24,13 +24,16 @@ const Signup = () => {
 
   const handleRegister = async (data: z.infer<typeof signupSchema>) => {
     setIsPending(true);
-    const response = await fetch(`http://localhost:3000/api/auth/signup`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    });
+    const response = await fetch(
+      `https://food-man-test.vercel.app/api/auth/signup`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      }
+    );
     const resData = await response.json();
     setIsPending(false);
     if (!response.ok) {
