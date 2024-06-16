@@ -84,7 +84,7 @@ export default async function handler(
         },
       });
       const userName = name.charAt(0).toLocaleUpperCase() + name.slice(1);
-      const emailVerifyLink = `${config.apiBaseUrl}/auth/food-man.vercel.app/${verifyCode.token}`;
+      const emailVerifyLink = `${config.apiBaseUrl}/auth/email-verify/${verifyCode.token}`;
       await transport.sendMail({
         from: user.email,
         to: process.env.SMTP_USER,
