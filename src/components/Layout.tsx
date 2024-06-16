@@ -19,7 +19,7 @@ const Layout = ({ children }: Props) => {
   const isOrderApp = tableId;
   const isBackofficeApp = router.pathname.includes("/backoffice");
   const tables = useAppSelector((state) => state.table.items);
-  const [curTable, setCurTable] = useState<Table>();
+  const [locationId, setLocationId] = useState<string>("");
 
   const socketInitiallize = async () => {
     await fetch(`${process.env.NEXT_PUBLIC_SOCKET_API_URL!}`);
@@ -27,14 +27,14 @@ const Layout = ({ children }: Props) => {
 
   useEffect(() => {
     if (tables.length) {
-      setCurTable(tables[0]);
+      setLocationId(tables[0].locationId);
     }
   }, [tables]);
 
   useEffect(() => {
-    if (curTable) {
+    if (locationId) {
       socketInitiallize().then((res) => {});
-      socket.auth = { locationId: curTable.locationId };
+      socket.auth = { locationId: locationId };
 
       socket.connect();
 
@@ -57,7 +57,7 @@ const Layout = ({ children }: Props) => {
         socket.disconnect();
       };
     }
-  }, [curTable]);
+  }, [locationId]);
 
   const primaryColor = useAppSelector((state) => state.app.primaryColor);
   const { theme: themeValue } = useCreateTheme(primaryColor);

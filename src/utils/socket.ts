@@ -8,6 +8,9 @@ const socket = io("https://food-man-test.vercel.app", {
   addTrailingSlash: false,
   withCredentials: true,
   rejectUnauthorized: false,
+  reconnection: true,
+  reconnectionAttempts: 5,
+  reconnectionDelay: 1000,
 });
 
 export { socket };
