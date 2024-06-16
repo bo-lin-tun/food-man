@@ -2,14 +2,14 @@
 import { CartItem } from "@/types/cart";
 import { prisma } from "@/utils/db";
 import { getCartTotalPrice, getOrderTotalPrice } from "@/utils/generals";
-import { NextApiResponseWithSocket } from "@/utils/server";
+import { pusherServer } from "@/utils/server";
 import { ORDERSTATUS, Order } from "@prisma/client";
 import { nanoid } from "nanoid";
-import type { NextApiRequest } from "next";
+import type { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponseWithSocket
+  res: NextApiResponse
 ) {
   const method = req.method;
   if (method === "GET") {
@@ -96,7 +96,8 @@ export default async function handler(
       data: { totalPrice },
       where: { orderSeq },
     });
-    res?.socket?.server?.io?.to(foundedTable.locationId).emit("new_order", {
+
+    await pusherServer.trigger("orders", "new_order", {
       orders: new_orders,
       table: foundedTable,
     });

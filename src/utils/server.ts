@@ -1,16 +1,9 @@
-import type { Server as HTTPServer } from "http";
-import type { NextApiResponse } from "next";
-import type { Socket as NetSocket } from "net";
-import { Server as IOServer } from "socket.io";
+import PusherServer from "pusher";
 
-interface SocketServer extends HTTPServer {
-  io?: IOServer | undefined;
-}
-
-interface SocketWithIO extends NetSocket {
-  server: SocketServer;
-}
-
-export interface NextApiResponseWithSocket extends NextApiResponse {
-  socket: SocketWithIO;
-}
+export const pusherServer = new PusherServer({
+  appId: process.env.PUSHER_APP_ID!,
+  key: process.env.PUSHER_KEY!,
+  secret: process.env.PUSHER_SECRET!,
+  cluster: process.env.PUSHER_CLUSTER!,
+  useTLS: true,
+});

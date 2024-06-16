@@ -9,7 +9,7 @@ import Topbar from "./Topbar";
 import { Order, Table } from "@prisma/client";
 import { addOrders } from "@/store/slices/orderSlice";
 import { toast } from "react-toastify";
-import { socket } from "@/utils/socket";
+import { pusherClient } from "@/utils/pusher-client";
 
 interface Props {
   children: ReactNode;
@@ -32,16 +32,15 @@ const BackofficeLayout = ({ children }: Props) => {
   }, [session, isReady]);
 
   useEffect(() => {
-    socket.on(
-      "new_order",
-      ({ orders, table }: { orders: Order[]; table: Table }) => {
-        dispatch(addOrders(orders));
-        toast.success(`New order from ${table.name}`);
-      }
-    );
+    const channel = pusherClient.subscribe("orders");
+    channel.bind("new_order", (data: { orders: Order[]; table: Table }) => {
+      dispatch(addOrders({ orders: data.orders, tableId: data.table.id }));
+      toast.success(`New order from ${data.table.name}`);
+    });
 
     return () => {
-      socket.off("new_order");
+      channel.unbind("new_order");
+      channel.unsubscribe();
     };
   }, []);
 

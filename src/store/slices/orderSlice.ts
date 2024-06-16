@@ -90,8 +90,15 @@ const orderSlice = createSlice({
     setOrders: (state, action: PayloadAction<Order[]>) => {
       state.items = action.payload;
     },
-    addOrders: (state, action: PayloadAction<Order[]>) => {
-      state.items = [...state.items, ...action.payload];
+    addOrders: (
+      state,
+      action: PayloadAction<{ orders: Order[]; tableId: string }>
+    ) => {
+      const tableId = state.items[0].tableId;
+      const newOrders = action.payload.orders.filter(
+        (item) => item.tableId === tableId
+      );
+      state.items = [...state.items, ...newOrders];
     },
     removeOrders: (state, action: PayloadAction<Order[]>) => {
       if (!action.payload.length) return;
