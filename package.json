@@ -23,6 +23,7 @@
     "bcrypt": "^5.1.1",
     "chroma-js": "^2.4.2",
     "date-fns": "^3.6.0",
+    "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "form-data": "^4.0.0",
     "formidable": "^3.5.1",
