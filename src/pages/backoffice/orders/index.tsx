@@ -1,11 +1,10 @@
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { addOrders, updateOrder } from "@/store/slices/orderSlice";
+import { updateOrder } from "@/store/slices/orderSlice";
 import { Box, Paper, ToggleButton, ToggleButtonGroup } from "@mui/material";
 import { ORDERSTATUS, Order, Table } from "@prisma/client";
 import { useEffect, useState } from "react";
 import { toggleButtonGroupClasses } from "@mui/material/ToggleButtonGroup";
 import { styled } from "@mui/material/styles";
-import { socket } from "@/utils/socket";
 import { toast } from "react-toastify";
 import OrderCard from "./order-card";
 
@@ -33,10 +32,10 @@ const OrdersPage = () => {
     (item) => item.tableId && item.tableId
   );
   const orderTables = tables.filter((item) => orderTableIds.includes(item.id));
-const orderDate =
+  const orderDate =
     filterOrders &&
     filterOrders.find((item) => item.tableId === orderTables[0].id);
- 
+
   const handleOrderStatuUpdate = ({
     itemId,
     status,
@@ -75,7 +74,7 @@ const orderDate =
     }
     return toast.error("At this time, can't do this action!");
   };
-// if (!orderTables || orderTables.length === 0) return null;
+  // if (!orderTables || orderTables.length === 0) return null;
   return (
     <Box>
       <Box sx={{ display: "flex", justifyContent: "flex-end", mb: 2 }}>
@@ -121,7 +120,7 @@ const orderDate =
           </StyledToggleButtonGroup>
         </Paper>
       </Box>
-         {!orderTables || orderTables.length === 0 ? null : (
+      {!orderTables || orderTables.length === 0 ? null : (
         <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
           {orderTables.map((item) => {
             const foundedOrders = filterOrders.filter(
