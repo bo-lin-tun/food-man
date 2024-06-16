@@ -1,15 +1,9 @@
-// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import { CartItem } from "@/types/cart";
 import { prisma } from "@/utils/db";
-import { getCartTotalPrice, getOrderTotalPrice } from "@/utils/generals";
-import { NextApiResponseWithSocket } from "@/utils/server";
-import { ORDERSTATUS, Order } from "@prisma/client";
-import { nanoid } from "nanoid";
-import type { NextApiRequest } from "next";
+import type { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponseWithSocket
+  res: NextApiResponse
 ) {
   const method = req.method;
   if (method === "GET") {
