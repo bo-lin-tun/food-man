@@ -12,7 +12,8 @@ declare module "socket.io" {
 
 const ioHandler = (req: NextApiRequest, res: NextApiResponseWithSocket) => {
   if (!res.socket.server.io) {
-    const io = new ServerIO(res.socket.server, {
+    const httpServer: HttpServer = res.socket.server;
+    const io = new ServerIO(httpServer, {
       path: "/api/socket",
       cors: {
         origin: "https://food-man-test.vercel.app",
@@ -24,6 +25,7 @@ const ioHandler = (req: NextApiRequest, res: NextApiResponseWithSocket) => {
     io.on("connection", (socket) => {
       const locationId = socket.handshake.auth.locationId;
       if (!locationId) {
+        console.error("Connection error: missing locationId");
         socket.disconnect(true);
         return;
       }
