@@ -22,9 +22,8 @@ export default function handler(req: Request, res: Response) {
         res.status(200).json({ assetUrl });
       });
 
-const Text = upload.any
-console.log("Text",Text);
-
+      const Text = upload.any;
+      console.log("Text", Text);
     }
   } catch (err) {
     res.status(500).send("Internal Server Error");
@@ -85,9 +84,7 @@ console.log("Text",Text);
 //         const file = files[0];
 //         // const assetUrl = path.join("D:", "uploads",`${file.filename}` );
 //          const assetUrl = `/uploads/${file.filename}`;
-      
 
-    
 //         res.status(200).json({ assetUrl });
 //       });
 //     } else {
