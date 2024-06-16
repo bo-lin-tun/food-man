@@ -21,9 +21,9 @@ const Layout = ({ children }: Props) => {
   const tables = useAppSelector((state) => state.table.items);
   const [curTable, setCurTable] = useState<Table>();
 
-  // const socketInitiallize = async () => {
-  //   await fetch(`${process.env.NEXT_PUBLIC_SOCKET_API_URL!}`);
-  // };
+  const socketInitiallize = async () => {
+    await fetch(`${process.env.NEXT_PUBLIC_SOCKET_API_URL!}`);
+  };
 
   useEffect(() => {
     if (tables.length) {
@@ -33,12 +33,16 @@ const Layout = ({ children }: Props) => {
 
   useEffect(() => {
     if (curTable) {
+      socketInitiallize().then((res) => {});
       socket.auth = { locationId: curTable.locationId };
 
       socket.connect();
 
       socket.on("connect_error", (error) => {
-        console.log("err: ", error);
+        console.log("err: ", error.message);
+        console.log("err name: ", error.name);
+        console.log("err cuase", error.cause);
+        console.log("error stack: ", error.stack);
       });
 
       socket.on("connect", () => {
