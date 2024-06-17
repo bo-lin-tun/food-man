@@ -94,11 +94,12 @@ const orderSlice = createSlice({
       state,
       action: PayloadAction<{ orders: Order[]; tableId: string }>
     ) => {
-      const tableId = state.items[0].tableId;
-      const newOrders = action.payload.orders.filter(
-        (item) => item.tableId === tableId
-      );
-      state.items = [...state.items, ...newOrders];
+      // const tableId = state.items[0].tableId;
+      // const newOrders = action.payload.orders.filter(
+      //   (item) => item.tableId === tableId
+      // );
+      // console.log("new order", newOrders, tableId);
+      state.items = [...state.items, ...action.payload.orders];
     },
     removeOrders: (state, action: PayloadAction<Order[]>) => {
       if (!action.payload.length) return;

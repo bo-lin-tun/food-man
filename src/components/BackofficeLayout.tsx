@@ -35,6 +35,7 @@ const BackofficeLayout = ({ children }: Props) => {
     const channel = pusherClient.subscribe("orders");
     channel.bind("new_order", (data: { orders: Order[]; table: Table }) => {
       dispatch(addOrders({ orders: data.orders, tableId: data.table.id }));
+
       toast.success(`New order from ${data.table.name}`);
     });
 
