@@ -69,7 +69,7 @@ const tables = useAppSelector((state) => state.table.items);
       channel.unbind("new_order");
       channel.unsubscribe();
     };
-  }, []);
+  }, [tables]);
 
   return (
     <Box sx={{ minHeight: "100vh" }}>
