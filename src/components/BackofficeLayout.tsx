@@ -21,7 +21,7 @@ const BackofficeLayout = ({ children }: Props) => {
   const { isReady, ...router } = useRouter();
   const { theme } = useAppSelector((state) => state.app);
   const { init } = useAppSelector((state) => state.app);
-
+const tables = useAppSelector((state) => state.table.items);
   useEffect(() => {
     if (session && !init) {
       dispatch(fetchAppData({}));
@@ -31,14 +31,34 @@ const BackofficeLayout = ({ children }: Props) => {
     }
   }, [session, isReady]);
 
+  // useEffect(() => {
+  //   const channel = pusherClient.subscribe("orders");
+  //   channel.bind("new_order", (data: { orders: Order[]; table: Table }) => {
+  //     const dataTableID = data.table.id;
+  //     const OrderTableId = data.orders.map((item) => item.tableId);
+
+  //     // Check if dataTableID is present in the OrderTableId array
+  //     const isSame = OrderTableId.includes(dataTableID);
+  //     if (isSame) {
+  //       dispatch(addOrders({ orders: data.orders, tableId: data.table.id }));
+  //       toast.success(`New order from ${data.table.name}`);
+  //     }
+  //   });
+
+  //   return () => {
+  //     channel.unbind("new_order");
+  //     channel.unsubscribe();
+  //   };
+  // }, []);
+
+
+
+
   useEffect(() => {
     const channel = pusherClient.subscribe("orders");
-    channel.bind("new_order", (data: { orders: Order[]; table: Table }) => {
-      const dataTableID = data.table.id;
-      const OrderTableId = data.orders.map((item) => item.tableId);
 
-      // Check if dataTableID is present in the OrderTableId array
-      const isSame = OrderTableId.includes(dataTableID);
+    channel.bind("new_order", (data: { orders: Order[]; table: Table }) => {
+      const isSame = tables.find((t) => t.id === data.table.id);
       if (isSame) {
         dispatch(addOrders({ orders: data.orders, tableId: data.table.id }));
         toast.success(`New order from ${data.table.name}`);
