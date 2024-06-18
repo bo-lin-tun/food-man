@@ -34,13 +34,8 @@ const BackofficeLayout = ({ children }: Props) => {
   useEffect(() => {
     const channel = pusherClient.subscribe("orders");
     channel.bind("new_order", (data: { orders: Order[]; table: Table }) => {
-      const dataTableID = data.table.id;
-      const OrderTableId = data.orders.map((item) => item.tableId);
-      const isSame = OrderTableId.includes(dataTableID);
-      if (isSame) {
-        dispatch(addOrders({ orders: data.orders, tableId: data.table.id }));
-        toast.success(`New order from ${data.table.name}`);
-      }
+      dispatch(addOrders({ orders: data.orders, tableId: data.table.id }));
+      toast.success(`New order from ${data.table.name}`);
     });
 
     return () => {

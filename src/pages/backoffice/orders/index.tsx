@@ -32,7 +32,6 @@ const OrdersPage = () => {
     (item) => item.tableId && item.tableId
   );
   const orderTables = tables.filter((item) => orderTableIds.includes(item.id));
-  console.log("orderTable", orderTables);
   const orderDate =
     filterOrders &&
     filterOrders.find((item) => item.tableId === orderTables[0]?.id);
