@@ -17,7 +17,7 @@ const ThemeChanger = () => {
   const handleSubmit = () => {
     if (window && color) {
       window.localStorage.setItem("primaryColor", color);
-      console.log({ color });
+      
       dispatch(setPrimaryColor);
       //!
       fetch(`${config.backofficeApiUrl}/theme?theme=${color.slice(1)}`).catch(

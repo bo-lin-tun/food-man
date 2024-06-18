@@ -18,12 +18,12 @@ const OrderLayout = (props: Props) => {
   const router = useRouter();
   const { tableId } = router.query;
   const dispatch = useAppDispatch();
-  console.log({ mainTheme });
+
   const { theme: themeValue } = useCreateTheme(mainTheme);
 
   const fetchTable = async () => {
     if (!tableId) return;
-    console.log("fetch data");
+   
     fetch(`${config.orderApiUrl}/theme?tableId=${tableId}`)
       .then((res) => res.json())
       .then((data) => {

@@ -94,11 +94,14 @@ const orderSlice = createSlice({
       state,
       action: PayloadAction<{ orders: Order[]; tableId: string }>
     ) => {
-      const tableId = state.items[0].tableId;
+      const tableId = state.items[0]?.tableId;
       const newOrders = action.payload.orders.filter(
         (item) => item.tableId === tableId
       );
-      state.items = [...state.items, ...newOrders];
+      return {
+        ...state,
+        items: [...state.items, ...newOrders],
+      };
     },
     removeOrders: (state, action: PayloadAction<Order[]>) => {
       if (!action.payload.length) return;
