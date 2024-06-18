@@ -94,7 +94,7 @@ const orderSlice = createSlice({
       state,
       action: PayloadAction<{ orders: Order[]; tableId: string }>
     ) => {
-      const tableId = state.items[0].tableId;
+      const tableId = state.items[0]?.tableId;
       const newOrders = action.payload.orders.filter(
         (item) => item.tableId === tableId
       );
