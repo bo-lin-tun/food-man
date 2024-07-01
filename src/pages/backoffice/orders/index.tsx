@@ -49,7 +49,7 @@ const OrdersPage = () => {
   useEffect(() => {
     const filterOrders = orders.filter((item) => item.status === status);
     setFilterOrders(filterOrders);
-    console.log("filterOrders", filterOrders,orders);
+    console.log("filterOrders", filterOrders, orders);
   }, [orders, status]);
 
   const printPrice = ({ id }: { id: string }) => {
@@ -65,7 +65,9 @@ const OrdersPage = () => {
       const printWindow = window.open("", "_blank");
       if (printWindow) {
         printWindow.document.write(`<html><head><title>Print</title>`);
-        printWindow.document.write("</head><body>");
+        printWindow.document.write(
+          `</head><body><h1>Table:${orderTables[0]?.name}</h1>`
+        );
         printWindow.document.write(printContent.innerHTML);
 
         printWindow.document.write("</body></html>");
