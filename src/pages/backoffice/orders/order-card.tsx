@@ -38,7 +38,7 @@ interface OrderCardProps {
   orderItem?: OrderItem;
   handleOrderStatuUpdate: ({ itemId, status }: ORDERUPDATETYPE) => void;
   status?: ORDERSTATUS;
-  printPrice: ({ id }: { id: string }) => void;
+  printPrice: ({ id, table }: { id: string; table: Table }) => void;
 }
 
 const OrderCard = ({
@@ -261,7 +261,10 @@ const OrderCard = ({
           <Box sx={{ m: 2, display: "flex", justifyContent: "flex-end" }}>
             <Box sx={{ flex: "2 1 80%" }}></Box>
             <Box sx={{ flex: "1 1 20%", display: "flex", gap: 1 }}>
-              <Button variant="outlined" onClick={() => printPrice({ id: id })}>
+              <Button
+                variant="outlined"
+                onClick={() => printPrice({ id: id, table })}
+              >
                 Print
               </Button>
               <Button variant="contained" onClick={handleUpdateComplete}>
